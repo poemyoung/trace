@@ -3,7 +3,7 @@ package com.trace;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.trace")
 public class MainApp {
 
     public static void main(String[] args) {
