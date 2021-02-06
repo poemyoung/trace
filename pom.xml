@@ -31,8 +31,11 @@
         <gson.version>2.8.6</gson.version>
         <protostuff.version>1.5.9</protostuff.version>
         <commons.version>2.6</commons.version>
+        <mybatis.version>3.4.6</mybatis.version>
+        <junit.version>4.12</junit.version>
+        <mybatis.generator.version>1.4.0</mybatis.generator.version>
+        <mysql.connector.version>8.0.21</mysql.connector.version>
     </properties>
-
     <!--    模块说明，这里有多个子模块-->
     <!-- end 模块说明-->
     <!--    管理依赖版本号-->
@@ -55,6 +58,12 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.version}</version>
         </dependency>
     </dependencies>
 
@@ -95,8 +104,25 @@
                 <artifactId>commons-io</artifactId>
                 <version>${commons.version}</version>
             </dependency>
-
-
+            <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/junit/junit -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-maven-plugin -->
+            <dependency>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>${mybatis.generator.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
