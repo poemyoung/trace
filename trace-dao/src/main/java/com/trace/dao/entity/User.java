@@ -1,4 +1,4 @@
-package entity;
+package com.trace.dao.entity;
 
 public class User {
     private Integer id;

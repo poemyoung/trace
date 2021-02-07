@@ -80,8 +80,21 @@
              domainObjectName 是要生成的实体类名(可以不指定，默认按帕斯卡命名法将表名转换成类名)
              enableXXXByExample 默认为 true， 为 true 会生成一个对应Example帮助类，帮助你进行条件查询，不想要可以设为false
              -->
-        <table schema="" tableName="user_info" domainObjectName="User"
-               enableCountByExample="true" enableDeleteByExample="false" enableSelectByExample="false"
+
+
+<!--        用户表-->
+<!--        <table schema="" tableName="user_info" domainObjectName="User"-->
+<!--               enableCountByExample="true" enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               enableUpdateByExample="false" selectByExampleQueryId="true">-->
+<!--            &lt;!&ndash;是否使用实际列名,默认为false&ndash;&gt;-->
+<!--            &lt;!&ndash;<property name="useActualColumnNames" value="false" />&ndash;&gt;-->
+<!--        </table>-->
+<!--        -->
+
+
+<!--        open id 与 user id 转换表-->
+        <table schema="" tableName="user_cvt" domainObjectName="UserConvert"
+               enableCountByExample="true" enableDeleteByExample="false" enableSelectByExample="true"
                enableUpdateByExample="false" selectByExampleQueryId="true">
             <!--是否使用实际列名,默认为false-->
             <!--<property name="useActualColumnNames" value="false" />-->

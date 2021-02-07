@@ -1,7 +1,7 @@
-package repository;
+package com.trace.dao.repository;
 
-import entity.User;
-import entity.UserExample;
+import com.trace.dao.entity.User;
+import com.trace.dao.entity.UserExample;
 
 public interface UserMapper {
     long countByExample(UserExample example);

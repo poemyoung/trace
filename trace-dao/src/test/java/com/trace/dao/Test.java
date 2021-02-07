@@ -1,12 +1,19 @@
-import entity.User;
-import entity.UserExample;
+package com.trace.dao;
+
+import com.trace.dao.entity.UserExample;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import repository.UserMapper;
+import com.trace.dao.repository.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,8 +23,12 @@ import java.io.InputStream;
  * Created on 2021/2/3
  */
 
-@RunWith(JUnit4.class)
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = SpringConfig.class)
 public class Test {
+    @Autowired
+    UserMapper mapper;
+
     @org.junit.Test
     public void test() throws IOException {
         InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
@@ -30,6 +41,7 @@ public class Test {
     }
     @org.junit.Test
     public void test2(){
-//        System.out.println(UserInfoMapper.class.getClassLoader().getResource(""));
+        UserExample example = new UserExample();
+        long l = mapper.countByExample(example);
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="repository.UserMapper">
-  <resultMap id="BaseResultMap" type="entity.User">
+<mapper namespace="com.trace.dao.repository.UserMapper">
+  <resultMap id="BaseResultMap" type="com.trace.dao.entity.User">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="card_id" jdbcType="CHAR" property="cardId" />
@@ -50,13 +50,13 @@
     delete from user_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="entity.User">
+  <insert id="insert" parameterType="com.trace.dao.entity.User">
     insert into user_info (id, name, card_id, 
       detail, user_type)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{cardId,jdbcType=CHAR}, 
       #{detail,jdbcType=INTEGER}, #{userType,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="entity.User">
+  <insert id="insertSelective" parameterType="com.trace.dao.entity.User">
     insert into user_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -93,13 +93,13 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="entity.UserExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.trace.dao.entity.UserExample" resultType="java.lang.Long">
     select count(*) from user_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByPrimaryKeySelective" parameterType="entity.User">
+  <update id="updateByPrimaryKeySelective" parameterType="com.trace.dao.entity.User">
     update user_info
     <set>
       <if test="name != null">
@@ -117,7 +117,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="entity.User">
+  <update id="updateByPrimaryKey" parameterType="com.trace.dao.entity.User">
     update user_info
     set name = #{name,jdbcType=VARCHAR},
       card_id = #{cardId,jdbcType=CHAR},

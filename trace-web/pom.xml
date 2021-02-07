@@ -10,6 +10,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>trace-web</artifactId>
-
+    <dependencies>
+        <dependency>
+            <groupId>com.xzp</groupId>
+            <artifactId>trace-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>
