@@ -51,4 +51,5 @@ public class UserMapperImpl implements UserMapper {
     public int updateByPrimaryKey(User record) {
         return mapper.updateByPrimaryKey(record);
     }
+
 }

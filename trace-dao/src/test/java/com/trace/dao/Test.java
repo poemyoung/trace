@@ -1,5 +1,6 @@
 package com.trace.dao;
 
+import com.trace.dao.entity.User;
 import com.trace.dao.entity.UserExample;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -12,6 +13,7 @@ import com.trace.dao.repository.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -40,8 +42,10 @@ public class Test {
         System.out.println(a);
     }
     @org.junit.Test
+    @Rollback(false)
     public void test2(){
-        UserExample example = new UserExample();
-        long l = mapper.countByExample(example);
+        User user = new User();
+        user.setId(12333333);
+        mapper.insertSelective(user);
     }
 }
