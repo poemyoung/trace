@@ -15,7 +15,7 @@ import java.util.List;
  * Created on 2021/2/7
  */
 @Service
-public class UserIdConvert {
+public class UserIdConvertService {
 
     @Autowired
     UserConvertMapper convertMapper;
@@ -24,6 +24,7 @@ public class UserIdConvert {
     UserMapper userMapper;
 
     public Integer openIdConvert(String openId){
+        if(openId == null)return null;
         if(isUserExists(openId)){
             return convertMapper.selectByOpenId(openId);
         }else {

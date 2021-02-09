@@ -14,8 +14,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SpringConfig {
     @Bean
-    public UserIdConvert getUserIdConvert() {
-        return new UserIdConvert();
+    public UserIdConvertService getUserIdConvert() {
+        return new UserIdConvertService();
     }
     @Bean
     public UserConvertMapper getUserConvertMapper() {
