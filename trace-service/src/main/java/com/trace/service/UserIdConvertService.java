@@ -1,5 +1,6 @@
 package com.trace.service;
 
+import com.trace.api.openid.OpenIdApi;
 import com.trace.dao.entity.User;
 import com.trace.dao.entity.UserConvert;
 import com.trace.dao.entity.UserConvertExample;
@@ -23,6 +24,20 @@ public class UserIdConvertService {
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    OpenIdApi openIdApi;
+
+    public Integer codeCovert(String code) {
+        Integer a = 0;
+        try {
+            String openId = openIdApi.getOpenIdByCode(code);
+            a = this.openIdConvert(openId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return a;
+    }
 
     @Transactional
     public Integer openIdConvert(String openId){

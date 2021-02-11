@@ -21,7 +21,7 @@ public class UserLoginController {
 
     @GetMapping("/login")
     public Result loginIn(String openId){
-        Integer id = service.openIdConvert(openId);
+        Integer id = service.codeCovert(openId);
         if(id != null){
             return Result.success(id);
         }else {

@@ -10,6 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>trace-api</artifactId>
-<!--    Web模块相关依赖-->
-
+    <dependencies>
+        <dependency>
+            <groupId>com.xzp</groupId>
+            <artifactId>trace-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
 </project>

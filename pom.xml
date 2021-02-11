@@ -35,6 +35,7 @@
         <junit.version>4.12</junit.version>
         <mybatis.generator.version>1.4.0</mybatis.generator.version>
         <mysql.connector.version>8.0.21</mysql.connector.version>
+        <http.client.version>4.5.12</http.client.version>
     </properties>
     <!--    模块说明，这里有多个子模块-->
     <!-- end 模块说明-->
@@ -122,6 +123,12 @@
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
                 <version>${mybatis.generator.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${http.client.version}</version>
             </dependency>
 
         </dependencies>
