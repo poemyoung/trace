@@ -1,4 +1,4 @@
-package com.trace.service;
+package com.trace.service.user;
 
 import com.trace.api.openid.OpenIdApi;
 import com.trace.dao.entity.User;

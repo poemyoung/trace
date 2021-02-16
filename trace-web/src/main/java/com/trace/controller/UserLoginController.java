@@ -1,6 +1,6 @@
 package com.trace.controller;
 
-import com.trace.service.UserIdConvertService;
+import com.trace.service.user.UserIdConvertService;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;

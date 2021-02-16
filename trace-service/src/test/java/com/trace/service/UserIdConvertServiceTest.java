@@ -3,6 +3,7 @@ package com.trace.service;
 import com.trace.dao.entity.User;
 import com.trace.dao.entity.UserExample;
 import com.trace.dao.repository.UserMapper;
+import com.trace.service.user.UserIdConvertService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
