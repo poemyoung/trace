@@ -41,8 +41,4 @@ public class QRCode {
         }
         return null;
     }
-
-    public static void main(String[] args) {
-        QRCode.QRCode();
-    }
 }

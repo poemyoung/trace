@@ -8,9 +8,9 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/qr"/>
-                <property name="username" value="root"/>
-                <property name="password" value="s13558540729cu"/>
+                <property name="url" value="jdbc:mysql://rm-2vc158j9z8735dj0uqo.mysql.cn-chengdu.rds.aliyuncs.com:3306/qr"/>
+                <property name="username" value="xzp_trace_mysql"/>
+                <property name="password" value="S13032855167cu"/>
             </dataSource>
         </environment>
     </environments>
