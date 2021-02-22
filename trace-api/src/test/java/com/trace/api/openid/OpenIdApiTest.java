@@ -1,14 +1,9 @@
 package com.trace.api.openid;
 
-import com.google.gson.Gson;
+import com.common.utils.GsonUtils;
 import com.trace.api.resp.WxErrorRep;
 import com.trace.api.resp.WxOpenIdRep;
-import com.trace.utils.GsonUtils;
 import org.junit.Test;
-
-import java.lang.annotation.Target;
-
-import static org.junit.Assert.*;
 
 /**
  * @author xzp

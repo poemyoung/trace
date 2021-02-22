@@ -1,4 +1,4 @@
-package com.trace.service;
+package com.trace.user;
 
 import com.trace.dao.entity.User;
 import com.trace.dao.entity.UserExample;

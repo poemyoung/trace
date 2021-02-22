@@ -1,4 +1,4 @@
-package com.trace.utils;
+package com.common.utils;
 
 /**
  * Base64 工具类

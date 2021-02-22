@@ -1,8 +1,8 @@
 package com.trace.api.openid;
 
 import com.trace.api.resp.WxOpenIdRep;
-import com.trace.utils.GsonUtils;
-import com.trace.utils.HttpGetUtil;
+import com.common.utils.GsonUtils;
+import com.common.utils.HttpGetUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

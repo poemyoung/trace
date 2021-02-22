@@ -1,4 +1,4 @@
-package com.trace.utils;
+package com.common.utils;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

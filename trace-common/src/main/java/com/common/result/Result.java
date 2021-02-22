@@ -1,4 +1,4 @@
-package com.trace.result;
+package com.common.result;
 
 import java.io.Serializable;
 

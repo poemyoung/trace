@@ -1,11 +1,10 @@
 package com.trace.utils;
 
+import com.common.utils.HttpGetUtil;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.junit.Assert.*;
 
 /**
  * @author xzp

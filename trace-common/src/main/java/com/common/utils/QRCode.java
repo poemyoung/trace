@@ -1,6 +1,6 @@
-package com.trace.utils;
+package com.common.utils;
 
-import com.trace.auth.AuthService;
+import com.common.auth.AuthService;
 
 import java.net.URLEncoder;
 

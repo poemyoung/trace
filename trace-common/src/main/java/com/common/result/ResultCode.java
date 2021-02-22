@@ -1,8 +1,5 @@
-package com.trace.result;
+package com.common.result;
 
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * API 统一返回状态码

@@ -1,4 +1,4 @@
-package com.trace.serialize;
+package com.common.serialize;
 
 import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtostuffIOUtil;

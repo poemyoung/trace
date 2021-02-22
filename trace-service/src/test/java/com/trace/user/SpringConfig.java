@@ -1,4 +1,4 @@
-package com.trace.service;
+package com.trace.user;
 
 import com.trace.dao.impl.UserConvertMapperImpl;
 import com.trace.dao.impl.UserMapperImpl;

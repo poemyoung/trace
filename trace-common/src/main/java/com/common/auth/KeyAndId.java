@@ -1,4 +1,4 @@
-package com.trace.auth;
+package com.common.auth;
 
 public enum  KeyAndId {
     QR_SCAN("e3M0uDo9KmcxUrKtYQemkdGZ","dGgd7RA2VGuXS6qXfwzdBNdZBGoTwtpL");
