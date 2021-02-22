@@ -86,17 +86,4 @@ public enum ResultCode {
     public String toString() {
         return this.name();
     }
-
-    //校验重复的code值
-    public static void main(String[] args) {
-        ResultCode[] ApiResultCodes = ResultCode.values();
-        List<Integer> codeList = new ArrayList<Integer>();
-        for (ResultCode ApiResultCode : ApiResultCodes) {
-            if (codeList.contains(ApiResultCode.code)) {
-                System.out.println(ApiResultCode.code);
-            } else {
-                codeList.add(ApiResultCode.code());
-            }
-        }
-    }
 }
