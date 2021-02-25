@@ -1,12 +1,11 @@
 package com.trace.controller;
 
+import com.trace.service.entity.UserBaseMsg;
 import com.trace.service.user.UserInfoService;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -37,5 +36,11 @@ public class UserInfoController {
         }else {
             return Result.fail(ResultCode.USER_INFO_NOT_COMPLETE);
         }
+    }
+
+    @PostMapping("/fill")
+    public Result fillUserInfo(@RequestBody UserBaseMsg msg) {
+        System.out.println(msg);
+        return Result.success();
     }
 }
