@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author xzp
  * Created on 2021/2/26
  */
-@RestController 
+@RestController
 public class TestMysqlUsableController {
     @Autowired
     TestMysqlUsableService service;
