@@ -17,5 +17,7 @@
     <mappers>
         <mapper resource="mapper/UserMapper.xml"/>
         <mapper resource="mapper/UserConvertMapper.xml" />
+        <mapper resource="mapper/UserDetailMapper.xml" />
+        <mapper resource="mapper/TestMysqlUsableMapper.xml" />
     </mappers>
 </configuration>
