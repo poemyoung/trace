@@ -13,15 +13,23 @@ import java.io.InputStream;
  * Created on 2021/2/7
  */
 public class SqlSessionGet {
+    volatile static  SqlSession sqlSession = null;
+
     public static SqlSession getSqlSession(){
-        try {
-            InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
-            SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(inputStream);
-            SqlSession session = factory.openSession(true);
-            return session;
-        } catch (Exception e){
-            e.printStackTrace();
+        if(sqlSession == null) {
+            synchronized (SqlSessionGet.class) {
+                if(sqlSession == null) {
+                    try {
+                        InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+                        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(inputStream);
+                        sqlSession = factory.openSession(true);
+                        return sqlSession;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
-        return null;
+        return sqlSession;
     }
 }
