@@ -23,6 +23,7 @@ public class DetailConverter {
         detail.setIduserDetail(Integer.parseInt(msg.getUserId()));
         int addrId = (msg.getLocation().getCity()+msg.getLocation().getCounty()
                 +msg.getLocation().getDetailAddr()+msg.getIdCard()).hashCode();
+        if(addrId < 0)addrId += Integer.MAX_VALUE;
         UserDetailExample example = new UserDetailExample();
         example.createCriteria().andAddrIdEqualTo(addrId);
         for (;mapper.selectByExample(example).size() > 0;example.createCriteria().andAddrIdEqualTo(addrId+1));

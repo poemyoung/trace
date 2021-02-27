@@ -53,10 +53,6 @@ public class UserInfoService {
             return false;
         }
 
-        if(!updateUser(msg.getName(),msg.getIdCard(),userId)) {
-            return false;
-        }
-
         // 插入详细地址
         if(msg.getLocation() == null) {
             return false;
@@ -65,6 +61,10 @@ public class UserInfoService {
 
         // end
         if(msg.getSymptom() == null) {
+            return false;
+        }
+
+        if(!updateUser(msg.getName(),msg.getIdCard(),userId)) {
             return false;
         }
 
