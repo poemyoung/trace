@@ -5,6 +5,8 @@ package com.trace.service.entity;
  * Created on 2021/2/25
  */
 public class UserBaseMsg {
+
+    private String userId;
     private String name;
     private String idCard;
     private String phone;
@@ -14,6 +16,14 @@ public class UserBaseMsg {
     private boolean highRisk;
     private boolean contactPatient;
     private Number bodyHeat;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getName() {
         return name;

@@ -40,7 +40,20 @@ public class UserInfoController {
 
     @PostMapping("/fill")
     public Result fillUserInfo(@RequestBody UserBaseMsg msg) {
-        System.out.println(msg);
-        return Result.success();
+        String userId = msg.getUserId();
+        int i = 0;
+        try {
+            i = Integer.parseInt(userId);
+        }catch (NumberFormatException e) {
+            e.printStackTrace();
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        boolean f = service.isInfoAccessible(i);
+        if(f) {
+            return Result.fail(ResultCode.USER_REP_FILL);
+        }else {
+            return service.fillUserInfo(msg,i) ?
+                    Result.success() : Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
     }
 }
