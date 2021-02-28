@@ -1,7 +1,12 @@
 package com.trace.service.user;
 
+import com.trace.api.addrpentity.AddrResult;
+import com.trace.api.addrpentity.BaseResult;
+import com.trace.api.openid.TencentPosService;
+import com.trace.dao.entity.Address;
 import com.trace.dao.entity.User;
 import com.trace.dao.entity.UserDetail;
+import com.trace.dao.repository.AddressMapper;
 import com.trace.dao.repository.UserDetailMapper;
 import com.trace.dao.repository.UserMapper;
 import com.trace.service.converter.DetailConverter;
@@ -11,6 +16,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 /**
@@ -28,6 +35,12 @@ public class UserInfoService {
 
     @Autowired
     DetailConverter converter;
+
+    @Autowired
+    TencentPosService posService;
+
+    @Autowired
+    AddressMapper addressMapper;
 
     public boolean isInfoAccessible(int userId) {
         User user = userMapper.selectByPrimaryKey(userId);
@@ -53,17 +66,9 @@ public class UserInfoService {
         if(!checkTemp(temp)) {
             return false;
         }
-
-        // 插入详细地址
         if(msg.getLocation() == null) {
             return false;
         }
-        UserLiveLocation location = msg.getLocation();
-        if(!this.locationInsert(location,userId)) {
-            return false;
-        }
-
-        // end
         if(msg.getSymptom() == null) {
             return false;
         }
@@ -73,12 +78,38 @@ public class UserInfoService {
         }
 
         UserDetail detail = converter.convertDetail(msg);
+
+        UserLiveLocation location = msg.getLocation();
+        if(!this.locationInsert(location,userId,detail.getAddrId())) {
+            return false;
+        }
+
         detailMapper.insertSelective(detail);
         return true;
     }
-    private boolean locationInsert(UserLiveLocation location,Integer userId) {
-
-        return false;
+    public boolean locationInsert(UserLiveLocation location,Integer userId,Integer addrId) {
+        if(StringUtils.isBlank(location.getCity()) || StringUtils.isBlank(location.getProvince())){
+            return false;
+        }
+        String addrReqStr = location.getProvince() + location.getCity()
+                + location.getCounty() + location.getDetailAddr();
+        String region = StringUtils.isBlank(location.getCounty()) ? location.getCity() : location.getCounty();
+        BaseResult result = posService.descParseAddr(addrReqStr,region);
+        AddrResult result1 = result.getResult();
+        Address address = new Address();
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+08:00"));
+        address.setAdcode(Integer.parseInt(result1.getAd_info().getAdcode()));
+        address.setCity(location.getCity());
+        address.setCounty(location.getCounty());
+        address.setDetail(location.getDetailAddr());
+        address.setIdaddress(addrId);
+        address.setLat(result1.getLocation().getLat().toString());
+        address.setLng(result1.getLocation().getLng().toString());
+        address.setProvince(location.getProvince());
+        address.setTime(new Date());
+        address.setUserId(userId);
+        int i = addressMapper.insertSelective(address);
+        return i > 0;
     }
 
     private boolean updateUser(String name,String cardId,Integer userId) {

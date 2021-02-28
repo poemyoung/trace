@@ -1,5 +1,6 @@
 package com.trace.user;
 
+import com.trace.api.openid.TencentPosService;
 import com.trace.dao.impl.UserConvertMapperImpl;
 import com.trace.dao.impl.UserMapperImpl;
 import com.trace.dao.repository.UserConvertMapper;
@@ -25,5 +26,9 @@ public class SpringConfig {
     @Bean
     public UserMapper getUserMapper() {
         return new UserMapperImpl();
+    }
+    @Bean
+    public TencentPosService getTencentPosService(){
+        return new TencentPosService();
     }
 }

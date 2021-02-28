@@ -93,7 +93,7 @@
 
 
 <!--        open id 与 user id 转换表-->
-        <table schema="" tableName="address" domainObjectName="TestMysqlUsable"
+        <table schema="" tableName="address" domainObjectName="Address"
                enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
                enableUpdateByExample="true" selectByExampleQueryId="">
             <!--是否使用实际列名,默认为false-->

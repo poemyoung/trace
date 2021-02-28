@@ -36,7 +36,6 @@ public class TencentPosService {
 
     private BaseResult parseAddr(String s) {
        BaseResult result =  GsonUtils.fromJson(s, BaseResult.class);
-
        return result;
     }
 }
