@@ -93,9 +93,9 @@
 
 
 <!--        open id 与 user id 转换表-->
-        <table schema="" tableName="test_table" domainObjectName="TestMysqlUsable"
-               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
-               enableUpdateByExample="false" selectByExampleQueryId="false">
+        <table schema="" tableName="address" domainObjectName="TestMysqlUsable"
+               enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               enableUpdateByExample="true" selectByExampleQueryId="">
             <!--是否使用实际列名,默认为false-->
             <!--<property name="useActualColumnNames" value="false" />-->
         </table>

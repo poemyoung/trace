@@ -6,6 +6,7 @@ import com.trace.dao.repository.UserDetailMapper;
 import com.trace.dao.repository.UserMapper;
 import com.trace.service.converter.DetailConverter;
 import com.trace.service.entity.UserBaseMsg;
+import com.trace.service.entity.UserLiveLocation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,7 +58,10 @@ public class UserInfoService {
         if(msg.getLocation() == null) {
             return false;
         }
-
+        UserLiveLocation location = msg.getLocation();
+        if(!this.locationInsert(location,userId)) {
+            return false;
+        }
 
         // end
         if(msg.getSymptom() == null) {
@@ -72,6 +76,11 @@ public class UserInfoService {
         detailMapper.insertSelective(detail);
         return true;
     }
+    private boolean locationInsert(UserLiveLocation location,Integer userId) {
+
+        return false;
+    }
+
     private boolean updateUser(String name,String cardId,Integer userId) {
         User user = userMapper.selectByPrimaryKey(userId);
         user.setName(name);
