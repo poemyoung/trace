@@ -10,11 +10,7 @@ import java.util.TimeZone;
 @SpringBootApplication(scanBasePackages = "com.trace.*")
 public class MainApp {
     public static void main(String[] args) {
-        SpringApplication.run(MainApp.class,args);
+        SpringApplication.run(MainApp.class, args);
     }
-    @PostConstruct
-    void setDefaultTimezone() {
-        // TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
-        TimeZone.setDefault(TimeZone.getTimeZone("GMT+08:00"));
-    }
+
 }

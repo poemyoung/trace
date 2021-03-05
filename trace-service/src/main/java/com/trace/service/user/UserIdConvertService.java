@@ -68,7 +68,13 @@ public class UserIdConvertService {
         UserConvertExample example = new UserConvertExample();
         UserConvertExample.Criteria criteria = example.createCriteria();
         criteria.andOpenIdEqualTo(openId);
-        List<UserConvert> users = convertMapper.selectByExample(example);
-        return users != null && !users.isEmpty();
+        try {
+            List<UserConvert> users = convertMapper.selectByExample(example);
+            return users != null && !users.isEmpty();
+        }catch (Exception e) {
+            // 改查open id
+            Integer userId = convertMapper.selectByOpenId(openId);
+            return userId != null && userId != 0;
+        }
     }
 }
