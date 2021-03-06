@@ -11,3 +11,4 @@ CREATE TABLE `qr`.`address` (
   `adcode` INT NULL COMMENT '行政区划代码',
   PRIMARY KEY (`idaddress`),
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE);
+

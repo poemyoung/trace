@@ -4,6 +4,8 @@ import com.common.utils.GsonUtils;
 import com.common.utils.HttpGetUtil;
 import com.trace.api.addrpentity.BaseResult;
 import com.trace.api.addrpentity.Position;
+import com.trace.api.reverseaddrprs.RevBaseMsg;
+import com.trace.api.reverseaddrprs.RevResult;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -38,4 +40,17 @@ public class TencentPosService {
        BaseResult result =  GsonUtils.fromJson(s, BaseResult.class);
        return result;
     }
+
+    public RevBaseMsg latLongToAddr(Number latitude, Number longitude){
+        String url = "https://apis.map.qq.com/ws/geocoder/v1/?location=" +
+                latitude + ","+ longitude + "&key=" + KEY;
+        String s = "";
+        try {
+            s = HttpGetUtil.getGeneralUrl(url);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return GsonUtils.fromJson(s,RevBaseMsg.class);
+    }
+
 }

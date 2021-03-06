@@ -20,7 +20,7 @@ public class QRController {
         // 返回码的颜色 1 2 3 4 绿 蓝 黄 红 安全
         // 未见异常 上次填报时间过久 居家隔离 集中观察
         System.out.println(res);
-        
-        return Result.success(1);
+
+        return Result.success(3);
     }
 }

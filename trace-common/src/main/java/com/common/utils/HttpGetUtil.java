@@ -25,7 +25,7 @@ public class HttpGetUtil {
         return getGeneralUrl(baseUrl);
     }
 
-    private static String getGeneralUrl(String generalUrl) throws Exception{
+    public static String getGeneralUrl(String generalUrl) throws Exception{
         HttpURLConnection connection = null;
         InputStream is = null;
         BufferedReader br = null;
