@@ -1,14 +1,19 @@
 package com.trace.controller;
 
+import com.trace.service.qrcode.QRCodeService;
 import com.trace.util.Result;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.trace.util.ResultCode;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+// unfinished
 @RestController
 @RequestMapping("/miniapi")
 public class QRController {
+
+    @Autowired
+    QRCodeService service;
 
     @PostMapping("/qrupload")
     public Result isSafety(@RequestBody String res) {
@@ -23,4 +28,21 @@ public class QRController {
 
         return Result.success(3);
     }
+
+    @PostMapping
+    public Result getQRCode(@RequestBody String userId) {
+        // 将userId 交给 service生成二维码，返回当前生成二维码的链接
+        int a = 0;
+        try {
+            a = Integer.parseInt(userId);
+        }catch (Exception e) {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        String s = service.generateQRCode(a);
+        if (StringUtils.isBlank(s)) {
+            return Result.fail(ResultCode.PARAM_IS_BLANK);
+        }
+        return Result.success(s);
+    }
+
 }

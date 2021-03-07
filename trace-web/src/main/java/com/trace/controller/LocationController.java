@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/miniapi")
+// unfinished
 public class LocationController {
 
     @Autowired

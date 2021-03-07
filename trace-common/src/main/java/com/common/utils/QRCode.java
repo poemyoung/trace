@@ -1,8 +1,17 @@
 package com.common.utils;
 
 import com.common.auth.AuthService;
+import com.common.enums.Colors;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
+import java.awt.image.BufferedImage;
 import java.net.URLEncoder;
+import java.util.Hashtable;
 
 /**
  * 二维码识别
@@ -40,5 +49,39 @@ public class QRCode {
             e.printStackTrace();
         }
         return null;
+    }
+    /**
+     * qrcode 生成
+     */
+    private static final String CHARSET = "utf-8";
+    // 尺寸
+    private static final int QRCODE_SIZE = 300;
+
+    public static BufferedImage createImageByColor(String content, Colors color) {
+        return createImage(content,color.getcStr());
+    }
+
+    private static BufferedImage createImage(String content,String color) {
+        Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
+        hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+        hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
+        hints.put(EncodeHintType.MARGIN, 1);
+        BitMatrix bitMatrix = null;
+        try {
+            bitMatrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, QRCODE_SIZE, QRCODE_SIZE,
+                    hints);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        int width = bitMatrix.getWidth();
+        int height = bitMatrix.getHeight();
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        int cValue = Integer.parseInt(color,16);
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                image.setRGB(x, y, bitMatrix.get(x, y) ? cValue : 0xFFFFFF);
+            }
+        }
+        return image;
     }
 }
