@@ -12,3 +12,6 @@ CREATE TABLE `qr`.`address` (
   PRIMARY KEY (`idaddress`),
   UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC) VISIBLE);
 
+ALTER TABLE `qr`.`address`
+CHANGE COLUMN `lat` `lat` VARCHAR(20) NOT NULL ,
+CHANGE COLUMN `lng` `lng` VARCHAR(20) NOT NULL ;
