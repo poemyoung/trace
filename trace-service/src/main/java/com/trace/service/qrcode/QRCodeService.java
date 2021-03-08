@@ -5,9 +5,9 @@ import com.common.utils.AESUtil;
 import com.common.utils.GsonUtils;
 import com.common.utils.QRCode;
 import com.trace.service.entity.QREntity;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +28,9 @@ import java.util.Date;
 @Service
 public class QRCodeService {
     private final Logger logger = LoggerFactory.getLogger(QRCodeService.class);
+
+    @Value("${qrcode.path}")
+    private String path = "/Users/xzp/Desktop/upload";
 
     public String generateQRCode(Integer userId) {
         if (userId == null || userId == 0) {
@@ -56,7 +59,7 @@ public class QRCodeService {
         entity.setExpireTime(expire);
         entity.setUserId(userId);
         String json = GsonUtils.toJson(entity);
-        return this.generate(json,hClass);
+        return this.generate(json,hClass,userId);
     }
 
     private String generateByHealthStatic(int userId, int hClass) {
@@ -64,7 +67,7 @@ public class QRCodeService {
         return "";
     }
 
-    private String generate(String json,int hClass) {
+    private String generate(String json,int hClass,int userId) {
         Colors colors;
         switch (hClass) {
             case 1:
@@ -92,19 +95,25 @@ public class QRCodeService {
             logger.error("aes 加密失败");
         }
         String qrStr = Base64.getEncoder().encodeToString(bytes);
-        return  generateQRPath(qrStr,colors);
+        return  generateQRPath(qrStr,colors,userId);
     }
 
-    private String generateQRPath(String s,Colors color) {
+    private String generateQRPath(String s,Colors color,Integer userId) {
         BufferedImage image = QRCode.createImageByColor(s, color);
         ClassPathResource classPathResource = new ClassPathResource("/public/qrcode");
-
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        String tag = userId + "_" + calendar.get(Calendar.YEAR)+(calendar.get(Calendar.MONTH)
+                +1)+
+                +calendar.get(Calendar.DAY_OF_MONTH)+calendar.get(Calendar.HOUR_OF_DAY)
+                +calendar.get(Calendar.MINUTE)+calendar.get(Calendar.SECOND);
+        String resPath = "/" + tag + ".jpg";
         try {
-            File f = classPathResource.getFile();
+            File f = new File(path + resPath);
             ImageIO.write(image,"jpg",f);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "hh";
+        return  resPath;
     }
 }
