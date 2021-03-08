@@ -11,6 +11,16 @@ import java.security.NoSuchAlgorithmException;
  * Created on 2021/3/6
  */
 public class AESUtil {
+    private static final String DEFAULT_KEY = "onetwothreefourf";
+
+    public static byte[] aesEncodeDef(String str) throws Exception {
+        return aesEncode(str,DEFAULT_KEY);
+    }
+
+    public static String aesDeCodeDef(byte[] bytes) throws Exception {
+        return aesDecode(bytes,DEFAULT_KEY);
+    }
+
     public static byte[] aesEncode(String str, String key)
     throws Exception {
         if(str == null || key == null) {
