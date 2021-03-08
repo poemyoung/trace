@@ -1,5 +1,6 @@
 package com.trace.controller;
 
+import com.trace.entity.UserId;
 import com.trace.service.qrcode.QRCodeService;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
@@ -16,7 +17,7 @@ public class QRController {
     QRCodeService service;
 
     @PostMapping("/qrupload")
-    public Result isSafety(@RequestBody String res) {
+    public Result isSafety(@RequestBody UserId res) {
         // 解析出结果
 
         // 交给service 处理结果
@@ -29,12 +30,12 @@ public class QRController {
         return Result.success(3);
     }
 
-    @PostMapping
-    public Result getQRCode(@RequestBody String userId) {
+    @PostMapping("/qrdyn")
+    public Result getQRCode(@RequestBody UserId userId) {
         // 将userId 交给 service生成二维码，返回当前生成二维码的链接
         int a = 0;
         try {
-            a = Integer.parseInt(userId);
+            a = Integer.parseInt(userId.getUserId());
         }catch (Exception e) {
             return Result.fail(ResultCode.PARAM_IS_INVALID);
         }
