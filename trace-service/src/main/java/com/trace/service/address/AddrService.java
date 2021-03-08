@@ -11,6 +11,7 @@ import com.trace.dao.repository.AddressMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import java.util.UUID;
  * @author xzp
  * Created on 2021/3/6
  */
+// unfinished
 @Service
 public class AddrService {
     @Autowired
@@ -59,5 +61,15 @@ public class AddrService {
         }else {
             return 0;
         }
+    }
+
+    public Date getLastLocateTime(Integer userId) {
+        // 根据userId 获取用户上一次定位的时间
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DATE,10);
+        calendar.set(Calendar.MONTH,2);
+        calendar.set(Calendar.SECOND,10);
+        calendar.set(Calendar.HOUR,2);
+        return new Date(calendar.getTimeInMillis());
     }
 }

@@ -13,8 +13,8 @@ public class QRCodeServiceTest {
 
     @Test
     public void doTest() {
-        String res = service.generateQRCode(1);
-        System.out.println(res);
+      //  String res = service.generateQRCode(1);
+       // System.out.println(res);
     }
 
 }

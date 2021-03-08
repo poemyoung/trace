@@ -26,7 +26,7 @@ public class LocationController {
     public Result upLoadLocation(@RequestBody Pos location) {
         int a = 0;
         try{
-           a =  Integer.parseInt(location.getUserid());
+           a =  Integer.parseInt(location.getUserId());
         }catch (Exception e) {
             return Result.fail(ResultCode.PARAM_IS_INVALID);
         }
@@ -35,7 +35,6 @@ public class LocationController {
             return Result.fail(ResultCode.SYSTEM_INNER_ERROR);
         }
         // 将addrId 插入进用户-地址id 对应表中
-
 
         return Result.success();
     }

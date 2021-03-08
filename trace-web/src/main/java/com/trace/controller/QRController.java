@@ -1,6 +1,10 @@
 package com.trace.controller;
 
+import com.trace.entity.Pos;
 import com.trace.entity.UserId;
+import com.trace.service.entity.QREntity;
+import com.trace.service.entity.QRHealthyEntity;
+import com.trace.service.health.HealthyService;
 import com.trace.service.qrcode.QRCodeService;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
@@ -15,6 +19,9 @@ public class QRController {
 
     @Autowired
     QRCodeService service;
+
+    @Autowired
+    HealthyService hService;
 
     @PostMapping("/qrupload")
     public Result isSafety(@RequestBody UserId res) {
@@ -31,19 +38,18 @@ public class QRController {
     }
 
     @PostMapping("/qrdyn")
-    public Result getQRCode(@RequestBody UserId userId) {
-        // 将userId 交给 service生成二维码，返回当前生成二维码的链接
+    public Result getQRCode(@RequestBody Pos pos) {
+        // 将userId 交给 service生成二维码，返回当前生成二维码的链接、状态、上次定位时间
         int a = 0;
         try {
-            a = Integer.parseInt(userId.getUserId());
+            a = Integer.parseInt(pos.getUserId());
         }catch (Exception e) {
             return Result.fail(ResultCode.PARAM_IS_INVALID);
         }
-        String s = service.generateQRCode(a);
-        if (StringUtils.isBlank(s)) {
+        QRHealthyEntity qrEntity = service.generateQRCode(a);
+        if (qrEntity == null) {
             return Result.fail(ResultCode.PARAM_IS_BLANK);
         }
-        return Result.success(s);
+        return Result.success(qrEntity);
     }
-
 }

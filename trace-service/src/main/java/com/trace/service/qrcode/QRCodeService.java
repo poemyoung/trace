@@ -4,9 +4,13 @@ import com.common.enums.Colors;
 import com.common.utils.AESUtil;
 import com.common.utils.GsonUtils;
 import com.common.utils.QRCode;
+import com.trace.service.address.AddrService;
 import com.trace.service.entity.QREntity;
+import com.trace.service.entity.QRHealthyEntity;
+import com.trace.service.health.HealthyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -29,24 +33,30 @@ import java.util.Date;
 public class QRCodeService {
     private final Logger logger = LoggerFactory.getLogger(QRCodeService.class);
 
+    @Autowired
+    HealthyService hService;
+
+    @Autowired
+    AddrService addrService;
+
     @Value("${qrcode.path}")
     private String path = "/Users/xzp/Desktop/upload";
 
-    public String generateQRCode(Integer userId) {
+    public QRHealthyEntity generateQRCode(Integer userId) {
         if (userId == null || userId == 0) {
-            return "";
+            return null;
         }
         // 判断健康状况
-        int i = this.howHealth(userId);
+        int i = hService.howHealth(userId);
         // 根据健康状况生成二维码
         String s = this.generateByHealthDyn(userId,i);
-        return s;
-    }
-
-    private int howHealth(Integer userId) {
-        // 查数据库判断健康状况 1 2 3 4
-
-        return 1;
+        // 查找上次定位时间
+        Date lastLoc = addrService.getLastLocateTime(userId);
+        QRHealthyEntity entity = new QRHealthyEntity();
+        entity.setQrUrl(s);
+        entity.setStatus(i);
+        entity.setLastLocate(lastLoc);
+        return entity;
     }
 
     private String generateByHealthDyn(int userId, int hClass) {

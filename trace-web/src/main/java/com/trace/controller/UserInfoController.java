@@ -1,5 +1,6 @@
 package com.trace.controller;
 
+import com.trace.service.entity.UserBaseBinding;
 import com.trace.service.entity.UserBaseMsg;
 import com.trace.service.user.UserInfoService;
 import com.trace.util.Result;
@@ -55,5 +56,20 @@ public class UserInfoController {
             return service.fillUserInfo(msg,i) ?
                     Result.success() : Result.fail(ResultCode.PARAM_IS_INVALID);
         }
+    }
+
+    @GetMapping("/getuserbaseinfo")
+    public Result getInfo(String userId) {
+        int a = 0;
+        try {
+            a = Integer.parseInt(userId);
+        }catch (Exception e){
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        UserBaseBinding msg = service.getUserBaseMsg(a);
+        if(msg == null) {
+            return Result.fail(ResultCode.USER_NOT_EXIST);
+        }
+        return Result.success(msg);
     }
 }

@@ -10,6 +10,7 @@ import com.trace.dao.repository.AddressMapper;
 import com.trace.dao.repository.UserDetailMapper;
 import com.trace.dao.repository.UserMapper;
 import com.trace.service.converter.DetailConverter;
+import com.trace.service.entity.UserBaseBinding;
 import com.trace.service.entity.UserBaseMsg;
 import com.trace.service.entity.UserLiveLocation;
 import org.apache.commons.lang3.StringUtils;
@@ -145,5 +146,19 @@ public class UserInfoService {
             return true;
         }
         return false;
+    }
+
+    public UserBaseBinding getUserBaseMsg(Integer userId) {
+        if(userId == 0) {
+            return null;
+        }
+        User user = userMapper.selectByPrimaryKey(userId);
+        if(user == null) {
+            return null;
+        }
+        UserBaseBinding msg = new UserBaseBinding();
+        msg.setIdCard(user.getCardId());
+        msg.setName(user.getName());
+        return msg;
     }
 }
