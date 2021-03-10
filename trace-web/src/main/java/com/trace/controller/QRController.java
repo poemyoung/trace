@@ -1,10 +1,13 @@
 package com.trace.controller;
 
 import com.trace.entity.Pos;
+import com.trace.entity.StaticCodeMag;
 import com.trace.entity.UserId;
 import com.trace.service.entity.QREntity;
 import com.trace.service.entity.QRHealthyEntity;
+import com.trace.service.entity.UserStaticCode;
 import com.trace.service.health.HealthyService;
+import com.trace.service.qrcode.QRCodeMagService;
 import com.trace.service.qrcode.QRCodeService;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
@@ -12,10 +15,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 // unfinished
 @RestController
 @RequestMapping("/miniapi")
 public class QRController {
+    @Autowired
+    QRCodeMagService qrCodeMagService;
 
     @Autowired
     QRCodeService service;
@@ -51,5 +58,37 @@ public class QRController {
             return Result.fail(ResultCode.PARAM_IS_BLANK);
         }
         return Result.success(qrEntity);
+    }
+
+    @GetMapping("/qrcodemanage")
+    public Result getManageStaticCode(@RequestParam String userId) {
+        int a = 0;
+        try {
+            a = Integer.parseInt(userId);
+        }catch (Exception e) {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        // service 处理生成静态码实体类
+        List<UserStaticCode> staticCodes = service.getUserStaticCode(a);
+        if(staticCodes == null) {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        return Result.success(staticCodes);
+    }
+    @PostMapping("/delqrcodemanage")
+    public Result delStaticCode(@RequestBody StaticCodeMag mag) {
+        int a = 0,b = 0;
+        try {
+            a = Integer.parseInt(mag.getUserId());
+            b = Integer.parseInt(mag.getUserMagId());
+        }catch (Exception e) {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        // service 删除相关联的关系
+        boolean f = qrCodeMagService.deleteRelate(a,b);
+        if(!f) {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        return Result.success();
     }
 }

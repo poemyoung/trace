@@ -4,9 +4,11 @@ import com.common.enums.Colors;
 import com.common.utils.AESUtil;
 import com.common.utils.GsonUtils;
 import com.common.utils.QRCode;
+import com.google.common.collect.Lists;
 import com.trace.service.address.AddrService;
 import com.trace.service.entity.QREntity;
 import com.trace.service.entity.QRHealthyEntity;
+import com.trace.service.entity.UserStaticCode;
 import com.trace.service.health.HealthyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,7 @@ import java.sql.Timestamp;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author xzp
@@ -41,6 +44,20 @@ public class QRCodeService {
 
     @Value("${qrcode.path}")
     private String path = "/Users/xzp/Desktop/upload";
+
+
+    public List<UserStaticCode> getUserStaticCode(Integer userId) {
+        if (userId == null || userId == 0) {
+            return null;
+        }
+        // 查数据库获取user列表
+        UserStaticCode code = new UserStaticCode();
+        code.setIdCard("513030199505106516");
+        code.setQrCode("/1505084195_2021310133616.jpg");
+        code.setUserName("徐泽朋");
+        code.setUserId("1505084195");
+        return Lists.newArrayList(code);
+    }
 
     public QRHealthyEntity generateQRCode(Integer userId) {
         if (userId == null || userId == 0) {
@@ -74,6 +91,7 @@ public class QRCodeService {
 
     private String generateByHealthStatic(int userId, int hClass) {
        // 生成静态健康码
+
         return "";
     }
 

@@ -36,6 +36,7 @@
         <mybatis.generator.version>1.4.0</mybatis.generator.version>
         <mysql.connector.version>8.0.21</mysql.connector.version>
         <http.client.version>4.5.12</http.client.version>
+        <guava.version>30.1-jre</guava.version>
     </properties>
     <!--    模块说明，这里有多个子模块-->
     <!-- end 模块说明-->
@@ -131,6 +132,12 @@
                 <version>${http.client.version}</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
