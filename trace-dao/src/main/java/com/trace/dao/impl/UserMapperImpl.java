@@ -52,4 +52,9 @@ public class UserMapperImpl implements UserMapper {
         return mapper.updateByPrimaryKey(record);
     }
 
+    @Override
+    public Integer selectUserExists(User record) {
+        return mapper.selectUserExists(record);
+    }
+
 }

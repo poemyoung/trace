@@ -1,7 +1,10 @@
 package com.trace.service.user;
 
 import com.trace.dao.entity.User;
+import com.trace.dao.entity.UserExample;
+import com.trace.dao.impl.UserMapperImpl;
 import com.trace.dao.repository.UserMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +34,14 @@ public class UserNoQRService {
         return id;
     }
 
-    public boolean isUserExist(Integer userId) {
-        return true;
+    public Integer isUserExist(String name,String idCard) {
+        if(StringUtils.isBlank(name) || StringUtils.isBlank(idCard)) {
+            return null;
+        }
+        User user = new User();
+        user.setCardId(idCard);
+        user.setName(name);
+        Integer userId = userMapper.selectUserExists(user);
+        return userId;
     }
 }
