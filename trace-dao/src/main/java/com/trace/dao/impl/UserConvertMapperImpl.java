@@ -4,6 +4,8 @@ import com.trace.dao.SqlSessionGet;
 import com.trace.dao.entity.UserConvert;
 import com.trace.dao.entity.UserConvertExample;
 import com.trace.dao.repository.UserConvertMapper;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,7 +17,15 @@ import java.util.Objects;
  */
 @Repository
 public class UserConvertMapperImpl implements UserConvertMapper {
-    final UserConvertMapper mapper = Objects.requireNonNull(SqlSessionGet.getSqlSession()).getMapper(UserConvertMapper.class);
+    UserConvertMapper mapper;
+
+    SqlSessionTemplate sqlSessionTemplate;
+
+    @Autowired
+    public UserConvertMapperImpl(SqlSessionTemplate sqlSessionTemplate) {
+        this.sqlSessionTemplate = sqlSessionTemplate;
+        this.mapper = sqlSessionTemplate.getMapper(UserConvertMapper.class);
+    }
 
     @Override
     public long countByExample(UserConvertExample example) {

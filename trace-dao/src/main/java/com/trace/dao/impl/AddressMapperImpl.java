@@ -4,6 +4,8 @@ import com.trace.dao.SqlSessionGet;
 import com.trace.dao.entity.Address;
 import com.trace.dao.entity.AddressExample;
 import com.trace.dao.repository.AddressMapper;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +18,16 @@ import java.util.Objects;
  */
 @Repository
 public class AddressMapperImpl implements AddressMapper {
-    final AddressMapper mapper = Objects.requireNonNull(SqlSessionGet.getSqlSession()).getMapper(AddressMapper.class);
 
+    AddressMapper mapper;
+
+    SqlSessionTemplate sqlSessionTemplate;
+
+    @Autowired
+    public AddressMapperImpl(SqlSessionTemplate sqlSessionTemplate) {
+        this.sqlSessionTemplate = sqlSessionTemplate;
+        this.mapper  = sqlSessionTemplate.getMapper(AddressMapper.class);
+    }
 
     @Override
     public long countByExample(AddressExample example) {

@@ -5,6 +5,8 @@ import com.trace.dao.entity.User;
 import com.trace.dao.entity.UserExample;
 import com.trace.dao.repository.UserMapper;
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Objects;
@@ -15,7 +17,15 @@ import java.util.Objects;
  */
 @Repository
 public class UserMapperImpl implements UserMapper {
-    final UserMapper mapper = Objects.requireNonNull(SqlSessionGet.getSqlSession()).getMapper(UserMapper.class);
+    UserMapper mapper;
+
+    SqlSessionTemplate sqlSessionTemplate;
+
+    @Autowired
+    public UserMapperImpl(SqlSessionTemplate sqlSessionTemplate) {
+        this.sqlSessionTemplate = sqlSessionTemplate;
+        this.mapper = sqlSessionTemplate.getMapper(UserMapper.class);
+    }
 
     @Override
     public long countByExample(UserExample example) {

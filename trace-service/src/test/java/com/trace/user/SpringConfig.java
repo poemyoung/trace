@@ -15,20 +15,4 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class SpringConfig {
-    @Bean
-    public UserIdConvertService getUserIdConvert() {
-        return new UserIdConvertService();
-    }
-    @Bean
-    public UserConvertMapper getUserConvertMapper() {
-        return new UserConvertMapperImpl();
-    }
-    @Bean
-    public UserMapper getUserMapper() {
-        return new UserMapperImpl();
-    }
-    @Bean
-    public TencentPosService getTencentPosService(){
-        return new TencentPosService();
-    }
 }

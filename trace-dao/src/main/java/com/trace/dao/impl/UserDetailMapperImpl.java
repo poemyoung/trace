@@ -5,6 +5,8 @@ import com.trace.dao.entity.UserDetail;
 import com.trace.dao.entity.UserDetailExample;
 import com.trace.dao.repository.UserConvertMapper;
 import com.trace.dao.repository.UserDetailMapper;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,8 +18,15 @@ import java.util.Objects;
  */
 @Repository
 public class UserDetailMapperImpl implements UserDetailMapper {
-    final UserDetailMapper mapper = Objects.requireNonNull(SqlSessionGet.getSqlSession()).getMapper(UserDetailMapper.class);
+    UserDetailMapper mapper;
 
+    SqlSessionTemplate sqlSessionTemplate;
+
+    @Autowired
+    public UserDetailMapperImpl(SqlSessionTemplate sqlSessionTemplate) {
+        this.sqlSessionTemplate = sqlSessionTemplate;
+        this.mapper = sqlSessionTemplate.getMapper(UserDetailMapper.class);
+    }
 
     @Override
     public int deleteByPrimaryKey(Integer iduserDetail) {

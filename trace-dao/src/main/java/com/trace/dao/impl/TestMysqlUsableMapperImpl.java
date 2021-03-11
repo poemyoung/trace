@@ -5,6 +5,8 @@ import com.trace.dao.entity.TestMysqlUsable;
 import com.trace.dao.entity.TestMysqlUsableExample;
 import com.trace.dao.repository.TestMysqlUsableMapper;
 import com.trace.dao.repository.UserConvertMapper;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,8 +18,15 @@ import java.util.Objects;
  */
 @Repository
 public class TestMysqlUsableMapperImpl implements TestMysqlUsableMapper {
-    final TestMysqlUsableMapper mapper = Objects.requireNonNull(SqlSessionGet.getSqlSession()).getMapper(TestMysqlUsableMapper.class);
+    TestMysqlUsableMapper mapper;
 
+    SqlSessionTemplate sqlSessionTemplate;
+
+    @Autowired
+    public TestMysqlUsableMapperImpl(SqlSessionTemplate sqlSessionTemplate) {
+        this.sqlSessionTemplate = sqlSessionTemplate;
+        this.mapper = sqlSessionTemplate.getMapper(TestMysqlUsableMapper.class);
+    }
 
     @Override
     public int deleteByPrimaryKey(Integer idtestTable) {

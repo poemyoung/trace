@@ -4,6 +4,8 @@ import com.trace.dao.SqlSessionGet;
 import com.trace.dao.entity.CodeManage;
 import com.trace.dao.entity.CodeManageExample;
 import com.trace.dao.repository.CodeManageMapper;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,8 +17,15 @@ import java.util.Objects;
  */
 @Repository
 public class CodeManageImpl implements CodeManageMapper {
-    final CodeManageMapper mapper = Objects.requireNonNull(SqlSessionGet.getSqlSession()).getMapper(CodeManageMapper.class);
+    CodeManageMapper mapper;
 
+    SqlSessionTemplate sqlSessionTemplate;
+
+    @Autowired
+    public CodeManageImpl(SqlSessionTemplate sqlSessionTemplate) {
+        this.sqlSessionTemplate = sqlSessionTemplate;
+        this.mapper = sqlSessionTemplate.getMapper(CodeManageMapper.class);
+    }
 
     @Override
     public int deleteByExample(CodeManageExample example) {
