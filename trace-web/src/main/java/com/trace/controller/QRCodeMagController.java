@@ -1,8 +1,11 @@
 package com.trace.controller;
 
+import com.common.utils.SnowflakeIdUtil;
 import com.trace.entity.UserCardName;
 import com.trace.service.entity.UserBaseMsg;
 import com.trace.service.qrcode.QRCodeMagService;
+import com.trace.service.user.UserInfoService;
+import com.trace.service.user.UserInfoUpdateService;
 import com.trace.service.user.UserNoQRService;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
@@ -27,6 +30,14 @@ public class QRCodeMagController {
     @Autowired
     UserNoQRService noQRService;
 
+    @Autowired
+    UserInfoService infoService;
+
+    @Autowired
+    UserInfoUpdateService updateService;
+
+    SnowflakeIdUtil snow = new SnowflakeIdUtil();
+
     @PostMapping("/userexists")
     public Result isUserExists(@RequestBody UserCardName user) {
         String name = user.getName();
@@ -42,10 +53,17 @@ public class QRCodeMagController {
     @PostMapping("exeuserfill")
     public Result existUserFill(@RequestBody UserBaseMsg msg) {
         Integer userId = noQRService.isUserExist(msg.getName(),msg.getIdCard());
-        if(userId == null) {
+        boolean f = false;
+        if(userId == null || userId == 0) {
             // 走fill 接口生成新用户
+            userId = noQRService.createDefaultNoPhoneUser();
+            f = infoService.fillUserInfo(msg,userId);
         }else {
-            // 不生成新用户
+            // 不生成新用户,更新用户信息
+            f = updateService.updateExistMsg(userId,msg);
+        }
+        if(!f) {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
         }
         // 将管理信息插入数据库中
 

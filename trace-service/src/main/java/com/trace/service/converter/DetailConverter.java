@@ -1,5 +1,6 @@
 package com.trace.service.converter;
 
+import com.common.utils.SnowflakeIdUtil;
 import com.trace.dao.entity.UserDetail;
 import com.trace.dao.entity.UserDetailExample;
 import com.trace.dao.repository.UserDetailMapper;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DetailConverter {
+
     @Autowired
     UserDetailMapper mapper;
 
@@ -21,18 +23,23 @@ public class DetailConverter {
         detail.setTemp(msg.getBodyHeat().toString());
         detail.setPhone(msg.getPhone());
         detail.setIduserDetail(Integer.parseInt(msg.getUserId()));
-        int addrId = (msg.getLocation().getCity()+msg.getLocation().getCounty()
-                +msg.getLocation().getDetailAddr()+msg.getIdCard()).hashCode();
+        SnowflakeIdUtil util = new SnowflakeIdUtil();
+        int addrId = util.nextIntId();
         if(addrId < 0)addrId += Integer.MAX_VALUE;
+        // hash 冲突解决
         UserDetailExample example = new UserDetailExample();
         example.createCriteria().andAddrIdEqualTo(addrId);
         for (;mapper.selectByExample(example).size() > 0;example.createCriteria().andAddrIdEqualTo(addrId+1));
         detail.setAddrId(addrId);
-        detail.setRiskFlag(riskFlagConvert(msg));
+        if(msg.getSymptom() != null && msg.getSymptom().isIsSymptom()) {
+            detail.setRiskFlag(riskFlagConvert(msg));
+        }else {
+            detail.setRiskFlag(0);
+        }
         return detail;
     }
 
-    private Integer riskFlagConvert(UserBaseMsg msg) {
+    public Integer riskFlagConvert(UserBaseMsg msg) {
         int flag = 0;
         //前六位 症状
         if(msg.getSymptom().isIsSymptom()) {

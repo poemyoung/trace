@@ -1,5 +1,6 @@
 package com.trace.service.user;
 
+import com.common.utils.SnowflakeIdUtil;
 import com.trace.dao.entity.User;
 import com.trace.dao.entity.UserExample;
 import com.trace.dao.impl.UserMapperImpl;
@@ -23,15 +24,17 @@ public class UserNoQRService {
     @Autowired
     UserInfoService infoService;
 
+    SnowflakeIdUtil snow = new SnowflakeIdUtil();
+
     public int createDefaultNoPhoneUser() {
         User user = new User();
-        int id = new Date().hashCode();
+        int id = snow.nextIntId();
         if(id < 0)id += Integer.MAX_VALUE;
         // hash冲突解决,线性探查法解决
         for (;userMapper.selectByPrimaryKey(id) != null;id++);
         user.setId(id);
-        userMapper.insertSelective(user);
-        return id;
+        int r = userMapper.insertSelective(user);
+        return r > 0 ? id : 0;
     }
 
     public Integer isUserExist(String name,String idCard) {

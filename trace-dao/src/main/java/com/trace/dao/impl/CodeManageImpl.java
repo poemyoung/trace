@@ -4,6 +4,7 @@ import com.trace.dao.SqlSessionGet;
 import com.trace.dao.entity.CodeManage;
 import com.trace.dao.entity.CodeManageExample;
 import com.trace.dao.repository.CodeManageMapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +13,7 @@ import java.util.Objects;
  * @author xzp
  * Created on 2021/3/10
  */
+@Repository
 public class CodeManageImpl implements CodeManageMapper {
     final CodeManageMapper mapper = Objects.requireNonNull(SqlSessionGet.getSqlSession()).getMapper(CodeManageMapper.class);
 

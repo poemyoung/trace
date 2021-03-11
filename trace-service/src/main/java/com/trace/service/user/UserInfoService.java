@@ -9,6 +9,7 @@ import com.trace.dao.entity.UserDetail;
 import com.trace.dao.repository.AddressMapper;
 import com.trace.dao.repository.UserDetailMapper;
 import com.trace.dao.repository.UserMapper;
+import com.trace.service.converter.AddressConverter;
 import com.trace.service.converter.DetailConverter;
 import com.trace.service.entity.UserBaseBinding;
 import com.trace.service.entity.UserBaseMsg;
@@ -42,6 +43,9 @@ public class UserInfoService {
 
     @Autowired
     AddressMapper addressMapper;
+
+    @Autowired
+    AddressConverter addrConverter;
 
     public boolean isInfoAccessible(int userId) {
         User user = userMapper.selectByPrimaryKey(userId);
@@ -85,30 +89,14 @@ public class UserInfoService {
             return false;
         }
 
-        detailMapper.insertSelective(detail);
-        return true;
+        int i = detailMapper.insertSelective(detail);
+        return i > 0;
     }
     public boolean locationInsert(UserLiveLocation location,Integer userId,Integer addrId) {
-        if(StringUtils.isBlank(location.getCity()) || StringUtils.isBlank(location.getProvince())){
+        Address address = addrConverter.convertAddree(location,addrId,userId);
+        if(address == null) {
             return false;
         }
-        String addrReqStr = location.getProvince() + location.getCity()
-                + location.getCounty() + location.getDetailAddr();
-        String region = StringUtils.isBlank(location.getCounty()) ? location.getCity() : location.getCounty();
-        BaseResult result = posService.descParseAddr(addrReqStr,region);
-        AddrResult result1 = result.getResult();
-        Address address = new Address();
-        TimeZone.setDefault(TimeZone.getTimeZone("GMT+08:00"));
-        address.setAdcode(Integer.parseInt(result1.getAd_info().getAdcode()));
-        address.setCity(location.getCity());
-        address.setCounty(location.getCounty());
-        address.setDetail(location.getDetailAddr());
-        address.setIdaddress(addrId);
-        address.setLat(result1.getLocation().getLat().toString());
-        address.setLng(result1.getLocation().getLng().toString());
-        address.setProvince(location.getProvince());
-        address.setTime(new Date());
-        address.setUserId(userId);
         int i = addressMapper.insertSelective(address);
         return i > 0;
     }
@@ -126,7 +114,7 @@ public class UserInfoService {
         return true;
     }
 
-    private boolean checkPhone(String phone){
+    public boolean checkPhone(String phone){
         if(StringUtils.isBlank(phone)){
             return false;
         }
@@ -137,7 +125,7 @@ public class UserInfoService {
         return true;
     }
 
-    private boolean checkTemp(Number temp) {
+    public boolean checkTemp(Number temp) {
         if(temp == null) {
             return false;
         }

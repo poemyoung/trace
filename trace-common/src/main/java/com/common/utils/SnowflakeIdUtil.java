@@ -62,12 +62,20 @@ public class SnowflakeIdUtil {
      * 上次生成ID的时间截
      */
     private long lastTimestamp = -1L;
+
+    public SnowflakeIdUtil() {
+        this.buildSnowflakeUtil(5,6);
+    }
     /**
      * 构造函数
      * @param workerId     工作ID (0~31)
      * @param datacenterId 数据中心ID (0~31)
      */
     public SnowflakeIdUtil(long workerId, long datacenterId) {
+        this.buildSnowflakeUtil(workerId,datacenterId);
+    }
+
+    private void buildSnowflakeUtil(long workerId,long datacenterId) {
         if (workerId > maxWorkerId || workerId < 0) {
             throw new IllegalArgumentException(String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
         }
@@ -77,6 +85,11 @@ public class SnowflakeIdUtil {
         this.workerId = workerId;
         this.datacenterId = datacenterId;
     }
+    public synchronized int nextIntId() {
+        long i = this.nextId();
+        return (i+"").hashCode();
+    }
+
     /**
      * 获得下一个ID (该方法是线程安全的)
      * @return SnowflakeId
