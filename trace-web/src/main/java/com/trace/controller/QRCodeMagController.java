@@ -9,8 +9,10 @@ import com.trace.service.user.UserInfoUpdateService;
 import com.trace.service.user.UserNoQRService;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
+import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -46,6 +48,7 @@ public class QRCodeMagController {
     }
     
     @PostMapping("/exeuserfill")
+    @Transactional
     public Result existUserFill(@RequestBody UserBaseMsg msg, @RequestParam String id) {
         int a = 0;
         try {
@@ -58,6 +61,15 @@ public class QRCodeMagController {
         if(userId == null || userId == 0) {
             // 走fill 接口生成新用户
             userId = noQRService.createDefaultNoPhoneUser();
+            msg.setUserId(userId + "");
+            // 手机号未填默认使用填报者的手机号
+            if(StringUtils.isBlank(msg.getPhone())) {
+                String p = infoService.getUserPhone(a);
+                if(StringUtils.isBlank(p)) {
+                    return Result.fail(ResultCode.USER_NOT_EXIST);
+                }
+                msg.setPhone(p);
+            }
             f = infoService.fillUserInfo(msg,userId);
         }else {
             // 不生成新用户,更新用户信息

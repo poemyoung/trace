@@ -130,7 +130,7 @@ public class UserInfoService {
             return false;
         }
         float a = temp.floatValue();
-        if(a > 35 && a < 41) {
+        if(a > 34 && a < 41) {
             return true;
         }
         return false;
@@ -148,5 +148,14 @@ public class UserInfoService {
         msg.setIdCard(user.getCardId());
         msg.setName(user.getName());
         return msg;
+    }
+
+    public String getUserPhone(Integer userId) {
+        if(userId == null || userId == 0) {
+            return "";
+        }
+        UserDetail user = detailMapper.selectByPrimaryKey(userId);
+        String phone = user.getPhone();
+        return phone;
     }
 }
