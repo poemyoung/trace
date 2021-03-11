@@ -11,10 +11,7 @@ import com.trace.util.Result;
 import com.trace.util.ResultCode;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author xzp
@@ -36,8 +33,6 @@ public class QRCodeMagController {
     @Autowired
     UserInfoUpdateService updateService;
 
-    SnowflakeIdUtil snow = new SnowflakeIdUtil();
-
     @PostMapping("/userexists")
     public Result isUserExists(@RequestBody UserCardName user) {
         String name = user.getName();
@@ -50,8 +45,14 @@ public class QRCodeMagController {
         }
     }
     
-    @PostMapping("exeuserfill")
-    public Result existUserFill(@RequestBody UserBaseMsg msg) {
+    @PostMapping("/exeuserfill")
+    public Result existUserFill(@RequestBody UserBaseMsg msg, @RequestParam String id) {
+        int a = 0;
+        try {
+            a = Integer.parseInt(id);
+        }catch (Exception e) {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
         Integer userId = noQRService.isUserExist(msg.getName(),msg.getIdCard());
         boolean f = false;
         if(userId == null || userId == 0) {
@@ -66,7 +67,11 @@ public class QRCodeMagController {
             return Result.fail(ResultCode.PARAM_IS_INVALID);
         }
         // 将管理信息插入数据库中
-
-        return null;
+        boolean res = magService.addRelate(userId,a,msg.getName(),msg.getIdCard());
+        if(res) {
+            return Result.success();
+        }else {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
     }
 }

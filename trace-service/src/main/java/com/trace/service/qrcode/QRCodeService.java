@@ -8,8 +8,10 @@ import com.google.common.collect.Lists;
 import com.trace.service.address.AddrService;
 import com.trace.service.entity.QREntity;
 import com.trace.service.entity.QRHealthyEntity;
+import com.trace.service.entity.UserId;
 import com.trace.service.entity.UserStaticCode;
 import com.trace.service.health.HealthyService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,18 +47,14 @@ public class QRCodeService {
     @Value("${qrcode.path}")
     private String path = "/Users/xzp/Desktop/upload";
 
-
-    public List<UserStaticCode> getUserStaticCode(Integer userId) {
+    public String generateStaticCode(Integer userId) {
         if (userId == null || userId == 0) {
             return null;
         }
-        // 查数据库获取user列表
-        UserStaticCode code = new UserStaticCode();
-        code.setIdCard("513030199505106516");
-        code.setQrCode("/1505084195_2021310133616.jpg");
-        code.setUserName("徐泽朋");
-        code.setUserId("1505084195");
-        return Lists.newArrayList(code);
+        // 判断健康状况
+        int i = hService.howHealth(userId);
+        String s = this.generateByHealthStatic(userId,i);
+        return s;
     }
 
     public QRHealthyEntity generateQRCode(Integer userId) {
@@ -91,8 +89,10 @@ public class QRCodeService {
 
     private String generateByHealthStatic(int userId, int hClass) {
        // 生成静态健康码
-
-        return "";
+        UserId userId1 = new UserId();
+        userId1.setUserId(userId + "");
+        String json = GsonUtils.toJson(userId1);
+        return this.generate(json,hClass,userId);
     }
 
     private String generate(String json,int hClass,int userId) {

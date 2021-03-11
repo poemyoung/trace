@@ -20,5 +20,6 @@
         <mapper resource="mapper/UserDetailMapper.xml" />
         <mapper resource="mapper/TestMysqlUsableMapper.xml" />
         <mapper resource="mapper/AddressMapper.xml" />
+        <mapper resource="mapper/CodeManageMapper.xml" />
     </mappers>
 </configuration>

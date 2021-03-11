@@ -1,4 +1,4 @@
-package com.trace.entity;
+package com.trace.service.entity;
 
 /**
  * @author xzp

@@ -2,8 +2,7 @@ package com.trace.controller;
 
 import com.trace.entity.Pos;
 import com.trace.entity.StaticCodeMag;
-import com.trace.entity.UserId;
-import com.trace.service.entity.QREntity;
+import com.trace.service.entity.UserId;
 import com.trace.service.entity.QRHealthyEntity;
 import com.trace.service.entity.UserStaticCode;
 import com.trace.service.health.HealthyService;
@@ -11,7 +10,6 @@ import com.trace.service.qrcode.QRCodeMagService;
 import com.trace.service.qrcode.QRCodeService;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +27,9 @@ public class QRController {
 
     @Autowired
     HealthyService hService;
+
+    @Autowired
+    QRCodeMagService magService;
 
     @PostMapping("/qrupload")
     public Result isSafety(@RequestBody UserId res) {
@@ -69,7 +70,7 @@ public class QRController {
             return Result.fail(ResultCode.PARAM_IS_INVALID);
         }
         // service 处理生成静态码实体类
-        List<UserStaticCode> staticCodes = service.getUserStaticCode(a);
+        List<UserStaticCode> staticCodes = magService.getUserStaticCode(a);
         if(staticCodes == null) {
             return Result.fail(ResultCode.PARAM_IS_INVALID);
         }
