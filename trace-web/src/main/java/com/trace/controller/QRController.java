@@ -86,7 +86,7 @@ public class QRController {
             return Result.fail(ResultCode.PARAM_IS_INVALID);
         }
         // service 删除相关联的关系
-        boolean f = qrCodeMagService.deleteRelate(a,b);
+        boolean f = qrCodeMagService.deleteRelate(b,a);
         if(!f) {
             return Result.fail(ResultCode.PARAM_IS_INVALID);
         }

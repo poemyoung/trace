@@ -3,6 +3,8 @@ package com.trace.controller;
 import com.common.utils.SnowflakeIdUtil;
 import com.trace.entity.UserCardName;
 import com.trace.service.entity.UserBaseMsg;
+import com.trace.service.entity.UserRelateEntity;
+import com.trace.service.entity.UserStaticCode;
 import com.trace.service.qrcode.QRCodeMagService;
 import com.trace.service.user.UserInfoService;
 import com.trace.service.user.UserInfoUpdateService;
@@ -81,6 +83,23 @@ public class QRCodeMagController {
         // 将管理信息插入数据库中
         boolean res = magService.addRelate(userId,a,msg.getName(),msg.getIdCard());
         if(res) {
+            return Result.success();
+        }else {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+    }
+
+    @PostMapping("/addrelate")
+    public Result addRelate(@RequestBody UserRelateEntity relate) {
+        int a = 0;
+        try{
+            a = Integer.parseInt(relate.getUserId());
+        }catch (Exception e) {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        int b = noQRService.isUserExist(relate.getUserName(),relate.getIdCard());
+        boolean f =  magService.addRelate(b,a,relate.getUserName(),relate.getIdCard());
+        if(f) {
             return Result.success();
         }else {
             return Result.fail(ResultCode.PARAM_IS_INVALID);
