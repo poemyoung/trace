@@ -1,4 +1,7 @@
-package com.trace.service.entity;
+package com.trace.service.entity.recentity;
+
+import com.trace.service.entity.commentity.UserLiveLocation;
+import com.trace.service.entity.commentity.UserSymptom;
 
 /**
  * @author xzp

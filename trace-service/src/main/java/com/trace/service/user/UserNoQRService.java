@@ -44,7 +44,6 @@ public class UserNoQRService {
         User user = new User();
         user.setCardId(idCard);
         user.setName(name);
-        Integer userId = userMapper.selectUserExists(user);
-        return userId;
+        return userMapper.selectUserExists(user);
     }
 }

@@ -4,7 +4,7 @@ import com.common.utils.SnowflakeIdUtil;
 import com.trace.dao.entity.UserDetail;
 import com.trace.dao.entity.UserDetailExample;
 import com.trace.dao.repository.UserDetailMapper;
-import com.trace.service.entity.UserBaseMsg;
+import com.trace.service.entity.recentity.UserBaseMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

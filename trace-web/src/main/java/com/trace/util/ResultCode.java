@@ -28,6 +28,7 @@ public enum ResultCode {
 
     /* 业务错误：30001-39999 */
     SPECIFIED_QUESTIONED_USER_NOT_EXIST(30001, "某业务出现问题"),
+    QRCODE_NOT_REC(30002,"该二维码信息系统无法识别"),
 
     /* 系统错误：40001-49999 */
     SYSTEM_INNER_ERROR(40001, "系统繁忙，请稍后重试"),

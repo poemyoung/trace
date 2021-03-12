@@ -1,24 +1,30 @@
 package com.trace.controller;
 
-import com.trace.entity.Pos;
-import com.trace.entity.StaticCodeMag;
-import com.trace.service.entity.UserId;
-import com.trace.service.entity.QRHealthyEntity;
-import com.trace.service.entity.UserStaticCode;
+import com.common.utils.AESUtil;
+import com.common.utils.GsonUtils;
+import com.trace.service.entity.recentity.Pos;
+import com.trace.service.entity.recentity.StaticCodeMag;
+import com.trace.service.entity.recentity.UserId;
+import com.trace.service.entity.retentity.QRHealthyEntity;
+import com.trace.service.entity.retentity.UserStaticCode;
 import com.trace.service.health.HealthyService;
 import com.trace.service.qrcode.QRCodeMagService;
 import com.trace.service.qrcode.QRCodeService;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Base64;
 import java.util.List;
 
-// unfinished
 @RestController
 @RequestMapping("/miniapi")
 public class QRController {
+    final Logger logger = LoggerFactory.getLogger(QRController.class);
+
     @Autowired
     QRCodeMagService qrCodeMagService;
 
@@ -31,18 +37,36 @@ public class QRController {
     @Autowired
     QRCodeMagService magService;
 
+
     @PostMapping("/qrupload")
     public Result isSafety(@RequestBody UserId res) {
         // 解析出结果
-
+        String uid = "";
+        byte[] decode = Base64.getDecoder().decode(res.getUserId());
+        try {
+            String json = AESUtil.aesDeCodeDef(decode);
+            logger.info(json);
+            res = GsonUtils.fromJson(json,UserId.class);
+            if(res == null){
+                return Result.fail(ResultCode.QRCODE_NOT_REC);
+            }
+            uid = res.getUserId();
+        }catch (Exception e) {
+            logger.error("ase解密失败");
+            return Result.fail(ResultCode.QRCODE_NOT_REC);
+        }
+        int a = 0;
+        try {
+             a = Integer.parseInt(uid);
+        }catch (Exception e) {
+            return Result.fail(ResultCode.USER_NOT_EXIST);
+        }
         // 交给service 处理结果
-
-
-        // 返回码的颜色 1 2 3 4 绿 蓝 黄 红 安全
-        // 未见异常 上次填报时间过久 居家隔离 集中观察
-        System.out.println(res);
-
-        return Result.success(3);
+        int i = hService.howHealth(a);
+        if(i <= 0 ){
+            return Result.fail(ResultCode.QRCODE_NOT_REC);
+        }
+        return Result.success(i);
     }
 
     @PostMapping("/qrdyn")

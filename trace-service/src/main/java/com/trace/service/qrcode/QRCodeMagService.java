@@ -1,13 +1,11 @@
 package com.trace.service.qrcode;
 
-import com.google.common.collect.Lists;
 import com.trace.dao.entity.CodeManage;
 import com.trace.dao.entity.CodeManageExample;
 import com.trace.dao.repository.CodeManageMapper;
 import com.trace.service.converter.StaticCodeConverter;
-import com.trace.service.entity.UserStaticCode;
+import com.trace.service.entity.retentity.UserStaticCode;
 import org.apache.commons.lang3.StringUtils;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

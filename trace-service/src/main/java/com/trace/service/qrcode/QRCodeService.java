@@ -4,14 +4,11 @@ import com.common.enums.Colors;
 import com.common.utils.AESUtil;
 import com.common.utils.GsonUtils;
 import com.common.utils.QRCode;
-import com.google.common.collect.Lists;
 import com.trace.service.address.AddrService;
-import com.trace.service.entity.QREntity;
-import com.trace.service.entity.QRHealthyEntity;
-import com.trace.service.entity.UserId;
-import com.trace.service.entity.UserStaticCode;
+import com.trace.service.entity.commentity.QREntity;
+import com.trace.service.entity.retentity.QRHealthyEntity;
+import com.trace.service.entity.recentity.UserId;
 import com.trace.service.health.HealthyService;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +24,11 @@ import java.sql.Timestamp;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author xzp
  * Created on 2021/3/7
  */
-// unfinished
 @Service
 public class QRCodeService {
     private final Logger logger = LoggerFactory.getLogger(QRCodeService.class);
@@ -128,7 +123,6 @@ public class QRCodeService {
 
     private String generateQRPath(String s,Colors color,Integer userId) {
         BufferedImage image = QRCode.createImageByColor(s, color);
-        ClassPathResource classPathResource = new ClassPathResource("/public/qrcode");
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         String tag = userId + "_" + calendar.get(Calendar.YEAR)+(calendar.get(Calendar.MONTH)

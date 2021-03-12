@@ -1,7 +1,7 @@
 package com.trace.controller;
 
-import com.trace.service.entity.UserBaseBinding;
-import com.trace.service.entity.UserBaseMsg;
+import com.trace.service.entity.retentity.UserBaseBinding;
+import com.trace.service.entity.recentity.UserBaseMsg;
 import com.trace.service.user.UserInfoService;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/miniapi")
 public class UserInfoController {
-
 
     @Autowired
     UserInfoService service;

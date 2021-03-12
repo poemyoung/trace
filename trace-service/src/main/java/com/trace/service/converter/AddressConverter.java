@@ -4,7 +4,7 @@ import com.trace.api.addrpentity.AddrResult;
 import com.trace.api.addrpentity.BaseResult;
 import com.trace.api.openid.TencentPosService;
 import com.trace.dao.entity.Address;
-import com.trace.service.entity.UserLiveLocation;
+import com.trace.service.entity.commentity.UserLiveLocation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

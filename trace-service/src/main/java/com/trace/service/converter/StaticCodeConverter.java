@@ -1,7 +1,7 @@
 package com.trace.service.converter;
 
 import com.trace.dao.entity.CodeManage;
-import com.trace.service.entity.UserStaticCode;
+import com.trace.service.entity.retentity.UserStaticCode;
 import org.springframework.stereotype.Service;
 
 /**

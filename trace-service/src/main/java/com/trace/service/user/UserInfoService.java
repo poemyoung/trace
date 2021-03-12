@@ -1,7 +1,5 @@
 package com.trace.service.user;
 
-import com.trace.api.addrpentity.AddrResult;
-import com.trace.api.addrpentity.BaseResult;
 import com.trace.api.openid.TencentPosService;
 import com.trace.dao.entity.Address;
 import com.trace.dao.entity.User;
@@ -11,15 +9,13 @@ import com.trace.dao.repository.UserDetailMapper;
 import com.trace.dao.repository.UserMapper;
 import com.trace.service.converter.AddressConverter;
 import com.trace.service.converter.DetailConverter;
-import com.trace.service.entity.UserBaseBinding;
-import com.trace.service.entity.UserBaseMsg;
-import com.trace.service.entity.UserLiveLocation;
+import com.trace.service.entity.retentity.UserBaseBinding;
+import com.trace.service.entity.recentity.UserBaseMsg;
+import com.trace.service.entity.commentity.UserLiveLocation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 /**
@@ -155,7 +151,6 @@ public class UserInfoService {
             return "";
         }
         UserDetail user = detailMapper.selectByPrimaryKey(userId);
-        String phone = user.getPhone();
-        return phone;
+        return user.getPhone();
     }
 }

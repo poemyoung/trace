@@ -1,10 +1,8 @@
 package com.trace.controller;
 
-import com.common.utils.SnowflakeIdUtil;
-import com.trace.entity.UserCardName;
-import com.trace.service.entity.UserBaseMsg;
-import com.trace.service.entity.UserRelateEntity;
-import com.trace.service.entity.UserStaticCode;
+import com.trace.service.entity.recentity.UserCardName;
+import com.trace.service.entity.recentity.UserBaseMsg;
+import com.trace.service.entity.recentity.UserRelateEntity;
 import com.trace.service.qrcode.QRCodeMagService;
 import com.trace.service.user.UserInfoService;
 import com.trace.service.user.UserInfoUpdateService;
@@ -12,7 +10,6 @@ import com.trace.service.user.UserNoQRService;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
 import org.apache.commons.lang3.StringUtils;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;

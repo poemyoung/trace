@@ -1,15 +1,12 @@
 package com.trace.service.user;
 
-import com.trace.service.entity.UserLiveLocation;
+import com.trace.service.entity.commentity.UserLiveLocation;
 import com.trace.user.SpringConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import static org.junit.Assert.*;
 
 /**
  * @author xzp

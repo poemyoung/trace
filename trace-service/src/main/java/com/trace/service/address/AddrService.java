@@ -1,19 +1,18 @@
 package com.trace.service.address;
 
+import com.common.utils.SnowflakeIdUtil;
 import com.trace.api.addrpentity.AddrComponents;
 import com.trace.api.openid.TencentPosService;
 import com.trace.api.reverseaddrprs.RevBaseMsg;
 import com.trace.api.reverseaddrprs.RevResult;
-import com.trace.dao.entity.Address;
-import com.trace.dao.entity.AddressExample;
-import com.trace.dao.entity.UserDetailExample;
+import com.trace.dao.entity.*;
 import com.trace.dao.repository.AddressMapper;
+import com.trace.dao.repository.UserAndAddrMapper;
+import com.trace.service.entity.commentity.DateEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author xzp
@@ -28,6 +27,8 @@ public class AddrService {
     @Autowired
     AddressMapper mapper;
 
+    @Autowired
+    UserAndAddrMapper uaaMapper;
 
     public int addrInsert(Number lat,Number lng,Integer userId) {
         // 参数校验
@@ -38,8 +39,8 @@ public class AddrService {
         RevBaseMsg baseMsg = posService.latLongToAddr(lat,lng);
         RevResult res = baseMsg.getResult();
         AddrComponents cps = res.getAddress_component();
-        int addrId = (cps.getCity()+cps.getProvince()
-                +res.getFormatted_addresses().getRecommend()+ UUID.randomUUID()).hashCode();
+        SnowflakeIdUtil snow = new SnowflakeIdUtil();
+        int addrId = snow.nextIntId();
         if(addrId < 0)addrId += Integer.MAX_VALUE;
         AddressExample example = new AddressExample();
         example.createCriteria().andIdaddressEqualTo(addrId);
@@ -57,7 +58,7 @@ public class AddrService {
         address.setCity(cps.getCity());
         int i = mapper.insertSelective(address);
         if (i > 0){
-            return userId;
+            return addrId;
         }else {
             return 0;
         }
@@ -65,11 +66,27 @@ public class AddrService {
 
     public Date getLastLocateTime(Integer userId) {
         // 根据userId 获取用户上一次定位的时间
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DATE,10);
-        calendar.set(Calendar.MONTH,2);
-        calendar.set(Calendar.SECOND,10);
-        calendar.set(Calendar.HOUR,2);
-        return new Date(calendar.getTimeInMillis());
+        if(userId == null || userId == 0) {
+            return DateEnum.FRO_EVER.getDate();
+        }
+        UserAndAddrExample example = new UserAndAddrExample();
+        example.createCriteria().andUidEqualTo(userId);
+        List<UserAndAddr> userAndAddrs = uaaMapper.selectByExample(example);
+        // 选出最后的时间
+        if(userAndAddrs.size() == 0) {
+            return DateEnum.FRO_EVER.getDate();
+        }
+        UserAndAddr max = Collections.max(userAndAddrs, (o1, o2) -> {
+            Date d1 = o1.getTime();
+            Date d2 = o2.getTime();
+            if (d1 == null || d1.before(d2)) {
+                return -1;
+            } else if (d1.after(d2)) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+        return max.getTime();
     }
 }
