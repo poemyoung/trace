@@ -13,6 +13,8 @@ import com.trace.service.entity.retentity.UserBaseBinding;
 import com.trace.service.entity.recentity.UserBaseMsg;
 import com.trace.service.entity.commentity.UserLiveLocation;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ import java.util.regex.Pattern;
  */
 @Service
 public class UserInfoService {
+    private final Logger logger = LoggerFactory.getLogger(UserInfoService.class);
 
     @Autowired
     UserMapper userMapper;
@@ -99,6 +102,10 @@ public class UserInfoService {
 
     private boolean updateUser(String name,String cardId,Integer userId) {
         User user = userMapper.selectByPrimaryKey(userId);
+        if (user == null) {
+            logger.error("userId 为" + userId + "的用户不存在！");
+            return false;
+        }
         user.setName(name);
         final  String IDCARD_EXP = "(^[1-9]\\d{5}(18|19|20)\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|" +
                 "(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}$)";
