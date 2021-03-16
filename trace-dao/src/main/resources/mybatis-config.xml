@@ -22,5 +22,6 @@
         <mapper resource="mapper/AddressMapper.xml" />
         <mapper resource="mapper/CodeManageMapper.xml" />
         <mapper resource="mapper/UserAndAddrMapper.xml" />
+        <mapper resource="mapper/AdminMapper.xml" />
     </mappers>
 </configuration>
