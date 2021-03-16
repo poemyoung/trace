@@ -22,13 +22,13 @@ public class MyCorsFilter extends CORSFilter {
         CORSConfiguration config = null;
         try {
             InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("cors.properties");
+            assert resourceAsStream != null;
             props.load(resourceAsStream);
             config = new CORSConfiguration(props);
-        } catch (CORSConfigurationException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (CORSConfigurationException | IOException e) {
             e.printStackTrace();
         }
+        assert config != null;
         this.setConfiguration(config);
     }
 

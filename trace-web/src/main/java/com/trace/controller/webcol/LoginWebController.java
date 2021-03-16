@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/webapi")
-@CrossOrigin(origins = {"https://localhost:8080"})
 public class LoginWebController {
 
     private final Logger logger = LoggerFactory.getLogger(LoginWebController.class);
