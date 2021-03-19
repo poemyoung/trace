@@ -55,7 +55,7 @@ public class DistributeService {
        Calendar aC = Calendar.getInstance();
        aC.setTime(a);
         return aC.get(Calendar.YEAR) == bC.get(Calendar.YEAR)
-                && aC.get(Calendar.MONTH) == bC.get(Calendar.MONTH)
+                && aC.get(Calendar.MONTH)  == bC.get(Calendar.MONTH)
                 && aC.get(Calendar.DAY_OF_MONTH) == bC.get(Calendar.DAY_OF_MONTH);
     }
 }

@@ -36,7 +36,7 @@ public class DistributeWebController {
             int y = Integer.parseInt(strs[0]);
             c.set(Calendar.YEAR,y);
             int m = Integer.parseInt(strs[1]);
-            c.set(Calendar.MONTH,m);
+            c.set(Calendar.MONTH,m-1);
             int d = Integer.parseInt(strs[2]);
             c.set(Calendar.DAY_OF_MONTH,d);
         }catch (Exception e) {
