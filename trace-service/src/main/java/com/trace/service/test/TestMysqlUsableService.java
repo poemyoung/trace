@@ -4,6 +4,8 @@ import com.trace.dao.entity.TestMysqlUsable;
 import com.trace.dao.entity.TestMysqlUsableExample;
 import com.trace.dao.repository.TestMysqlUsableMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,9 @@ import java.util.List;
  * Created on 2021/2/26
  */
 @Service
+@CacheConfig(cacheNames = "trace")
 public class TestMysqlUsableService {
+
     @Autowired
     RedisTemplate redisTemplate;
 
@@ -38,6 +42,7 @@ public class TestMysqlUsableService {
         return !testMysqlUsables.isEmpty();
     }
 
+    @Cacheable(key = "#key")
     public boolean setRedisKey(String key,String value) {
         ValueOperations valueOperations = redisTemplate.opsForValue();
         valueOperations.set(key,value);

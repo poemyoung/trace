@@ -31,9 +31,10 @@ public class RedisTest {
 
     @Test
     public void test1() {
-        String value = tmu.testRedis("2020-03-19", "value");
-        Assert.assertEquals("value",value);
-
+        String value1 = tmu.testRedis("2020-03-19", "value1");
+        Assert.assertEquals("value1",value1);
+        String value2 = tmu.testRedis("2020-03-19", "value2");
+        Assert.assertEquals("value1",value2);
     }
 
 }
