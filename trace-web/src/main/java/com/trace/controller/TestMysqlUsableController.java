@@ -27,4 +27,8 @@ public class TestMysqlUsableController {
             return Result.fail(ResultCode.MYSQL_ERROR);
         }
     }
+    public String testRedis(String key,String value) {
+        service.setRedisKey(key,value);
+        return service.getRedisKey(key);
+    }
 }

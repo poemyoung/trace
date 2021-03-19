@@ -4,6 +4,8 @@ import com.trace.dao.entity.TestMysqlUsable;
 import com.trace.dao.entity.TestMysqlUsableExample;
 import com.trace.dao.repository.TestMysqlUsableMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -15,6 +17,9 @@ import java.util.List;
  */
 @Service
 public class TestMysqlUsableService {
+    @Autowired
+    RedisTemplate redisTemplate;
+
     @Autowired
     TestMysqlUsableMapper mapper;
     String sData = Calendar.getInstance().get(Calendar.MONTH) + "月" +
@@ -32,4 +37,17 @@ public class TestMysqlUsableService {
         List<TestMysqlUsable> testMysqlUsables = mapper.selectByExample(example);
         return !testMysqlUsables.isEmpty();
     }
+
+    public boolean setRedisKey(String key,String value) {
+        ValueOperations valueOperations = redisTemplate.opsForValue();
+        valueOperations.set(key,value);
+        return true;
+    }
+    public String getRedisKey(String key) {
+        ValueOperations valueOperations = redisTemplate.opsForValue();
+        return (String)valueOperations.get(key);
+
+    }
+
+
 }

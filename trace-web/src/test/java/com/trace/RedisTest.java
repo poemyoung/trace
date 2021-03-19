@@ -29,4 +29,11 @@ public class RedisTest {
 
     }
 
+    @Test
+    public void test1() {
+        String value = tmu.testRedis("2020-03-19", "value");
+        Assert.assertEquals("value",value);
+
+    }
+
 }
