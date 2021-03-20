@@ -7,10 +7,7 @@ import com.trace.util.ResultCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author xzp
@@ -26,6 +23,7 @@ public class LoginWebController {
     AdminLoginService adminLoginService;
 
     @PostMapping("/login")
+    @CrossOrigin
     public Result login(@RequestBody AdminLogin admin) {
         if(admin == null) {
             return Result.fail(ResultCode.PARAM_IS_BLANK);

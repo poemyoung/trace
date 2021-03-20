@@ -26,6 +26,7 @@ public class DistributeWebController {
     DistributeService service;
 
     @GetMapping("/dstb")
+    @CrossOrigin
     public Result getAddressByDay(@RequestParam String date) {
         String[] strs = date.split("-");
         if(strs.length != 3) {
