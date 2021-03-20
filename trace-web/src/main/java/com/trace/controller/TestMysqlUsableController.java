@@ -3,7 +3,6 @@ package com.trace.controller;
 import com.trace.service.test.TestMysqlUsableService;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,5 +29,10 @@ public class TestMysqlUsableController {
     public String testRedis(String key,String value) {
         service.setRedisKey(key,value);
         return service.getRedisKey(key);
+    }
+    public void addRandomData() {
+        for (int i = 50;i <=100;i++) {
+            service.addRandom(i);
+        }
     }
 }

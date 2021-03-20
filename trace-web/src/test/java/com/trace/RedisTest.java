@@ -56,5 +56,10 @@ public class RedisTest {
         System.out.println(s1);
     }
 
+    @Test
+    public void randomData() {
+        tmu.addRandomData();
+    }
+
 
 }

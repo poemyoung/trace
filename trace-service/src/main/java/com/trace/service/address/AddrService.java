@@ -52,7 +52,11 @@ public class AddrService {
         address.setLng(lng.toString());
         address.setLat(lat.toString());
         address.setIdaddress(addrId);
-        address.setDetail(res.getFormatted_addresses().getRecommend());
+        if(res.getFormatted_addresses() == null) {
+            address.setDetail("");
+        }else {
+            address.setDetail(res.getFormatted_addresses().getRecommend());
+        }
         address.setCounty(cps.getDistrict());
         address.setAdcode(Integer.parseInt(res.getAd_info().getAdcode()));
         address.setCity(cps.getCity());
