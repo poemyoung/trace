@@ -77,11 +77,11 @@ public class RedisConfig {
                 .disableCachingNullValues();
 
         Set<String> cacheNames = new HashSet<>();
-        cacheNames.add("trace");
+        cacheNames.add(CacheNames.ADDR_CACHE.getCacheName());
 
         // 对每个缓存空间应用不同的配置
         Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
-        configMap.put("trace", defaultCacheConfig.entryTtl(Duration.ofSeconds(200)));
+        configMap.put(CacheNames.ADDR_CACHE.getCacheName(), defaultCacheConfig.entryTtl(Duration.ofDays(300)));
 
         RedisCacheManager cacheManager = RedisCacheManager.builder(lettuceConnectionFactory)
                 .cacheDefaults(defaultCacheConfig)

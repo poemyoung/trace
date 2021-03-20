@@ -3,6 +3,7 @@ package com.trace.service.test;
 import com.trace.dao.entity.TestMysqlUsable;
 import com.trace.dao.entity.TestMysqlUsableExample;
 import com.trace.dao.repository.TestMysqlUsableMapper;
+import com.trace.service.redis.CacheNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -42,8 +43,9 @@ public class TestMysqlUsableService {
         return !testMysqlUsables.isEmpty();
     }
 
-    @Cacheable(key = "#key")
+    @Cacheable(value = "addr_cache",key="#key")
     public boolean setRedisKey(String key,String value) {
+        System.out.println("执行了一次");
         ValueOperations valueOperations = redisTemplate.opsForValue();
         valueOperations.set(key,value);
         return true;
