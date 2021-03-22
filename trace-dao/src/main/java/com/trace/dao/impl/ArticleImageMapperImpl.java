@@ -14,17 +14,17 @@ import java.util.List;
  * Created on 2021/3/22
  */
 @Repository
-public class ArticleImageMapperImpl implements ArticleImageMapper {
+public class ArticleImageMapperImpl implements ArticleImageMapper{
+    private ArticleImageMapper mapper;
 
-    ArticleImageMapper mapper;
-
-    SqlSession sqlSession;
+    private SqlSession sqlSession;
 
     @Autowired
     public ArticleImageMapperImpl(SqlSession sqlSession) {
         this.sqlSession = sqlSession;
         this.mapper = sqlSession.getMapper(ArticleImageMapper.class);
     }
+
 
     @Override
     public long countByExample(ArticleImageExample example) {

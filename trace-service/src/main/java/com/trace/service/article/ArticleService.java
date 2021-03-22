@@ -66,6 +66,9 @@ public class ArticleService {
 
     private Article createGeneralArticle(ArticleRecEntity article) {
         int aid = snow.nextIntId();
+        if(aid < 0) {
+            aid += Integer.MAX_VALUE;
+        }
         for (; articleMapper.selectByPrimaryKey(aid) != null; aid++) ;
         Article articleDB = new Article();
         articleDB.setAid(aid);

@@ -14,13 +14,13 @@ import java.util.List;
  * Created on 2021/3/22
  */
 @Repository
-public class ArticleMapperImpl implements ArticleMapper {
+public class ArticleMapperImpl implements ArticleMapper{
+    private ArticleMapper mapper;
 
-    ArticleMapper mapper;
-
-    SqlSession sqlSession;
+    private SqlSession sqlSession;
 
     @Autowired
+
     public ArticleMapperImpl(SqlSession sqlSession) {
         this.sqlSession = sqlSession;
         this.mapper = sqlSession.getMapper(ArticleMapper.class);
