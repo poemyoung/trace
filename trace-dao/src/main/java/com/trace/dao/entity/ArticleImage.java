@@ -1,33 +1,33 @@
 package com.trace.dao.entity;
 
 public class ArticleImage {
-    private String imgid;
+    private String path;
 
-    private String aid;
+    private Integer aid;
 
-    private Byte flag;
+    private Boolean flag;
 
-    public String getImgid() {
-        return imgid;
+    public String getPath() {
+        return path;
     }
 
-    public void setImgid(String imgid) {
-        this.imgid = imgid == null ? null : imgid.trim();
+    public void setPath(String path) {
+        this.path = path == null ? null : path.trim();
     }
 
-    public String getAid() {
+    public Integer getAid() {
         return aid;
     }
 
-    public void setAid(String aid) {
-        this.aid = aid == null ? null : aid.trim();
+    public void setAid(Integer aid) {
+        this.aid = aid;
     }
 
-    public Byte getFlag() {
+    public Boolean getFlag() {
         return flag;
     }
 
-    public void setFlag(Byte flag) {
+    public void setFlag(Boolean flag) {
         this.flag = flag;
     }
 }

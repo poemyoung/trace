@@ -555,52 +555,52 @@ public class ArticleExample {
             return (Criteria) this;
         }
 
-        public Criteria andWhomEqualTo(Byte value) {
+        public Criteria andWhomEqualTo(Boolean value) {
             addCriterion("whom =", value, "whom");
             return (Criteria) this;
         }
 
-        public Criteria andWhomNotEqualTo(Byte value) {
+        public Criteria andWhomNotEqualTo(Boolean value) {
             addCriterion("whom <>", value, "whom");
             return (Criteria) this;
         }
 
-        public Criteria andWhomGreaterThan(Byte value) {
+        public Criteria andWhomGreaterThan(Boolean value) {
             addCriterion("whom >", value, "whom");
             return (Criteria) this;
         }
 
-        public Criteria andWhomGreaterThanOrEqualTo(Byte value) {
+        public Criteria andWhomGreaterThanOrEqualTo(Boolean value) {
             addCriterion("whom >=", value, "whom");
             return (Criteria) this;
         }
 
-        public Criteria andWhomLessThan(Byte value) {
+        public Criteria andWhomLessThan(Boolean value) {
             addCriterion("whom <", value, "whom");
             return (Criteria) this;
         }
 
-        public Criteria andWhomLessThanOrEqualTo(Byte value) {
+        public Criteria andWhomLessThanOrEqualTo(Boolean value) {
             addCriterion("whom <=", value, "whom");
             return (Criteria) this;
         }
 
-        public Criteria andWhomIn(List<Byte> values) {
+        public Criteria andWhomIn(List<Boolean> values) {
             addCriterion("whom in", values, "whom");
             return (Criteria) this;
         }
 
-        public Criteria andWhomNotIn(List<Byte> values) {
+        public Criteria andWhomNotIn(List<Boolean> values) {
             addCriterion("whom not in", values, "whom");
             return (Criteria) this;
         }
 
-        public Criteria andWhomBetween(Byte value1, Byte value2) {
+        public Criteria andWhomBetween(Boolean value1, Boolean value2) {
             addCriterion("whom between", value1, value2, "whom");
             return (Criteria) this;
         }
 
-        public Criteria andWhomNotBetween(Byte value1, Byte value2) {
+        public Criteria andWhomNotBetween(Boolean value1, Boolean value2) {
             addCriterion("whom not between", value1, value2, "whom");
             return (Criteria) this;
         }
@@ -615,52 +615,52 @@ public class ArticleExample {
             return (Criteria) this;
         }
 
-        public Criteria andFirstEqualTo(Byte value) {
+        public Criteria andFirstEqualTo(Boolean value) {
             addCriterion("first =", value, "first");
             return (Criteria) this;
         }
 
-        public Criteria andFirstNotEqualTo(Byte value) {
+        public Criteria andFirstNotEqualTo(Boolean value) {
             addCriterion("first <>", value, "first");
             return (Criteria) this;
         }
 
-        public Criteria andFirstGreaterThan(Byte value) {
+        public Criteria andFirstGreaterThan(Boolean value) {
             addCriterion("first >", value, "first");
             return (Criteria) this;
         }
 
-        public Criteria andFirstGreaterThanOrEqualTo(Byte value) {
+        public Criteria andFirstGreaterThanOrEqualTo(Boolean value) {
             addCriterion("first >=", value, "first");
             return (Criteria) this;
         }
 
-        public Criteria andFirstLessThan(Byte value) {
+        public Criteria andFirstLessThan(Boolean value) {
             addCriterion("first <", value, "first");
             return (Criteria) this;
         }
 
-        public Criteria andFirstLessThanOrEqualTo(Byte value) {
+        public Criteria andFirstLessThanOrEqualTo(Boolean value) {
             addCriterion("first <=", value, "first");
             return (Criteria) this;
         }
 
-        public Criteria andFirstIn(List<Byte> values) {
+        public Criteria andFirstIn(List<Boolean> values) {
             addCriterion("first in", values, "first");
             return (Criteria) this;
         }
 
-        public Criteria andFirstNotIn(List<Byte> values) {
+        public Criteria andFirstNotIn(List<Boolean> values) {
             addCriterion("first not in", values, "first");
             return (Criteria) this;
         }
 
-        public Criteria andFirstBetween(Byte value1, Byte value2) {
+        public Criteria andFirstBetween(Boolean value1, Boolean value2) {
             addCriterion("first between", value1, value2, "first");
             return (Criteria) this;
         }
 
-        public Criteria andFirstNotBetween(Byte value1, Byte value2) {
+        public Criteria andFirstNotBetween(Boolean value1, Boolean value2) {
             addCriterion("first not between", value1, value2, "first");
             return (Criteria) this;
         }

@@ -17,9 +17,9 @@ public class Article {
 
     private Integer nextAid;
 
-    private Byte whom;
+    private Boolean whom;
 
-    private Byte first;
+    private Boolean first;
 
     private String evaluate;
 
@@ -79,19 +79,19 @@ public class Article {
         this.nextAid = nextAid;
     }
 
-    public Byte getWhom() {
+    public Boolean getWhom() {
         return whom;
     }
 
-    public void setWhom(Byte whom) {
+    public void setWhom(Boolean whom) {
         this.whom = whom;
     }
 
-    public Byte getFirst() {
+    public Boolean getFirst() {
         return first;
     }
 
-    public void setFirst(Byte first) {
+    public void setFirst(Boolean first) {
         this.first = first;
     }
 

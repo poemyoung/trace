@@ -104,73 +104,73 @@ public class ArticleImageExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andImgidIsNull() {
-            addCriterion("imgid is null");
+        public Criteria andPathIsNull() {
+            addCriterion("path is null");
             return (Criteria) this;
         }
 
-        public Criteria andImgidIsNotNull() {
-            addCriterion("imgid is not null");
+        public Criteria andPathIsNotNull() {
+            addCriterion("path is not null");
             return (Criteria) this;
         }
 
-        public Criteria andImgidEqualTo(String value) {
-            addCriterion("imgid =", value, "imgid");
+        public Criteria andPathEqualTo(String value) {
+            addCriterion("path =", value, "path");
             return (Criteria) this;
         }
 
-        public Criteria andImgidNotEqualTo(String value) {
-            addCriterion("imgid <>", value, "imgid");
+        public Criteria andPathNotEqualTo(String value) {
+            addCriterion("path <>", value, "path");
             return (Criteria) this;
         }
 
-        public Criteria andImgidGreaterThan(String value) {
-            addCriterion("imgid >", value, "imgid");
+        public Criteria andPathGreaterThan(String value) {
+            addCriterion("path >", value, "path");
             return (Criteria) this;
         }
 
-        public Criteria andImgidGreaterThanOrEqualTo(String value) {
-            addCriterion("imgid >=", value, "imgid");
+        public Criteria andPathGreaterThanOrEqualTo(String value) {
+            addCriterion("path >=", value, "path");
             return (Criteria) this;
         }
 
-        public Criteria andImgidLessThan(String value) {
-            addCriterion("imgid <", value, "imgid");
+        public Criteria andPathLessThan(String value) {
+            addCriterion("path <", value, "path");
             return (Criteria) this;
         }
 
-        public Criteria andImgidLessThanOrEqualTo(String value) {
-            addCriterion("imgid <=", value, "imgid");
+        public Criteria andPathLessThanOrEqualTo(String value) {
+            addCriterion("path <=", value, "path");
             return (Criteria) this;
         }
 
-        public Criteria andImgidLike(String value) {
-            addCriterion("imgid like", value, "imgid");
+        public Criteria andPathLike(String value) {
+            addCriterion("path like", value, "path");
             return (Criteria) this;
         }
 
-        public Criteria andImgidNotLike(String value) {
-            addCriterion("imgid not like", value, "imgid");
+        public Criteria andPathNotLike(String value) {
+            addCriterion("path not like", value, "path");
             return (Criteria) this;
         }
 
-        public Criteria andImgidIn(List<String> values) {
-            addCriterion("imgid in", values, "imgid");
+        public Criteria andPathIn(List<String> values) {
+            addCriterion("path in", values, "path");
             return (Criteria) this;
         }
 
-        public Criteria andImgidNotIn(List<String> values) {
-            addCriterion("imgid not in", values, "imgid");
+        public Criteria andPathNotIn(List<String> values) {
+            addCriterion("path not in", values, "path");
             return (Criteria) this;
         }
 
-        public Criteria andImgidBetween(String value1, String value2) {
-            addCriterion("imgid between", value1, value2, "imgid");
+        public Criteria andPathBetween(String value1, String value2) {
+            addCriterion("path between", value1, value2, "path");
             return (Criteria) this;
         }
 
-        public Criteria andImgidNotBetween(String value1, String value2) {
-            addCriterion("imgid not between", value1, value2, "imgid");
+        public Criteria andPathNotBetween(String value1, String value2) {
+            addCriterion("path not between", value1, value2, "path");
             return (Criteria) this;
         }
 
@@ -184,62 +184,52 @@ public class ArticleImageExample {
             return (Criteria) this;
         }
 
-        public Criteria andAidEqualTo(String value) {
+        public Criteria andAidEqualTo(Integer value) {
             addCriterion("aid =", value, "aid");
             return (Criteria) this;
         }
 
-        public Criteria andAidNotEqualTo(String value) {
+        public Criteria andAidNotEqualTo(Integer value) {
             addCriterion("aid <>", value, "aid");
             return (Criteria) this;
         }
 
-        public Criteria andAidGreaterThan(String value) {
+        public Criteria andAidGreaterThan(Integer value) {
             addCriterion("aid >", value, "aid");
             return (Criteria) this;
         }
 
-        public Criteria andAidGreaterThanOrEqualTo(String value) {
+        public Criteria andAidGreaterThanOrEqualTo(Integer value) {
             addCriterion("aid >=", value, "aid");
             return (Criteria) this;
         }
 
-        public Criteria andAidLessThan(String value) {
+        public Criteria andAidLessThan(Integer value) {
             addCriterion("aid <", value, "aid");
             return (Criteria) this;
         }
 
-        public Criteria andAidLessThanOrEqualTo(String value) {
+        public Criteria andAidLessThanOrEqualTo(Integer value) {
             addCriterion("aid <=", value, "aid");
             return (Criteria) this;
         }
 
-        public Criteria andAidLike(String value) {
-            addCriterion("aid like", value, "aid");
-            return (Criteria) this;
-        }
-
-        public Criteria andAidNotLike(String value) {
-            addCriterion("aid not like", value, "aid");
-            return (Criteria) this;
-        }
-
-        public Criteria andAidIn(List<String> values) {
+        public Criteria andAidIn(List<Integer> values) {
             addCriterion("aid in", values, "aid");
             return (Criteria) this;
         }
 
-        public Criteria andAidNotIn(List<String> values) {
+        public Criteria andAidNotIn(List<Integer> values) {
             addCriterion("aid not in", values, "aid");
             return (Criteria) this;
         }
 
-        public Criteria andAidBetween(String value1, String value2) {
+        public Criteria andAidBetween(Integer value1, Integer value2) {
             addCriterion("aid between", value1, value2, "aid");
             return (Criteria) this;
         }
 
-        public Criteria andAidNotBetween(String value1, String value2) {
+        public Criteria andAidNotBetween(Integer value1, Integer value2) {
             addCriterion("aid not between", value1, value2, "aid");
             return (Criteria) this;
         }
@@ -254,52 +244,52 @@ public class ArticleImageExample {
             return (Criteria) this;
         }
 
-        public Criteria andFlagEqualTo(Byte value) {
+        public Criteria andFlagEqualTo(Boolean value) {
             addCriterion("flag =", value, "flag");
             return (Criteria) this;
         }
 
-        public Criteria andFlagNotEqualTo(Byte value) {
+        public Criteria andFlagNotEqualTo(Boolean value) {
             addCriterion("flag <>", value, "flag");
             return (Criteria) this;
         }
 
-        public Criteria andFlagGreaterThan(Byte value) {
+        public Criteria andFlagGreaterThan(Boolean value) {
             addCriterion("flag >", value, "flag");
             return (Criteria) this;
         }
 
-        public Criteria andFlagGreaterThanOrEqualTo(Byte value) {
+        public Criteria andFlagGreaterThanOrEqualTo(Boolean value) {
             addCriterion("flag >=", value, "flag");
             return (Criteria) this;
         }
 
-        public Criteria andFlagLessThan(Byte value) {
+        public Criteria andFlagLessThan(Boolean value) {
             addCriterion("flag <", value, "flag");
             return (Criteria) this;
         }
 
-        public Criteria andFlagLessThanOrEqualTo(Byte value) {
+        public Criteria andFlagLessThanOrEqualTo(Boolean value) {
             addCriterion("flag <=", value, "flag");
             return (Criteria) this;
         }
 
-        public Criteria andFlagIn(List<Byte> values) {
+        public Criteria andFlagIn(List<Boolean> values) {
             addCriterion("flag in", values, "flag");
             return (Criteria) this;
         }
 
-        public Criteria andFlagNotIn(List<Byte> values) {
+        public Criteria andFlagNotIn(List<Boolean> values) {
             addCriterion("flag not in", values, "flag");
             return (Criteria) this;
         }
 
-        public Criteria andFlagBetween(Byte value1, Byte value2) {
+        public Criteria andFlagBetween(Boolean value1, Boolean value2) {
             addCriterion("flag between", value1, value2, "flag");
             return (Criteria) this;
         }
 
-        public Criteria andFlagNotBetween(Byte value1, Byte value2) {
+        public Criteria andFlagNotBetween(Boolean value1, Boolean value2) {
             addCriterion("flag not between", value1, value2, "flag");
             return (Criteria) this;
         }
