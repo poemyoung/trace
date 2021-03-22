@@ -12,6 +12,7 @@
     <result column="whom" jdbcType="BIT" property="whom" />
     <result column="first" jdbcType="BIT" property="first" />
     <result column="evaluate" jdbcType="VARCHAR" property="evaluate" />
+    <result column="is_article" jdbcType="BIT" property="isArticle" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    aid, uid, headline, content, time, status, next_aid, whom, first, evaluate
+    aid, uid, headline, content, time, status, next_aid, whom, first, evaluate, is_article
   </sql>
   <select id="selectByExample" parameterType="com.trace.dao.entity.ArticleExample" resultMap="BaseResultMap">
     select
@@ -107,12 +108,12 @@
   <insert id="insert" parameterType="com.trace.dao.entity.Article">
     insert into article (aid, uid, headline, 
       content, time, status, 
-      next_aid, whom, first, evaluate
-      )
+      next_aid, whom, first, evaluate, 
+      is_article)
     values (#{aid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{headline,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
-      #{nextAid,jdbcType=INTEGER}, #{whom,jdbcType=BIT}, #{first,jdbcType=BIT}, #{evaluate,jdbcType=VARCHAR}
-      )
+      #{nextAid,jdbcType=INTEGER}, #{whom,jdbcType=BIT}, #{first,jdbcType=BIT}, #{evaluate,jdbcType=VARCHAR}, 
+      #{isArticle,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.trace.dao.entity.Article">
     insert into article
@@ -147,6 +148,9 @@
       <if test="evaluate != null">
         evaluate,
       </if>
+      <if test="isArticle != null">
+        is_article,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="aid != null">
@@ -178,6 +182,9 @@
       </if>
       <if test="evaluate != null">
         #{evaluate,jdbcType=VARCHAR},
+      </if>
+      <if test="isArticle != null">
+        #{isArticle,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -220,6 +227,9 @@
       <if test="record.evaluate != null">
         evaluate = #{record.evaluate,jdbcType=VARCHAR},
       </if>
+      <if test="record.isArticle != null">
+        is_article = #{record.isArticle,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -236,7 +246,8 @@
       next_aid = #{record.nextAid,jdbcType=INTEGER},
       whom = #{record.whom,jdbcType=BIT},
       first = #{record.first,jdbcType=BIT},
-      evaluate = #{record.evaluate,jdbcType=VARCHAR}
+      evaluate = #{record.evaluate,jdbcType=VARCHAR},
+      is_article = #{record.isArticle,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -271,6 +282,9 @@
       <if test="evaluate != null">
         evaluate = #{evaluate,jdbcType=VARCHAR},
       </if>
+      <if test="isArticle != null">
+        is_article = #{isArticle,jdbcType=BIT},
+      </if>
     </set>
     where aid = #{aid,jdbcType=INTEGER}
   </update>
@@ -284,7 +298,8 @@
       next_aid = #{nextAid,jdbcType=INTEGER},
       whom = #{whom,jdbcType=BIT},
       first = #{first,jdbcType=BIT},
-      evaluate = #{evaluate,jdbcType=VARCHAR}
+      evaluate = #{evaluate,jdbcType=VARCHAR},
+      is_article = #{isArticle,jdbcType=BIT}
     where aid = #{aid,jdbcType=INTEGER}
   </update>
 </mapper>

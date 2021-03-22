@@ -23,6 +23,8 @@ public class Article {
 
     private String evaluate;
 
+    private Boolean isArticle;
+
     public Integer getAid() {
         return aid;
     }
@@ -101,5 +103,13 @@ public class Article {
 
     public void setEvaluate(String evaluate) {
         this.evaluate = evaluate == null ? null : evaluate.trim();
+    }
+
+    public Boolean getIsArticle() {
+        return isArticle;
+    }
+
+    public void setIsArticle(Boolean isArticle) {
+        this.isArticle = isArticle;
     }
 }

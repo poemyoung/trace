@@ -44,6 +44,7 @@ public class ArticleService {
         article1.setFirst(true);
         article1.setStatus(StatusConverter.convertStatus(StatusEnum.UNHANDLE));
         article1.setWhom(WhomConverter.convertWhom(WhomEnum.USER));
+        article1.setIsArticle(false);
         int i = articleMapper.insertSelective(article1);
         boolean f = this.imageListInsert(article1.getAid(),ImagePosEnum.WEAPP,article.getImagePaths());
         return i > 0 && f;

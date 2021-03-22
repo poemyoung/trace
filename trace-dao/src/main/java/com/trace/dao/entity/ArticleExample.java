@@ -734,6 +734,66 @@ public class ArticleExample {
             addCriterion("evaluate not between", value1, value2, "evaluate");
             return (Criteria) this;
         }
+
+        public Criteria andIsArticleIsNull() {
+            addCriterion("is_article is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsArticleIsNotNull() {
+            addCriterion("is_article is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsArticleEqualTo(Boolean value) {
+            addCriterion("is_article =", value, "isArticle");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsArticleNotEqualTo(Boolean value) {
+            addCriterion("is_article <>", value, "isArticle");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsArticleGreaterThan(Boolean value) {
+            addCriterion("is_article >", value, "isArticle");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsArticleGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("is_article >=", value, "isArticle");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsArticleLessThan(Boolean value) {
+            addCriterion("is_article <", value, "isArticle");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsArticleLessThanOrEqualTo(Boolean value) {
+            addCriterion("is_article <=", value, "isArticle");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsArticleIn(List<Boolean> values) {
+            addCriterion("is_article in", values, "isArticle");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsArticleNotIn(List<Boolean> values) {
+            addCriterion("is_article not in", values, "isArticle");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsArticleBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_article between", value1, value2, "isArticle");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsArticleNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_article not between", value1, value2, "isArticle");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
