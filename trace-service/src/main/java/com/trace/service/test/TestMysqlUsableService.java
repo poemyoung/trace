@@ -161,7 +161,7 @@ public class TestMysqlUsableService {
                 b = girl.charAt(random.nextInt(girl.length()));
                 c = girl.charAt(random.nextInt(girl.length()));
             }
-            return a+b+c;
+            return random.nextBoolean() ? a+b+c : a+b;
         }
 
         public String randomIdCard() {

@@ -31,7 +31,7 @@ public class TestMysqlUsableController {
         return service.getRedisKey(key);
     }
     public void addRandomData() {
-        for (int i = 50;i <=100;i++) {
+        for (int i = 196;i <=300;i++) {
             service.addRandom(i);
         }
     }
