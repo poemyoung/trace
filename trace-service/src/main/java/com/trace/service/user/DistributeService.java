@@ -8,6 +8,7 @@ import org.apache.logging.log4j.spi.LoggerRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.*;
  * Created on 2021/3/19
  */
 @Service
+@CacheConfig(cacheNames = "addr_cache")
 public class DistributeService {
     final Logger LOGGER = LoggerFactory.getLogger(DistributeService.class);
 
