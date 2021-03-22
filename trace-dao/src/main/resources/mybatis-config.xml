@@ -23,5 +23,7 @@
         <mapper resource="mapper/CodeManageMapper.xml" />
         <mapper resource="mapper/UserAndAddrMapper.xml" />
         <mapper resource="mapper/AdminMapper.xml" />
+        <mapper resource="mapper/ArticleMapper.xml" />
+        <mapper resource="mapper/ArticleImageMapper.xml" />
     </mappers>
 </configuration>

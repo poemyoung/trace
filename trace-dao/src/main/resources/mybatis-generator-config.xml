@@ -93,8 +93,8 @@
 
 
 <!--        open id 与 user id 转换表-->
-        <table schema="" tableName="admin" domainObjectName="Admin"
-               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
+        <table schema="" tableName="images" domainObjectName="ArticleImage"
+               enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
                enableUpdateByExample="false" selectByExampleQueryId="">
             <!--是否使用实际列名,默认为false-->
             <!--<property name="useActualColumnNames" value="false" />-->
