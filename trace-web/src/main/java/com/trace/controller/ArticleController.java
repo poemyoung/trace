@@ -5,10 +5,7 @@ import com.trace.service.entity.recentity.ArticleRecEntity;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author xzp
@@ -31,4 +28,11 @@ public class ArticleController {
         }
     }
 
+    @GetMapping("/artobtain")
+    public Result obtainArticles(@RequestParam Integer userId) {
+        if(userId == null || userId == 0) {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        return Result.success(articleService.getArticlesByUserId(userId));
+    }
 }

@@ -2,6 +2,7 @@ package com.trace.service.article;
 
 import com.common.utils.SnowflakeIdUtil;
 import com.trace.dao.entity.Article;
+import com.trace.dao.entity.ArticleExample;
 import com.trace.dao.entity.ArticleImage;
 import com.trace.dao.repository.ArticleImageMapper;
 import com.trace.dao.repository.ArticleMapper;
@@ -12,11 +13,14 @@ import com.trace.service.entity.commentity.ImagePosEnum;
 import com.trace.service.entity.commentity.StatusEnum;
 import com.trace.service.entity.commentity.WhomEnum;
 import com.trace.service.entity.recentity.ArticleRecEntity;
+import com.trace.service.entity.retentity.ArticleRetEntity;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author xzp
@@ -104,4 +108,47 @@ public class ArticleService {
         }
         return content.length() <= 500;
     }
+
+    public List<ArticleRetEntity> getArticlesByUserId(Integer userId) {
+        if(userId == null || userId == 0){
+            return new ArrayList<>();
+        }
+        // 数据库中获取全部文章列表
+        ArticleExample example = new ArticleExample();
+        example.createCriteria()
+                .andUidEqualTo(userId);
+        List<Article> articles = articleMapper.selectByExample(example);
+        // 遍历，装入first = 1 的所有文章列表
+        if(articles == null || articles.size() == 0) {
+            return new ArrayList<>();
+        }
+        List<ArticleRetEntity> articlesRes = new ArrayList<>();
+        for (Article article : articles) {
+            if(article.getFirst() != null && article.getFirst()) {
+                ArticleRetEntity retEntity = new ArticleRetEntity();
+                retEntity.setContent(article.getContent());
+                retEntity.setHeadLine(article.getHeadline());
+                retEntity.setId(article.getAid());
+                retEntity.setTime(article.getTime());
+                retEntity.setArticle(article.getIsArticle());
+                articlesRes.add(retEntity);
+            }
+        }
+        // 排序，按照时间反向排序
+        this.sortByTime(articlesRes);
+        return articlesRes;
+    }
+
+    private void sortByTime(List<ArticleRetEntity> ens) {
+        ens.sort((o1, o2) -> {
+            if (o1.getTime().after(o2.getTime())) {
+                return -1;
+            } else if (o1.getTime().before(o2.getTime())) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+    }
+
 }
