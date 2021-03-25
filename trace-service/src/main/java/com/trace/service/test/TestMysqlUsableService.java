@@ -27,6 +27,9 @@ import java.util.*;
 public class TestMysqlUsableService {
 
     @Autowired
+    UserAndAddrMapper uaaMapper;
+
+    @Autowired
     RedisTemplate redisTemplate;
 
     @Autowired
@@ -130,8 +133,48 @@ public class TestMysqlUsableService {
         }
     }
 
+    public void washData() {
+        // 选出id 列表
+        RandomDataGenerator g = new RandomDataGenerator();
+        Calendar min = Calendar.getInstance();
+        min.set(Calendar.DAY_OF_MONTH,1);
+        Date minD = min.getTime();
+        Calendar max = Calendar.getInstance();
+        max.set(Calendar.MONTH,max.get(Calendar.MONTH) + 2);
+        max.set(Calendar.DAY_OF_MONTH,30);
+        Date maxD = max.getTime();
+        AddressExample example = new AddressExample();
+        List<Address> addresses = addressMapper.selectByExample(example);
+        int count = 0;
+        for (Address address : addresses) {
+           int aid = address.getIdaddress();
+            Date date = g.randomTime(minD, maxD);
+            // 置换
+            address.setTime(date);
+            addressMapper.updateByPrimaryKeySelective(address);
+            UserAndAddr uaa = new UserAndAddr();
+            uaa.setAid(aid);
+            uaa.setTime(date);
+            uaaMapper.updateByPrimaryKeySelective(uaa);
+            System.out.println(count++ +"时间为"+date);
+
+        }
+    }
+
     public static class RandomDataGenerator {
         Random random = new Random();
+        public Date randomTime(Date min,Date max) {
+            long minMill = min.getTime();
+            long maxMill = max.getTime();
+            long randomLong = this.getRandomLong(minMill, maxMill);
+            return new Date(randomLong);
+        }
+
+        public long getRandomLong(long min,long max) {
+            return (long)(min + Math.random() * (max-min+1));
+        }
+
+
         public String randomName() {
             String[] Surname = {"赵", "钱", "孙", "李", "周", "吴", "郑", "王", "冯", "陈", "褚", "卫", "蒋", "沈", "韩", "杨", "朱", "秦", "尤", "许",
                     "何", "吕", "施", "张", "孔", "曹", "严", "华", "金", "魏", "陶", "姜", "戚", "谢", "邹", "喻", "柏", "水", "窦", "章", "云", "苏", "潘", "葛", "奚", "范", "彭", "郎",

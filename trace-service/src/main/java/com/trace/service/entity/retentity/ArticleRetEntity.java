@@ -12,14 +12,7 @@ public class ArticleRetEntity {
     String content;
     Date time;
     Boolean isArticle;
-
-    public boolean isArticle() {
-        return isArticle;
-    }
-
-    public void setArticle(Boolean article) {
-        isArticle = article;
-    }
+    Integer status;
 
     public Integer getId() {
         return id;
@@ -51,5 +44,21 @@ public class ArticleRetEntity {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public Boolean getArticle() {
+        return isArticle;
+    }
+
+    public void setArticle(Boolean article) {
+        isArticle = article;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

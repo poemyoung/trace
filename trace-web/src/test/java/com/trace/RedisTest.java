@@ -61,5 +61,8 @@ public class RedisTest {
         tmu.addRandomData();
     }
 
-
+    @Test
+    public void washData() {
+        tmu.washData();
+    }
 }

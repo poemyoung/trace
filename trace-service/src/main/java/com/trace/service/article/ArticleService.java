@@ -131,6 +131,7 @@ public class ArticleService {
                 retEntity.setId(article.getAid());
                 retEntity.setTime(article.getTime());
                 retEntity.setArticle(article.getIsArticle());
+                retEntity.setStatus(article.getStatus());
                 articlesRes.add(retEntity);
             }
         }
