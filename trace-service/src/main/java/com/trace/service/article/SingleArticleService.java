@@ -30,6 +30,44 @@ public class SingleArticleService {
     @Autowired
     ArticleImageMapper imageMapper;
 
+    public boolean endWorkOrder(Integer aid,Float eva) {
+        if(aid == null || aid == 0) {
+            return false;
+        }
+        List<Integer> workOrderIds = this.findWorkOrderIds(aid);
+        if(workOrderIds == null || workOrderIds.size() == 0){
+            return false;
+        }
+        for (Integer id : workOrderIds) {
+            Article article = new Article();
+            article.setAid(id);
+            article.setEvaluate(eva+"");
+            article.setStatus(StatusConverter.convertStatus(StatusEnum.READED_HANDLE));
+            int i = articleMapper.updateByPrimaryKeySelective(article);
+            if(i <= 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public List<Integer> findWorkOrderIds(Integer aid) {
+        List<Integer> aidList = new LinkedList<>();
+        Article article = articleMapper.selectByPrimaryKey(aid);
+        if(article!=null) {
+            aidList.add(aid);
+        }else {
+            return new ArrayList<>();
+        }
+        Integer nextAid = article.getNextAid();
+        while (nextAid != null) {
+            article = articleMapper.selectByPrimaryKey(nextAid);
+            aidList.add(nextAid);
+            nextAid = article.getNextAid();
+        }
+        return aidList;
+    }
+
     public WorkOrderSingleRet dealSingleWorkOrder(Integer aid) {
         if (aid == null || aid == 0) {
             return null;

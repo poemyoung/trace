@@ -8,10 +8,10 @@ import java.util.List;
  * Created on 2021/3/27
  */
 public class WorkOrderSingleRet {
-    List<WorkOrderRet> wos;
-    String statusDesc;
-    Date lastTime;
-    Float eva;
+    private List<WorkOrderRet> wos;
+    private String statusDesc;
+    private Date lastTime;
+    private Float eva;
 
     public List<WorkOrderRet> getWos() {
         return wos;

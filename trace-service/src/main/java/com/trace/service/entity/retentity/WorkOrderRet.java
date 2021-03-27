@@ -8,12 +8,12 @@ import java.util.List;
  * Created on 2021/3/27
  */
 public class WorkOrderRet {
-    Integer aid;
-    String headLine;
-    String content;
-    Boolean whom;
-    Date time;
-    List<String> images;
+    private Integer aid;
+    private String headLine;
+    private String content;
+    private Boolean whom;
+    private Date time;
+    private List<String> images;
 
     public Integer getAid() {
         return aid;
