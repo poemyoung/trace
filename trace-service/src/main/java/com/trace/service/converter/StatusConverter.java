@@ -18,4 +18,16 @@ public class StatusConverter {
         }
         return 0;
     }
+
+    public static StatusEnum covertInt(int status) {
+        switch (status) {
+            case 1:
+                return StatusEnum.UNREAD_MEUNHANDLE;
+            case 2:
+                return StatusEnum.UNHANDLE;
+            case 0:
+                return StatusEnum.READED_HANDLE;
+        }
+        return StatusEnum.UNHANDLE;
+    }
 }
