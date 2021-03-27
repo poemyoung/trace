@@ -5,16 +5,16 @@ package com.trace.service.entity.recentity;
  * Created on 2021/3/27
  */
 public class WOReplyRec {
-    private Integer aid;
+    private String aid;
     private  String headLine;
     private String content;
     private String[] imagePaths;
 
-    public Integer getAid() {
+    public String getAid() {
         return aid;
     }
 
-    public void setAid(Integer aid) {
+    public void setAid(String aid) {
         this.aid = aid;
     }
 

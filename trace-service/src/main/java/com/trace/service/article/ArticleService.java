@@ -47,11 +47,18 @@ public class ArticleService {
 
     public boolean workOrderNewReply(WOReplyRec wo,WhomEnum whom,ImagePosEnum imagePos) {
         // 参数校验
-        if(wo.getAid() == null || wo.getAid() == 0) {
+        if(StringUtils.isBlank(wo.getAid())) {
             return false;
         }
         // 获取文章最后id
-        List<Integer> workOrderIds = singleArticleService.findWorkOrderIds(wo.getAid());
+        Integer aid = 0;
+        try {
+            aid = Integer.parseInt(wo.getAid());
+        }catch (Exception e) {
+            LOGGER.error("aid转整数解析失败--"+wo.getAid());
+            return false;
+        }
+        List<Integer> workOrderIds = singleArticleService.findWorkOrderIds(aid);
         if(workOrderIds == null || workOrderIds.size() == 0) {
             return false;
         }
