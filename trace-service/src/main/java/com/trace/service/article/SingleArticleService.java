@@ -31,14 +31,18 @@ public class SingleArticleService {
     ArticleImageMapper imageMapper;
 
     public WorkOrderSingleRet dealSingleWorkOrder(Integer aid) {
-        if(aid == null || aid == 0) {
+        if (aid == null || aid == 0) {
+            return null;
+        }
+        Article article = articleMapper.selectByPrimaryKey(aid);
+        if (article == null) {
             return null;
         }
         List<WorkOrderRet> wos = this.workOrdersById(aid);
         Date lastTime = this.worOrderLastTime(aid);
-        Float eva = ((Integer)0).floatValue();
+        Float eva = ((Integer) 0).floatValue();
         String stausDesc = this.workOrderStatusDesc(aid);
-        if(stausDesc.equals("已结单")){
+        if (stausDesc.equals("已结单")) {
             eva = this.workOrderRate(aid);
         }
         WorkOrderSingleRet ret = new WorkOrderSingleRet();
@@ -52,8 +56,12 @@ public class SingleArticleService {
     // 获取上次回复时间
     public Date worOrderLastTime(Integer aid) {
         Article article = articleMapper.selectByPrimaryKey(aid);
+        if (article == null) {
+            return null;
+        }
+        int count = 0;
         Integer next = article.getNextAid();
-        while (next != null) {
+        while (next != null && count++ < 15) {
             article = articleMapper.selectByPrimaryKey(article.getNextAid());
             next = article.getNextAid();
         }
@@ -63,6 +71,9 @@ public class SingleArticleService {
     // 获取状态描述
     public String workOrderStatusDesc(Integer aid) {
         Article article = articleMapper.selectByPrimaryKey(aid);
+        if (article == null) {
+            return "";
+        }
         StatusEnum status = StatusConverter.covertInt(article.getStatus());
         switch (status) {
             case READED_HANDLE:
@@ -78,14 +89,17 @@ public class SingleArticleService {
 
     // 获取评分,未结单返回null
     public Float workOrderRate(Integer aid) {
-            Article article = articleMapper.selectByPrimaryKey(aid);
-            if(article.getEvaluate() == null) {
-                return null;
-            }
-            if (StatusConverter.covertInt(article.getStatus()) == StatusEnum.READED_HANDLE) {
-                // 已结单，拉取评分
-                return Float.parseFloat(article.getEvaluate());
-            }
+        Article article = articleMapper.selectByPrimaryKey(aid);
+        if (article == null) {
+            return null;
+        }
+        if (article.getEvaluate() == null) {
+            return null;
+        }
+        if (StatusConverter.covertInt(article.getStatus()) == StatusEnum.READED_HANDLE) {
+            // 已结单，拉取评分
+            return Float.parseFloat(article.getEvaluate());
+        }
         return null;
     }
 
@@ -93,9 +107,13 @@ public class SingleArticleService {
     public List<WorkOrderRet> workOrdersById(Integer aid) {
         List<WorkOrderRet> wos = new LinkedList<>();
         Article article = articleMapper.selectByPrimaryKey(aid);
+        if (article == null) {
+            return new ArrayList<>();
+        }
         wos.add(covertArticle(article));
         Integer next = article.getNextAid();
-        while (next != null) {
+        int count = 0;
+        while (next != null && count++ < 15) {
             article = articleMapper.selectByPrimaryKey(article.getNextAid());
             wos.add(this.covertArticle(article));
             next = article.getNextAid();
@@ -104,6 +122,9 @@ public class SingleArticleService {
     }
 
     public WorkOrderRet covertArticle(Article article) {
+        if (article == null) {
+            return null;
+        }
         WorkOrderRet wo = new WorkOrderRet();
         wo.setAid(article.getAid());
         wo.setHeadLine(article.getHeadline());
