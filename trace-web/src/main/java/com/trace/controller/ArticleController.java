@@ -48,11 +48,17 @@ public class ArticleController {
     }
 
     @GetMapping("/singlewo")
-    public Result obtainSingleWo(@RequestParam Integer aid) {
-        if(aid == null || aid == 0) {
-            return Result.fail(ResultCode.PARAM_IS_INVALID);
+    public Result obtainSingleWo(@RequestParam String aid) {
+        Integer a = 0;
+        try{
+            a = Integer.parseInt(aid);
+        }catch (Exception e) {
+            Result.fail(ResultCode.PARAM_IS_INVALID);
         }
-        WorkOrderSingleRet ret = singleService.dealSingleWorkOrder(aid);
+        if(a == 0) {
+            return  Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        WorkOrderSingleRet ret = singleService.dealSingleWorkOrder(a);
         if(ret == null) {
             return Result.fail(ResultCode.WORKORDER_NOT_EXIST);
         }
@@ -69,6 +75,7 @@ public class ArticleController {
     }
     @PostMapping("/newreply")
     public Result newReply(@RequestBody WOReplyRec newReply) {
+
         boolean f = articleService.workOrderNewReply(newReply, WhomEnum.ADMIN, ImagePosEnum.WEAPP);
         if(f) {
             return Result.success();
