@@ -1,17 +1,18 @@
 package com.trace.service.entity.retentity;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * @author xzp
  * Created on 2021/3/27
  */
-public class WorkOrderRetEntity {
+public class WorkOrderRet {
     Integer aid;
     String headLine;
     String content;
     Boolean whom;
-    String time;
+    Date time;
     List<String> images;
 
     public Integer getAid() {
@@ -46,11 +47,11 @@ public class WorkOrderRetEntity {
         this.whom = whom;
     }
 
-    public String getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 

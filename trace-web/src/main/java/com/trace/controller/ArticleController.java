@@ -1,7 +1,9 @@
 package com.trace.controller;
 
 import com.trace.service.article.ArticleService;
+import com.trace.service.article.SingleArticleService;
 import com.trace.service.entity.recentity.ArticleRecEntity;
+import com.trace.service.entity.retentity.WorkOrderSingleRet;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class ArticleController {
 
     @Autowired
     ArticleService articleService;
+
+    @Autowired
+    SingleArticleService singleService;
 
     @PostMapping("/wosubmit")
     public Result submitWorkFlow(@RequestBody ArticleRecEntity article) {
@@ -34,5 +39,17 @@ public class ArticleController {
             return Result.fail(ResultCode.PARAM_IS_INVALID);
         }
         return Result.success(articleService.getArticlesByUserId(userId));
+    }
+
+    @GetMapping("/singlewo")
+    public Result obtainSingleWo(@RequestParam Integer aid) {
+        if(aid == null || aid == 0) {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        WorkOrderSingleRet ret = singleService.dealSingleWorkOrder(aid);
+        if(ret == null) {
+            return Result.fail(ResultCode.WORKORDER_NOT_EXIST);
+        }
+        return Result.success(ret);
     }
 }

@@ -16,6 +16,7 @@ public enum ResultCode {
     PARAM_IS_BLANK(10002, "参数为空"),
     PARAM_TYPE_BIND_ERROR(10003, "参数类型错误"),
     PARAM_NOT_COMPLETE(10004, "参数缺失"),
+    WORKORDER_NOT_EXIST(10005,"文章不存在"),
 
     /* 用户错误：20001-29999*/
     USER_NOT_LOGGED_IN(20001, "用户未登录"),

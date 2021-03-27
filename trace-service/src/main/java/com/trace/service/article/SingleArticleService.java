@@ -1,7 +1,5 @@
 package com.trace.service.article;
 
-import com.common.utils.TimeFormatUtil;
-import com.google.common.collect.Lists;
 import com.trace.dao.entity.Article;
 import com.trace.dao.entity.ArticleImage;
 import com.trace.dao.entity.ArticleImageExample;
@@ -9,11 +7,14 @@ import com.trace.dao.repository.ArticleImageMapper;
 import com.trace.dao.repository.ArticleMapper;
 import com.trace.service.converter.StatusConverter;
 import com.trace.service.entity.commentity.StatusEnum;
-import com.trace.service.entity.retentity.WorkOrderRetEntity;
+import com.trace.service.entity.retentity.WorkOrderRet;
+import com.trace.service.entity.retentity.WorkOrderSingleRet;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,19 +30,68 @@ public class SingleArticleService {
     @Autowired
     ArticleImageMapper imageMapper;
 
+    public WorkOrderSingleRet dealSingleWorkOrder(Integer aid) {
+        if(aid == null || aid == 0) {
+            return null;
+        }
+        List<WorkOrderRet> wos = this.workOrdersById(aid);
+        Date lastTime = this.worOrderLastTime(aid);
+        Float eva = ((Integer)0).floatValue();
+        String stausDesc = this.workOrderStatusDesc(aid);
+        if(stausDesc.equals("已结单")){
+            eva = this.workOrderRate(aid);
+        }
+        WorkOrderSingleRet ret = new WorkOrderSingleRet();
+        ret.setEva(eva);
+        ret.setStatusDesc(stausDesc);
+        ret.setLastTime(lastTime);
+        ret.setWos(wos);
+        return ret;
+    }
+
+    // 获取上次回复时间
+    public Date worOrderLastTime(Integer aid) {
+        Article article = articleMapper.selectByPrimaryKey(aid);
+        Integer next = article.getNextAid();
+        while (next != null) {
+            article = articleMapper.selectByPrimaryKey(article.getNextAid());
+            next = article.getNextAid();
+        }
+        return article.getTime();
+    }
+
+    // 获取状态描述
+    public String workOrderStatusDesc(Integer aid) {
+        Article article = articleMapper.selectByPrimaryKey(aid);
+        StatusEnum status = StatusConverter.covertInt(article.getStatus());
+        switch (status) {
+            case READED_HANDLE:
+                return "已结单";
+            case UNHANDLE:
+                return "未处理";
+            case UNREAD_MEUNHANDLE:
+                return "待我处理";
+        }
+        return "未处理";
+    }
+
+
     // 获取评分,未结单返回null
     public Float workOrderRate(Integer aid) {
-        Article article = articleMapper.selectByPrimaryKey(aid);
-        if(StatusConverter.covertInt(article.getStatus()) == StatusEnum.READED_HANDLE) {
-            // 已结单，拉取评分
-            return Float.parseFloat(article.getEvaluate());
-        }
+            Article article = articleMapper.selectByPrimaryKey(aid);
+            if(article.getEvaluate() == null) {
+                return null;
+            }
+            if (StatusConverter.covertInt(article.getStatus()) == StatusEnum.READED_HANDLE) {
+                // 已结单，拉取评分
+                return Float.parseFloat(article.getEvaluate());
+            }
         return null;
     }
 
     // 获取全部文章list
-    public List<WorkOrderRetEntity> workOrdersById(Integer aid) {
-        List<WorkOrderRetEntity> wos = new LinkedList<>();
+    public List<WorkOrderRet> workOrdersById(Integer aid) {
+        List<WorkOrderRet> wos = new LinkedList<>();
         Article article = articleMapper.selectByPrimaryKey(aid);
         wos.add(covertArticle(article));
         Integer next = article.getNextAid();
@@ -53,13 +103,13 @@ public class SingleArticleService {
         return wos;
     }
 
-    public WorkOrderRetEntity covertArticle(Article article) {
-        WorkOrderRetEntity wo = new WorkOrderRetEntity();
+    public WorkOrderRet covertArticle(Article article) {
+        WorkOrderRet wo = new WorkOrderRet();
         wo.setAid(article.getAid());
         wo.setHeadLine(article.getHeadline());
         wo.setContent(article.getContent());
         wo.setWhom(article.getWhom());
-        wo.setTime(TimeFormatUtil.formatTime(article.getTime()));
+        wo.setTime(article.getTime());
         // find images;
         ArticleImageExample example = new ArticleImageExample();
         example.createCriteria().andAidEqualTo(article.getAid());
