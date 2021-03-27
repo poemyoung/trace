@@ -2,20 +2,20 @@ package com.trace.service.entity.recentity;
 
 /**
  * @author xzp
- * Created on 2021/3/22
+ * Created on 2021/3/27
  */
-public class ArticleRecEntity {
-   private Integer userId;
-   private  String headLine;
+public class WOReplyRec {
+    private Integer aid;
+    private  String headLine;
     private String content;
     private String[] imagePaths;
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getAid() {
+        return aid;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setAid(Integer aid) {
+        this.aid = aid;
     }
 
     public String getHeadLine() {

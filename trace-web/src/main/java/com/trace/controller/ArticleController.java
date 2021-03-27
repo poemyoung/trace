@@ -2,13 +2,18 @@ package com.trace.controller;
 
 import com.trace.service.article.ArticleService;
 import com.trace.service.article.SingleArticleService;
+import com.trace.service.entity.commentity.ImagePosEnum;
+import com.trace.service.entity.commentity.WhomEnum;
 import com.trace.service.entity.recentity.ArticleRecEntity;
 import com.trace.service.entity.recentity.EndWorkOrderEntity;
+import com.trace.service.entity.recentity.WOReplyRec;
 import com.trace.service.entity.retentity.WorkOrderSingleRet;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.awt.*;
 
 /**
  * @author xzp
@@ -61,5 +66,14 @@ public class ArticleController {
         }
         boolean b = singleService.endWorkOrder(woEnd.getAid(), woEnd.getEva());
         return b ? Result.success() : Result.fail(ResultCode.PARAM_IS_INVALID);
+    }
+    @PostMapping("/newreply")
+    public Result newReply(@RequestBody WOReplyRec newReply) {
+        boolean f = articleService.workOrderNewReply(newReply, WhomEnum.ADMIN, ImagePosEnum.WEAPP);
+        if(f) {
+            return Result.success();
+        }else {
+            return Result.fail(ResultCode.WORKORDER_NOT_EXIST);
+        }
     }
 }

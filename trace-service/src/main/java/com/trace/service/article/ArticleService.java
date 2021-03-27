@@ -13,8 +13,11 @@ import com.trace.service.entity.commentity.ImagePosEnum;
 import com.trace.service.entity.commentity.StatusEnum;
 import com.trace.service.entity.commentity.WhomEnum;
 import com.trace.service.entity.recentity.ArticleRecEntity;
+import com.trace.service.entity.recentity.WOReplyRec;
 import com.trace.service.entity.retentity.ArticleRetEntity;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +38,44 @@ public class ArticleService {
     @Autowired
     ArticleImageMapper aiMapper;
 
+    @Autowired
+    SingleArticleService singleArticleService;
+
+    private final Logger LOGGER = LoggerFactory.getLogger(ArticleService.class);
+
     SnowflakeIdUtil snow = new SnowflakeIdUtil();
+
+    public boolean workOrderNewReply(WOReplyRec wo,WhomEnum whom,ImagePosEnum imagePos) {
+        // 参数校验
+        if(wo.getAid() == null || wo.getAid() == 0) {
+            return false;
+        }
+        // 获取文章最后id
+        List<Integer> workOrderIds = singleArticleService.findWorkOrderIds(wo.getAid());
+        if(workOrderIds == null || workOrderIds.size() == 0) {
+            return false;
+        }
+        Integer last = workOrderIds.get(workOrderIds.size()-1);
+        Article oldArticle = articleMapper.selectByPrimaryKey(last);
+        // 插入到last尾部
+        // 更新原来最后一篇文章
+        ArticleRecEntity newArticle = new ArticleRecEntity();
+        newArticle.setUserId(oldArticle.getUid());
+        newArticle.setContent(wo.getContent());
+        newArticle.setHeadLine(wo.getHeadLine());
+        newArticle.setImagePaths(wo.getImagePaths());
+        Article generalArticle = this.createGeneralArticle(newArticle);
+        oldArticle.setNextAid(generalArticle.getAid());
+        int i = articleMapper.updateByPrimaryKeySelective(oldArticle);
+        if(i <= 0)return false;
+        generalArticle.setFirst(false);
+        generalArticle.setStatus(oldArticle.getStatus());
+        generalArticle.setWhom(WhomConverter.convertWhom(whom));
+        generalArticle.setIsArticle(false);
+        i = articleMapper.insertSelective(generalArticle);
+        boolean f = this.imageListInsert(generalArticle.getAid(),imagePos,wo.getImagePaths());
+        return i > 0 && f;
+    }
 
     public boolean workOrderSubFirst(ArticleRecEntity article) {
         // 参数校验
