@@ -9,6 +9,8 @@ import com.trace.service.converter.StatusConverter;
 import com.trace.service.entity.commentity.StatusEnum;
 import com.trace.service.entity.retentity.WorkOrderRet;
 import com.trace.service.entity.retentity.WorkOrderSingleRet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,25 @@ public class SingleArticleService {
 
     @Autowired
     ArticleImageMapper imageMapper;
+
+    private final Logger LOGGER = LoggerFactory.getLogger(SingleArticleService.class);
+
+    public boolean delArticle(Integer aid){
+        if(aid == null || aid == 0) {
+            return false;
+        }
+        List<Integer> workOrderIds = this.findWorkOrderIds(aid);
+        // 删除列表中所有文章/工单
+        if(workOrderIds == null || workOrderIds.size() == 0) {
+            LOGGER.error("工单找不到！");
+            return false;
+        }
+        for (Integer a : workOrderIds) {
+            int i = articleMapper.deleteByPrimaryKey(a);
+            if(i <= 0)return false;
+        }
+        return true;
+    }
 
     public boolean endWorkOrder(Integer aid,Float eva) {
         if(aid == null || aid == 0) {

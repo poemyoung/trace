@@ -10,6 +10,8 @@ import com.trace.service.entity.recentity.WOReplyRec;
 import com.trace.service.entity.retentity.WorkOrderSingleRet;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,7 @@ import java.awt.*;
 @RequestMapping("/miniapi")
 public class ArticleController {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(ArticleController.class);
     @Autowired
     ArticleService articleService;
 
@@ -82,5 +85,18 @@ public class ArticleController {
         }else {
             return Result.fail(ResultCode.WORKORDER_NOT_EXIST);
         }
+    }
+
+    @GetMapping("/delarticle")
+    public Result delArticle(@RequestParam String aid) {
+        Integer a = 0;
+        try{
+            a = Integer.parseInt(aid);
+        }catch (Exception e) {
+            LOGGER.error("参数解析失败！aid=" + aid);
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        boolean b = singleService.delArticle(a);
+        return b ? Result.success() : Result.fail(ResultCode.WORKORDER_NOT_EXIST);
     }
 }
