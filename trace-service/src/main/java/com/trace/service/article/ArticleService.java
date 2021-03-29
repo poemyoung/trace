@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author xzp
@@ -44,6 +45,11 @@ public class ArticleService {
     private final Logger LOGGER = LoggerFactory.getLogger(ArticleService.class);
 
     SnowflakeIdUtil snow = new SnowflakeIdUtil();
+
+    public List<Article> allWorkArticle() {
+        List<Article> articles = articleMapper.selectByExample(new ArticleExample());
+        return Objects.requireNonNullElseGet(articles, ArrayList::new);
+    }
 
     public boolean workOrderNewReply(WOReplyRec wo,WhomEnum whom,ImagePosEnum imagePos) {
         // 参数校验

@@ -6,6 +6,7 @@ import com.trace.service.entity.commentity.ImagePosEnum;
 import com.trace.service.entity.commentity.WhomEnum;
 import com.trace.service.entity.recentity.ArticleRecEntity;
 import com.trace.service.entity.recentity.EndWorkOrderEntity;
+import com.trace.service.entity.recentity.ImgRec;
 import com.trace.service.entity.recentity.WOReplyRec;
 import com.trace.service.entity.retentity.WorkOrderSingleRet;
 import com.trace.util.Result;
@@ -31,6 +32,13 @@ public class ArticleController {
 
     @Autowired
     SingleArticleService singleService;
+
+    @PostMapping("/delImgs")
+    public Result delImgs(@RequestBody ImgRec imgs) {
+
+        System.out.println(imgs);
+        return Result.success();
+    }
 
     @PostMapping("/wosubmit")
     public Result submitWorkFlow(@RequestBody ArticleRecEntity article) {
@@ -79,7 +87,7 @@ public class ArticleController {
     @PostMapping("/newreply")
     public Result newReply(@RequestBody WOReplyRec newReply) {
 
-        boolean f = articleService.workOrderNewReply(newReply, WhomEnum.ADMIN, ImagePosEnum.WEAPP);
+        boolean f = articleService.workOrderNewReply(newReply, WhomEnum.USER, ImagePosEnum.WEAPP);
         if(f) {
             return Result.success();
         }else {
