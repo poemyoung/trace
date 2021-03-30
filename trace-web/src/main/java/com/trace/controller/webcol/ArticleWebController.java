@@ -1,10 +1,11 @@
 package com.trace.controller.webcol;
 
 import com.trace.dao.entity.Article;
-import com.trace.dao.entity.ArticleImage;
 import com.trace.service.article.ArticleImageService;
 import com.trace.service.article.ArticleService;
+import com.trace.service.article.SingleArticleService;
 import com.trace.service.entity.recentity.ImageRecEntity;
+import com.trace.service.entity.retentity.WorkOrderSingleRet;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class ArticleWebController {
     @Autowired
     ArticleImageService imageService;
 
+    @Autowired
+    SingleArticleService singleService;
+
     @GetMapping("/allwo")
     public Result allWorkOrder(){
         List<Article> articles = articleService.allWorkArticle();
@@ -38,5 +42,23 @@ public class ArticleWebController {
         }
         String s = imageService.getImageDownLoadAddr(fileList.getFileList());
         return Result.success(s);
+    }
+
+    @GetMapping("/singlewo")
+    public Result obtainSingleWo(@RequestParam String aid) {
+        Integer a = 0;
+        try{
+            a = Integer.parseInt(aid);
+        }catch (Exception e) {
+            Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        if(a == 0) {
+            return  Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        WorkOrderSingleRet ret = singleService.dealSingleWorkOrder(a);
+        if(ret == null) {
+            return Result.fail(ResultCode.WORKORDER_NOT_EXIST);
+        }
+        return Result.success(ret);
     }
 }
