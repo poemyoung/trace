@@ -12,6 +12,24 @@ public class WoRec {
     private String content;
     private String aid;
     private boolean wo;
+    private Integer imgNum;
+    private String headline;
+
+    public String getHeadline() {
+        return headline;
+    }
+
+    public void setHeadline(String headline) {
+        this.headline = headline;
+    }
+
+    public Integer getImgNum() {
+        return imgNum;
+    }
+
+    public void setImgNum(Integer imgNum) {
+        this.imgNum = imgNum;
+    }
 
     @Override
     public String toString() {

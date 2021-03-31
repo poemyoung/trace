@@ -1,4 +1,5 @@
 package com.common.utils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +52,7 @@ public class CreateFileUtil {
     public static boolean createDir(String destDirName) {
         File dir = new File(destDirName);
         if (dir.exists()) {
-            logger.error("创建目录" + destDirName + "失败，目标目录已经存在");
+
             return false;
         }
         if (!destDirName.endsWith(File.separator)) {
@@ -59,10 +60,9 @@ public class CreateFileUtil {
         }
         //创建目录
         if (dir.mkdirs()) {
-            logger.error("创建目录" + destDirName + "成功！");
+
             return true;
         } else {
-            logger.error("创建目录" + destDirName + "失败！");
             return false;
         }
     }
