@@ -47,7 +47,9 @@ public class ArticleService {
     SnowflakeIdUtil snow = new SnowflakeIdUtil();
 
     public List<Article> allWorkArticle() {
-        List<Article> articles = articleMapper.selectByExample(new ArticleExample());
+        ArticleExample example = new ArticleExample();
+        example.createCriteria().andFirstEqualTo(true);
+        List<Article> articles = articleMapper.selectByExample(example);
         return Objects.requireNonNullElseGet(articles, ArrayList::new);
     }
 

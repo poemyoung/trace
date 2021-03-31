@@ -6,6 +6,7 @@ import com.common.utils.HttpPostUtil;
 import com.trace.api.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.*;
 
@@ -42,7 +43,7 @@ public class ImageDeal {
         for (String fileid : fileIds) {
             AFile f = new AFile();
             f.setFileid(fileid);
-            f.setMax_age(7200);
+            f.setMax_age(72000);
             list.add(f);
         }
         req.setList(list);
