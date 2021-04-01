@@ -130,4 +130,15 @@
     where name = #{name,jdbcType=VARCHAR}
     and card_id = #{cardId,jdbcType=CHAR}
   </select>
+  <select id="selectByCondition" parameterType="com.trace.dao.entity.User" resultType="java.lang.Integer">
+    select id from user_info
+    <where>
+      <if test="name != null">
+        name like #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="cardId != null">
+        and card_id like #{cardId,jdbcType=CHAR}
+      </if>
+    </where>
+  </select>
 </mapper>

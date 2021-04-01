@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -60,6 +61,11 @@ public class UserMapperImpl implements UserMapper {
     @Override
     public int updateByPrimaryKey(User record) {
         return mapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<Integer> selectByCondition(User record) {
+        return mapper.selectByCondition(record);
     }
 
     @Override

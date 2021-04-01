@@ -3,6 +3,8 @@ package com.trace.dao.repository;
 import com.trace.dao.entity.User;
 import com.trace.dao.entity.UserExample;
 
+import java.util.List;
+
 public interface UserMapper {
     long countByExample(UserExample example);
 
@@ -19,4 +21,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     Integer selectUserExists(User record);
+
+    List<Integer> selectByCondition(User record);
 }
