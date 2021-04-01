@@ -13,7 +13,7 @@ public class ConditionEntity {
     private String passPlace;
     private String name;
     private String cardId;
-    private String symptom;
+    private Boolean symptom;
 
     public Date getStartDate() {
         return startDate;
@@ -63,11 +63,11 @@ public class ConditionEntity {
         this.cardId = cardId;
     }
 
-    public String getSymptom() {
+    public Boolean getSymptom() {
         return symptom;
     }
 
-    public void setSymptom(String symptom) {
+    public void setSymptom(Boolean symptom) {
         this.symptom = symptom;
     }
 
