@@ -1,7 +1,9 @@
 package com.trace.service.health;
 
+import com.trace.dao.repository.UserMapper;
 import com.trace.service.entity.recentity.ConditionEntity;
 import com.trace.service.entity.retentity.Person;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +16,9 @@ import java.util.List;
  */
 @Service
 public class SearchService {
+
+    @Autowired
+    UserMapper userMapper;
 
     public List<Person> search(ConditionEntity conditions) {
         if(conditions == null) {
