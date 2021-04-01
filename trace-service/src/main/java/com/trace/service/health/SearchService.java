@@ -41,8 +41,7 @@ public class SearchService {
             // 姓名身份证号过滤
             lists.add(this.searchByNameIdCard(conditions.getName(),conditions.getCardId()));
         }
-        if(conditions.getSymptom() != null) {
-
+        if(conditions.getSymptom()) {
             lists.add(this.searchBySymtom(conditions.getSymptom()));
         }
         if (StringUtils.isNotBlank(conditions.getPassPlace())||
@@ -134,7 +133,12 @@ public class SearchService {
             person.setCardId(user.getCardId());
             person.setName(user.getName());
             UserDetail detail = detailMapper.selectByPrimaryKey(i);
-            person.setSymptom(detail.getRiskFlag() != 0);
+            if(detail == null){
+               person.setSymptom(false);
+            }else {
+                person.setSymptom(detail.getRiskFlag() != 0);
+            }
+
             // 查找居住地id
             Integer lid = this.findLivePlace(i);
             Address address = addressMapper.selectByPrimaryKey(lid);
@@ -147,7 +151,7 @@ public class SearchService {
 
     private Integer findLivePlace(Integer uid) {
 
-        return 292961;
+        return 243863;
     }
 
 
