@@ -140,5 +140,6 @@
         and card_id like #{cardId,jdbcType=CHAR}
       </if>
     </where>
+    order by id asc
   </select>
 </mapper>

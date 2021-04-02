@@ -78,11 +78,14 @@ public class RedisConfig {
 
         Set<String> cacheNames = new HashSet<>();
         cacheNames.add(CacheNames.ADDR_CACHE.getCacheName());
+        cacheNames.add(CacheNames.IMG_CACHE.getCacheName());
+        cacheNames.add(CacheNames.SEATCH_CACHE.getCacheName());
 
         // 对每个缓存空间应用不同的配置
         Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
         configMap.put(CacheNames.ADDR_CACHE.getCacheName(), defaultCacheConfig.entryTtl(Duration.ofDays(300)));
         configMap.put(CacheNames.IMG_CACHE.getCacheName(),defaultCacheConfig.entryTtl(Duration.ofMillis(72000)));
+        configMap.put(CacheNames.SEATCH_CACHE.getCacheName(),defaultCacheConfig.entryTtl(Duration.ofMinutes(10)));
 
         RedisCacheManager cacheManager = RedisCacheManager.builder(lettuceConnectionFactory)
                 .cacheDefaults(defaultCacheConfig)

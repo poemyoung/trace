@@ -6,7 +6,8 @@ package com.trace.service.redis;
  */
 public enum CacheNames {
     ADDR_CACHE("addr_cache"),
-    IMG_CACHE("img_cache");
+    IMG_CACHE("img_cache"),
+    SEATCH_CACHE("search");
 
     CacheNames(String s) {
         this.cacheName = s;

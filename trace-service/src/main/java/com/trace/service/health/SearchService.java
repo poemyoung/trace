@@ -1,10 +1,5 @@
 package com.trace.service.health;
 
-import com.google.common.collect.Lists;
-import com.trace.dao.entity.Address;
-import com.trace.dao.entity.AddressExample;
-import com.trace.dao.entity.User;
-import com.trace.dao.entity.UserDetail;
 import com.trace.dao.repository.AddressMapper;
 import com.trace.dao.repository.UserDetailMapper;
 import com.trace.dao.repository.UserMapper;
@@ -12,6 +7,8 @@ import com.trace.service.entity.recentity.ConditionEntity;
 import com.trace.service.entity.retentity.Person;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -21,7 +18,11 @@ import java.util.*;
  * Created on 2021/4/1
  */
 @Service
+@CacheConfig(cacheNames = "search")
 public class SearchService {
+
+    @Autowired
+    SearchFilterService sfService;
 
     @Autowired
     UserDetailMapper detailMapper;
@@ -39,7 +40,7 @@ public class SearchService {
         List<List<Integer>> lists = new ArrayList<>();
         if(StringUtils.isNotBlank(conditions.getName())|| StringUtils.isNotBlank(conditions.getCardId())) {
             // 姓名身份证号过滤
-            lists.add(this.searchByNameIdCard(conditions.getName(),conditions.getCardId()));
+            lists.add(sfService.searchByNameIdCard(conditions.getName(),conditions.getCardId()));
         }
         if(conditions.getSymptom()) {
             lists.add(this.searchBySymtom(conditions.getSymptom()));
@@ -62,20 +63,6 @@ public class SearchService {
         return this.findPersons(interSeac);
     }
 
-    private List<Integer> searchByNameIdCard(String name,String cardId){
-        User user = new User();
-        if(StringUtils.isNotBlank(name)){
-            user.setName(name + "%");
-        }
-        if(StringUtils.isNotBlank(cardId)) {
-            user.setCardId("%"+cardId+"%");
-        }
-        List<Integer> list = userMapper.selectByCondition(user);
-        if(list == null) {
-            return new ArrayList<>();
-        }
-        return list;
-    }
 
     private List<Integer> searchBySymtom(boolean symptom) {
         return null;
@@ -126,30 +113,15 @@ public class SearchService {
     private List<Person> findPersons(List<Integer> list) {
         List<Person> persons = new ArrayList<>();
         for (Integer i : list) {
-            if(i == null) continue;
-            User user = userMapper.selectByPrimaryKey(i);
-            Person person = new Person();
-            person.setUid(i);
-            person.setCardId(user.getCardId());
-            person.setName(user.getName());
-            UserDetail detail = detailMapper.selectByPrimaryKey(i);
-            if(detail == null){
-               person.setSymptom(false);
-            }else {
-                person.setSymptom(detail.getRiskFlag() != 0);
-            }
-
-            // 查找居住地id
-            Integer lid = this.findLivePlace(i);
-            Address address = addressMapper.selectByPrimaryKey(lid);
-            person.setLivePlace(address.getProvince()+address.getCity()
-                    +address.getCounty()+address.getDetail());
-            persons.add(person);
+           Person p = sfService.findSinglePerson(i);
+           if(p == null)continue;
+           persons.add(p);
         }
         return persons;
     }
 
-    private Integer findLivePlace(Integer uid) {
+    @Cacheable(value = "search",key = "'uid'+#uid")
+    public Integer findLivePlace(Integer uid) {
 
         return 243863;
     }
