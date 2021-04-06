@@ -85,4 +85,23 @@ public class SearchFilterService {
                 +address.getCounty()+address.getDetail());
         return person;
     }
+    
+    private String getDetail(Address address) {
+        if(address == null) {
+            return "";
+        }
+        if(StringUtils.isBlank(address.getProvince())){
+            address.setProvince("");
+        }
+        if(StringUtils.isBlank(address.getCity())) {
+            address.setCity("");
+        }
+        if(StringUtils.isBlank(address.getCounty())) {
+            address.setCounty("");
+        }
+        if(StringUtils.isBlank(address.getDetail())) {
+            address.setDetail("");
+        }
+        return address.getProvince() + address.getCity() +address.getCounty() + address.getDetail();
+    }
 }
