@@ -34,8 +34,7 @@ public class SearchService {
     @Autowired
     UserMapper userMapper;
 
-    public List<Person> search(ConditionEntity conditions) {
-        if(conditions == null) {
+    public List<Person> search(ConditionEntity conditions) { if(conditions == null) {
             return new ArrayList<>();
         }
         List<List<Integer>> lists = new ArrayList<>();

@@ -25,6 +25,10 @@ import java.util.regex.Pattern;
 @Service
 @CacheConfig(cacheNames = "search")
 public class SearchFilterService {
+
+    @Autowired
+    PatricialTrieService ptService;
+
     @Autowired
     UserMapper userMapper;
 
@@ -95,35 +99,10 @@ public class SearchFilterService {
     public List<Integer> searchByLivePlace(String place) {
         List<Address> addresses = searchService.getLiveAddress();
         // 搜索地址集合
-        PatriciaTrie<Integer> tree = new PatriciaTrie<>();
-        for (Address a : addresses) {
-           tree.put(this.getDetail(a),a.getIdaddress());
-        }
-        Collection<Integer> values = tree.prefixMap(place).values();
-        List<Integer> list = new ArrayList<>(values);
+        ptService.isUsable();
+        PatricialTrieService.buildAddressTree(addresses);
+        List<Integer> list = PatricialTrieService.searchInPatree(place);
         list.sort(Comparator.comparingInt(o -> o));
         return list;
     }
-
-
-    private String getDetail(Address address) {
-        if(address == null) {
-            return "";
-        }
-        if(StringUtils.isBlank(address.getProvince())){
-            address.setProvince("");
-        }
-        if(StringUtils.isBlank(address.getCity())) {
-            address.setCity("");
-        }
-        if(StringUtils.isBlank(address.getCounty())) {
-            address.setCounty("");
-        }
-        if(StringUtils.isBlank(address.getDetail())) {
-            address.setDetail("");
-        }
-        return address.getProvince() + address.getCity() +address.getCounty() + address.getDetail();
-    }
-
-
 }

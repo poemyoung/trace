@@ -83,7 +83,7 @@ public class RedisConfig {
         Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
         configMap.put(CacheNames.ADDR_CACHE.getCacheName(), defaultCacheConfig.entryTtl(Duration.ofDays(300)));
         configMap.put(CacheNames.IMG_CACHE.getCacheName(),defaultCacheConfig.entryTtl(Duration.ofMillis(72000)));
-        configMap.put(CacheNames.SEATCH_CACHE.getCacheName(),defaultCacheConfig.entryTtl(Duration.ofMinutes(10)));
+        configMap.put(CacheNames.SEATCH_CACHE.getCacheName(),defaultCacheConfig.entryTtl(Duration.ofMinutes(20)));
 
         RedisCacheManager cacheManager = RedisCacheManager.builder(lettuceConnectionFactory)
                 .cacheDefaults(defaultCacheConfig)
