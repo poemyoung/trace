@@ -1,20 +1,22 @@
 package com.trace.service.health;
 
 import com.trace.dao.entity.Address;
+import com.trace.dao.entity.AddressExample;
 import com.trace.dao.entity.User;
 import com.trace.dao.entity.UserDetail;
 import com.trace.dao.repository.AddressMapper;
 import com.trace.dao.repository.UserDetailMapper;
 import com.trace.dao.repository.UserMapper;
 import com.trace.service.entity.retentity.Person;
+import org.apache.commons.collections4.trie.PatriciaTrie;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * @author xzp
@@ -55,6 +57,9 @@ public class SearchFilterService {
     public Person findSinglePerson(Integer uid) {
         if(uid == null) return null;
         User user = userMapper.selectByPrimaryKey(uid);
+        if(user == null) {
+            return null;
+        }
         Person person = new Person();
         person.setUid(uid);
         person.setCardId(user.getCardId());
@@ -85,7 +90,22 @@ public class SearchFilterService {
                 +address.getCounty()+address.getDetail());
         return person;
     }
-    
+
+    @Cacheable(value = "search",key = "'live'+#place")
+    public List<Integer> searchByLivePlace(String place) {
+        List<Address> addresses = searchService.getLiveAddress();
+        // 搜索地址集合
+        PatriciaTrie<Integer> tree = new PatriciaTrie<>();
+        for (Address a : addresses) {
+           tree.put(this.getDetail(a),a.getIdaddress());
+        }
+        Collection<Integer> values = tree.prefixMap(place).values();
+        List<Integer> list = new ArrayList<>(values);
+        list.sort(Comparator.comparingInt(o -> o));
+        return list;
+    }
+
+
     private String getDetail(Address address) {
         if(address == null) {
             return "";
@@ -104,4 +124,6 @@ public class SearchFilterService {
         }
         return address.getProvince() + address.getCity() +address.getCounty() + address.getDetail();
     }
+
+
 }

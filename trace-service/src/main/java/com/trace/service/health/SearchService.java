@@ -1,7 +1,6 @@
 package com.trace.service.health;
 
-import com.trace.dao.entity.User;
-import com.trace.dao.entity.UserDetail;
+import com.trace.dao.entity.*;
 import com.trace.dao.repository.AddressMapper;
 import com.trace.dao.repository.UserDetailMapper;
 import com.trace.dao.repository.UserMapper;
@@ -54,7 +53,7 @@ public class SearchService {
             ,conditions.getStartDate(),conditions.getEndDate()));
         }
         if(StringUtils.isNotBlank(conditions.getLivePlace())) {
-            lists.add(this.searchByLivePlace(conditions.getLivePlace()));
+            lists.add(sfService.searchByLivePlace(conditions.getLivePlace()));
         }
         List<Integer> interSeac = findInterSeac(lists);
         // 数据库反查Person列表
@@ -70,9 +69,6 @@ public class SearchService {
         return null;
     }
     private List<Integer> searchByPassPlace(String place, Date startDate,Date endDate) {
-        return null;
-    }
-    private List<Integer> searchByLivePlace(String place) {
         return null;
     }
 
@@ -135,5 +131,26 @@ public class SearchService {
         return addrId;
     }
 
+    @Cacheable(value = "search",key = "'alladdr'")
+    public List<Address> getAllAddress() {
+        List<Address> addresses = addressMapper.selectByExample(new AddressExample());
+        if(addresses == null) {
+            return new ArrayList<>();
+        }
+        return addresses;
+    }
+
+    @Cacheable(value = "search",key = "'liveaddr'")
+    public List<Address> getLiveAddress() {
+        List<UserDetail> userDetails = detailMapper.selectByExample(new UserDetailExample());
+        List<Address> list = new ArrayList<>();
+        for (UserDetail detail : userDetails) {
+            Address address = addressMapper.selectByPrimaryKey(detail.getAddrId());
+            if(address != null) {
+                list.add(address);
+            }
+        }
+        return list;
+    }
 
 }
