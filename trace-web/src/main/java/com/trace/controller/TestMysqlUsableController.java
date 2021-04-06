@@ -38,4 +38,8 @@ public class TestMysqlUsableController {
     public void washData() {
         service.washData();
     }
+
+    public void washData2() {
+        service.washData2();
+    }
 }

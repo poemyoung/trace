@@ -1,5 +1,7 @@
 package com.trace.service.health;
 
+import com.trace.dao.entity.User;
+import com.trace.dao.entity.UserDetail;
 import com.trace.dao.repository.AddressMapper;
 import com.trace.dao.repository.UserDetailMapper;
 import com.trace.dao.repository.UserMapper;
@@ -54,11 +56,11 @@ public class SearchService {
         if(StringUtils.isNotBlank(conditions.getLivePlace())) {
             lists.add(this.searchByLivePlace(conditions.getLivePlace()));
         }
-        // 求交集算法
         List<Integer> interSeac = findInterSeac(lists);
         // 数据库反查Person列表
         if(interSeac == null || interSeac.isEmpty()){
-            return new ArrayList<>();
+           // 无条件查询
+            interSeac = userMapper.selectByCondition(new User());
         }
         return this.findPersons(interSeac);
     }
@@ -120,10 +122,17 @@ public class SearchService {
         return persons;
     }
 
-    @Cacheable(value = "search",key = "'uid'+#uid")
+    @Cacheable(value = "search",key = "'addr'+#uid")
     public Integer findLivePlace(Integer uid) {
-
-        return 243863;
+        UserDetail detail = detailMapper.selectByPrimaryKey(uid);
+        if(detail == null) {
+            return 243863;
+        }
+        Integer addrId = detail.getAddrId();
+        if(addrId == null || addrId == 0){
+            return 243863;
+        }
+        return addrId;
     }
 
 

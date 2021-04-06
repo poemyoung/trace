@@ -58,7 +58,9 @@ public class AddrService {
             address.setDetail(res.getFormatted_addresses().getRecommend());
         }
         address.setCounty(cps.getDistrict());
-        address.setAdcode(Integer.parseInt(res.getAd_info().getAdcode()));
+        if(res.getAd_info().getAdcode() != null) {
+            address.setAdcode(Integer.parseInt(res.getAd_info().getAdcode()));
+        }
         address.setCity(cps.getCity());
         int i = mapper.insertSelective(address);
         if (i > 0){

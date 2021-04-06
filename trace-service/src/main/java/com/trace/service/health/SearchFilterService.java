@@ -51,7 +51,7 @@ public class SearchFilterService {
         return list;
     }
 
-    @Cacheable(value = "search",key = "#uid")
+    @Cacheable(value = "search",key = "'person' + #uid")
     public Person findSinglePerson(Integer uid) {
         if(uid == null) return null;
         User user = userMapper.selectByPrimaryKey(uid);
@@ -69,13 +69,20 @@ public class SearchFilterService {
         // 查找居住地id
         Integer lid = searchService.findLivePlace(uid);
         Address address = addressMapper.selectByPrimaryKey(lid);
+        if(StringUtils.isBlank(address.getProvince())) {
+            address.setProvince("");
+        }
+        if(StringUtils.isBlank(address.getCity())) {
+            address.setCity("");
+        }
+        if(StringUtils.isBlank(address.getCounty())) {
+            address.setCounty("");
+        }
+        if(StringUtils.isBlank(address.getDetail())) {
+            address.setDetail("");
+        }
         person.setLivePlace(address.getProvince()+address.getCity()
                 +address.getCounty()+address.getDetail());
         return person;
     }
-
-
-
-
-
 }

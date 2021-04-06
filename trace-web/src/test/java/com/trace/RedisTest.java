@@ -65,4 +65,9 @@ public class RedisTest {
     public void washData() {
         tmu.washData();
     }
+
+    @Test
+    public void washData2() {
+        tmu.washData2();
+    }
 }

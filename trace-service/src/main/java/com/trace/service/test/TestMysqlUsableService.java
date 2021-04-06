@@ -1,5 +1,6 @@
 package com.trace.service.test;
 
+import com.google.common.collect.Lists;
 import com.trace.api.openid.TencentPosService;
 import com.trace.dao.entity.*;
 import com.trace.dao.repository.*;
@@ -50,16 +51,17 @@ public class TestMysqlUsableService {
         return !testMysqlUsables.isEmpty();
     }
 
-    @Cacheable(value = "addr_cache",key="#key")
-    public boolean setRedisKey(String key,String value) {
+    @Cacheable(value = "addr_cache", key = "#key")
+    public boolean setRedisKey(String key, String value) {
         System.out.println("执行了一次");
         ValueOperations valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(key,value);
+        valueOperations.set(key, value);
         return true;
     }
+
     public String getRedisKey(String key) {
         ValueOperations valueOperations = redisTemplate.opsForValue();
-        return (String)valueOperations.get(key);
+        return (String) valueOperations.get(key);
 
     }
 
@@ -71,30 +73,72 @@ public class TestMysqlUsableService {
     @Autowired
     UserConvertMapper userCvtMapper;
 
+    public void washData2() {
+        List<Integer> list = userInfoMapper.selectByCondition(new User());
+        for (int i : list) {
+            UserDetail detail = userDetailMapper.selectByPrimaryKey(i);
+            if(detail == null) {
+                System.out.println("奇奇怪怪"  + i);
+                detail = new UserDetail();
+                detail.setRiskFlag(0);
+                detail.setIduserDetail(i);
+                detail.setTemp("36.5");
+                detail.setPhone("13032855167");
+                AddressExample example = new AddressExample();
+                example.createCriteria().andUserIdEqualTo(i);
+                List<Address> addresses = addressMapper.selectByExample(example);
+                if (addresses != null && addresses.size() != 0) {
+                    Address address = addresses.get(0);
+                    detail.setAddrId(address.getIdaddress());
+                }
+                detail.setAddrId(addresses.get(0).getIdaddress());
+            }
+            // 从地址中选取一个
+            AddressExample example = new AddressExample();
+            example.createCriteria().andUserIdEqualTo(i);
+            List<Address> addresses = addressMapper.selectByExample(example);
+            if (addresses != null && addresses.size() != 0) {
+                Address address = addresses.get(0);
+                detail.setAddrId(address.getIdaddress());
+            }
+            int i1 = userDetailMapper.updateByPrimaryKeySelective(detail);
+            System.out.println(i + "  " + detail.getAddrId() + "成功" + i1);
+        }
+    }
+
+    private List<Integer> findNotIn(List<Integer> l1, List<Integer> l2) {
+        List<Integer> res = new ArrayList<>();
+        for (Integer i : l1) {
+            if (!l2.contains(i)) {
+                res.add(i);
+            }
+        }
+        return res;
+    }
 
 
     public void addRandom(int userId) {
-          Random random = new Random();
-          int range = random.nextInt(400);
-          RandomDataGenerator generator = new RandomDataGenerator();
-          User user = new User();
-          user.setId(userId);
-          user.setName(generator.randomName());
-          user.setCardId(generator.randomIdCard());
-          userInfoMapper.insertSelective(user);
-          UserDetail detail = new UserDetail();
-          detail.setIduserDetail(userId);
-          detail.setPhone(generator.randomTel());
-          detail.setRiskFlag(0);
-          detail.setTemp(RandomDataGenerator.randomTemp());
-          int i =  new RandomDataGenerator().getNum(addrId,addrId+range);
-          detail.setAddrId(i);
-          userDetailMapper.insertSelective(detail);
-          UserConvert cvt = new UserConvert();
-          cvt.setUserId(userId);
-          cvt.setOpenId("oSjSB4"+generator.randomString("gip9HyNGtP-poJep0aNl4E".length()));
-          userCvtMapper.insertSelective(cvt);
-          addRandomAddr(range,userId);
+        Random random = new Random();
+        int range = random.nextInt(400);
+        RandomDataGenerator generator = new RandomDataGenerator();
+        User user = new User();
+        user.setId(userId);
+        user.setName(generator.randomName());
+        user.setCardId(generator.randomIdCard());
+        userInfoMapper.insertSelective(user);
+        UserDetail detail = new UserDetail();
+        detail.setIduserDetail(userId);
+        detail.setPhone(generator.randomTel());
+        detail.setRiskFlag(0);
+        detail.setTemp(RandomDataGenerator.randomTemp());
+        int i = new RandomDataGenerator().getNum(addrId, addrId + range);
+        detail.setAddrId(i);
+        userDetailMapper.insertSelective(detail);
+        UserConvert cvt = new UserConvert();
+        cvt.setUserId(userId);
+        cvt.setOpenId("oSjSB4" + generator.randomString("gip9HyNGtP-poJep0aNl4E".length()));
+        userCvtMapper.insertSelective(cvt);
+        addRandomAddr(range, userId);
     }
 
     @Autowired
@@ -107,10 +151,10 @@ public class TestMysqlUsableService {
 
     int addrId = 1;
 
-    public void addRandomAddr(int num,int user){
+    public void addRandomAddr(int num, int user) {
         int old = addrId;
         addrId += num;
-        for(int i = old;i < addrId;i++) {
+        for (int i = old; i < addrId; i++) {
             new Thread(
                     new Runnable() {
                         @Override
@@ -137,17 +181,17 @@ public class TestMysqlUsableService {
         // 选出id 列表
         RandomDataGenerator g = new RandomDataGenerator();
         Calendar min = Calendar.getInstance();
-        min.set(Calendar.DAY_OF_MONTH,1);
+        min.set(Calendar.DAY_OF_MONTH, 1);
         Date minD = min.getTime();
         Calendar max = Calendar.getInstance();
-        max.set(Calendar.MONTH,max.get(Calendar.MONTH) + 2);
-        max.set(Calendar.DAY_OF_MONTH,30);
+        max.set(Calendar.MONTH, max.get(Calendar.MONTH) + 2);
+        max.set(Calendar.DAY_OF_MONTH, 30);
         Date maxD = max.getTime();
         AddressExample example = new AddressExample();
         List<Address> addresses = addressMapper.selectByExample(example);
         int count = 0;
         for (Address address : addresses) {
-           int aid = address.getIdaddress();
+            int aid = address.getIdaddress();
             Date date = g.randomTime(minD, maxD);
             // 置换
             address.setTime(date);
@@ -156,22 +200,23 @@ public class TestMysqlUsableService {
             uaa.setAid(aid);
             uaa.setTime(date);
             uaaMapper.updateByPrimaryKeySelective(uaa);
-            System.out.println(count++ +"时间为"+date);
+            System.out.println(count++ + "时间为" + date);
 
         }
     }
 
     public static class RandomDataGenerator {
         Random random = new Random();
-        public Date randomTime(Date min,Date max) {
+
+        public Date randomTime(Date min, Date max) {
             long minMill = min.getTime();
             long maxMill = max.getTime();
             long randomLong = this.getRandomLong(minMill, maxMill);
             return new Date(randomLong);
         }
 
-        public long getRandomLong(long min,long max) {
-            return (long)(min + Math.random() * (max-min+1));
+        public long getRandomLong(long min, long max) {
+            return (long) (min + Math.random() * (max - min + 1));
         }
 
 
@@ -197,32 +242,32 @@ public class TestMysqlUsableService {
             char b;
             char c;
             boolean sex = random.nextBoolean();
-            if(sex) {
-                 b = boy.charAt(random.nextInt(boy.length()));
-                 c = boy.charAt(random.nextInt(boy.length()));
-            }else {
+            if (sex) {
+                b = boy.charAt(random.nextInt(boy.length()));
+                c = boy.charAt(random.nextInt(boy.length()));
+            } else {
                 b = girl.charAt(random.nextInt(girl.length()));
                 c = girl.charAt(random.nextInt(girl.length()));
             }
-            return random.nextBoolean() ? a+b+c : a+b;
+            return random.nextBoolean() ? a + b + c : a + b;
         }
 
         public String randomIdCard() {
             String id = "";
             // 随机生成省、自治区、直辖市代码 1-2
-            String provinces[] = { "11", "12", "13", "14", "15", "21", "22", "23",
+            String provinces[] = {"11", "12", "13", "14", "15", "21", "22", "23",
                     "31", "32", "33", "34", "35", "36", "37", "41", "42", "43",
                     "44", "45", "46", "50", "51", "52", "53", "54", "61", "62",
-                    "63", "64", "65", "71", "81", "82" };
+                    "63", "64", "65", "71", "81", "82"};
             String province = provinces[new Random().nextInt(provinces.length - 1)];
             // 随机生成地级市、盟、自治州代码 3-4
-            String citys[] = { "01", "02", "03", "04", "05", "06", "07", "08",
-                    "09", "10", "21", "22", "23", "24", "25", "26", "27", "28" };
+            String citys[] = {"01", "02", "03", "04", "05", "06", "07", "08",
+                    "09", "10", "21", "22", "23", "24", "25", "26", "27", "28"};
             String city = citys[new Random().nextInt(citys.length - 1)];
             // 随机生成县、县级市、区代码 5-6
-            String countys[] = { "01", "02", "03", "04", "05", "06", "07", "08",
+            String countys[] = {"01", "02", "03", "04", "05", "06", "07", "08",
                     "09", "10", "21", "22", "23", "24", "25", "26", "27", "28",
-                    "29", "30", "31", "32", "33", "34", "35", "36", "37", "38" };
+                    "29", "30", "31", "32", "33", "34", "35", "36", "37", "38"};
             String county = countys[new Random().nextInt(countys.length - 1)];
             // 随机生成出生年月 7-14
             SimpleDateFormat dft = new SimpleDateFormat("yyyyMMdd");
@@ -235,8 +280,8 @@ public class TestMysqlUsableService {
             // 随机生成顺序号 15-17
             String no = new Random().nextInt(999) + "";
             // 随机生成校验码 18
-            String checks[] = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-                    "X" };
+            String checks[] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+                    "X"};
             String check = checks[new Random().nextInt(checks.length - 1)];
             // 拼接身份证号码
             id = province + city + county + birth + no + check;
@@ -244,35 +289,36 @@ public class TestMysqlUsableService {
             return id;
         }
 
-        private  String[] telFirst="134,135,136,137,138,139,150,151,152,157,158,159,130,131,132,155,156,133,153".split(",");
-        public  String randomTel() {
-            int index=getNum(0,telFirst.length-1);
-            String first=telFirst[index];
-            String second=String.valueOf(getNum(1,888)+10000).substring(1);
-            String third=String.valueOf(getNum(1,9100)+10000).substring(1);
-            return first+second+third;
+        private String[] telFirst = "134,135,136,137,138,139,150,151,152,157,158,159,130,131,132,155,156,133,153".split(",");
+
+        public String randomTel() {
+            int index = getNum(0, telFirst.length - 1);
+            String first = telFirst[index];
+            String second = String.valueOf(getNum(1, 888) + 10000).substring(1);
+            String third = String.valueOf(getNum(1, 9100) + 10000).substring(1);
+            return first + second + third;
         }
 
-        public int getNum(int start,int end) {
-            return (int)(Math.random()*(end-start+1)+start);
+        public int getNum(int start, int end) {
+            return (int) (Math.random() * (end - start + 1) + start);
         }
 
-        public  String randomString(int length){
-            String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNO-PQRSTUVWXYZ0123456789";
-            Random random=new Random();
-            StringBuffer sb=new StringBuffer();
-            for(int i=0;i<length;i++){
-                int number=random.nextInt(str.length()-1);
+        public String randomString(int length) {
+            String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNO-PQRSTUVWXYZ0123456789";
+            Random random = new Random();
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < length; i++) {
+                int number = random.nextInt(str.length() - 1);
                 sb.append(str.charAt(number));
             }
             return sb.toString();
         }
 
-        public  Map<String, String> randomLonLatChina() {
-            return this.randomLonLat(90,128,20,53);
+        public Map<String, String> randomLonLatChina() {
+            return this.randomLonLat(90, 128, 20, 53);
         }
 
-        public  Map<String, String> randomLonLat(double MinLon, double MaxLon, double MinLat, double MaxLat) {
+        public Map<String, String> randomLonLat(double MinLon, double MaxLon, double MinLat, double MaxLat) {
             BigDecimal db = new BigDecimal(Math.random() * (MaxLon - MinLon) + MinLon);
             String lon = db.setScale(6, BigDecimal.ROUND_HALF_UP).toString();// 小数后6位
             db = new BigDecimal(Math.random() * (MaxLat - MinLat) + MinLat);
@@ -284,7 +330,7 @@ public class TestMysqlUsableService {
         }
 
         public static String randomTemp() {
-            return (35 + Math.random() * 3+"").substring(0,4);
+            return (35 + Math.random() * 3 + "").substring(0, 4);
         }
 
     }
