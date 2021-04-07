@@ -7,29 +7,10 @@ import java.util.Date;
  * Created on 2021/4/1
  */
 public class ConditionEntity {
-    private Date startDate;
-    private Date endDate;
     private String livePlace;
-    private String passPlace;
     private String name;
     private String cardId;
     private Boolean symptom;
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
 
     public String getLivePlace() {
         return livePlace;
@@ -37,14 +18,6 @@ public class ConditionEntity {
 
     public void setLivePlace(String livePlace) {
         this.livePlace = livePlace;
-    }
-
-    public String getPassPlace() {
-        return passPlace;
-    }
-
-    public void setPassPlace(String passPlace) {
-        this.passPlace = passPlace;
     }
 
     public String getName() {
@@ -69,18 +42,5 @@ public class ConditionEntity {
 
     public void setSymptom(Boolean symptom) {
         this.symptom = symptom;
-    }
-
-    @Override
-    public String toString() {
-        return "ConditionEntity{" +
-                "startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", livePlace='" + livePlace + '\'' +
-                ", passPlace='" + passPlace + '\'' +
-                ", name='" + name + '\'' +
-                ", cardId='" + cardId + '\'' +
-                ", symptom='" + symptom + '\'' +
-                '}';
     }
 }

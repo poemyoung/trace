@@ -51,12 +51,7 @@ public class SearchService {
         if(conditions.getSymptom()) {
             lists.add(this.searchBySymtom(conditions.getSymptom()));
         }
-        if (StringUtils.isNotBlank(conditions.getPassPlace())||
-        conditions.getStartDate() != null ||
-        conditions.getEndDate() != null) {
-            lists.add(this.searchByPassPlace(conditions.getPassPlace()
-            ,conditions.getStartDate(),conditions.getEndDate()));
-        }
+
         if(StringUtils.isNotBlank(conditions.getLivePlace())) {
             lists.add(sfService.searchByLivePlace(conditions.getLivePlace()));
         }
@@ -73,11 +68,8 @@ public class SearchService {
     private boolean isAllEmpty(ConditionEntity entity) {
         boolean f1 = StringUtils.isBlank(entity.getCardId())
                 && StringUtils.isBlank(entity.getName())
-                && StringUtils.isBlank(entity.getLivePlace())
-                && StringUtils.isBlank(entity.getPassPlace());
-        boolean f2 = !entity.getSymptom()
-                && entity.getEndDate() == null
-                && entity.getStartDate() == null;
+                && StringUtils.isBlank(entity.getLivePlace());
+        boolean f2 = !entity.getSymptom();
         return f1 && f2;
     }
 
@@ -85,17 +77,14 @@ public class SearchService {
     private List<Integer> searchBySymtom(boolean symptom) {
         return null;
     }
-    private List<Integer> searchByPassPlace(String place, Date startDate,Date endDate) {
-        return null;
-    }
 
     public List<Integer> findInterSeac(List<List<Integer>> gather) {
         // 排除null
-        gather.removeIf(Objects::isNull);
         List<Integer> res = new ArrayList<>();
         if(gather == null || gather.size() == 0) {
             return new ArrayList<>();
         }
+        gather.removeIf(Objects::isNull);
         if(gather.size() == 1) {
             return gather.get(0);
         }
@@ -148,15 +137,6 @@ public class SearchService {
             return 243863;
         }
         return addrId;
-    }
-
-    @Cacheable(value = "search",key = "'alladdr'")
-    public List<Address> getAllAddress() {
-        List<Address> addresses = addressMapper.selectByExample(new AddressExample());
-        if(addresses == null) {
-            return new ArrayList<>();
-        }
-        return addresses;
     }
 
     @Cacheable(value = "search",key = "'liveaddr'")
