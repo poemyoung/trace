@@ -1,9 +1,6 @@
 package com.trace.service.health;
 
-import com.trace.dao.entity.Address;
-import com.trace.dao.entity.AddressExample;
-import com.trace.dao.entity.User;
-import com.trace.dao.entity.UserDetail;
+import com.trace.dao.entity.*;
 import com.trace.dao.repository.AddressMapper;
 import com.trace.dao.repository.UserDetailMapper;
 import com.trace.dao.repository.UserMapper;
@@ -72,7 +69,8 @@ public class SearchFilterService {
         if(detail == null){
             person.setSymptom(false);
         }else {
-            person.setSymptom(detail.getRiskFlag() != 0);
+            boolean f = detail.getRiskFlag() != 0 || (user.getUserType() != null && user.getUserType() == 1);
+            person.setSymptom(f);
         }
 
         // 查找居住地id
@@ -107,6 +105,7 @@ public class SearchFilterService {
 
     @Cacheable(value = "search",key = "'symptom'+#symptom")
     public List<Integer> searchBySymtom(boolean symptom) {
-        return symptom ? detailMapper.findHasSymptom() : detailMapper.findNoSymptom();
+        List<Integer> l1 =  symptom ? detailMapper.findHasSymptom() : detailMapper.findNoSymptom();
+        return l1;
     }
 }

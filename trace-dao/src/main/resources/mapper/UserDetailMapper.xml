@@ -135,9 +135,15 @@
     where iduser_detail = #{iduserDetail,jdbcType=INTEGER}
   </update>
   <select id="findHasSymptom" resultType="java.lang.Integer">
-    select iduser_detail from user_detail where risk_flag > 0 order by iduser_detail asc
+    select user_detail.iduser_detail from user_detail,user_info where
+    user_detail.iduser_detail = user_info.id and
+     user_detail.risk_flag > 0 or user_info.user_type > 0
+     order by iduser_detail asc
   </select>
   <select id="findNoSymptom" resultType="java.lang.Integer">
-    select iduser_detail from user_detail where risk_flag = 0 order by iduser_detail asc
+    select user_detail.iduser_detail from user_detail,user_info where
+    user_detail.iduser_detail = user_info.id and
+     user_detail.risk_flag = 0 and (user_info.user_type = 0 or user_info.user_type is null )
+     order by iduser_detail asc
   </select>
 </mapper>
