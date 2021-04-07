@@ -66,14 +66,15 @@ public class SearchService {
 
     // 判断是否条件全为空
     private boolean isAllEmpty(ConditionEntity entity) {
+        if(entity == null) {
+            return true;
+        }
         boolean f1 = StringUtils.isBlank(entity.getCardId())
                 && StringUtils.isBlank(entity.getName())
                 && StringUtils.isBlank(entity.getLivePlace());
-        boolean f2 = !entity.getSymptom();
+        boolean f2 = entity.getSymptom() == null || !entity.getSymptom();
         return f1 && f2;
     }
-
-
 
 
     public List<Integer> findInterSeac(List<List<Integer>> gather) {
