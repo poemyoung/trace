@@ -34,8 +34,14 @@ public class SearchService {
     @Autowired
     UserMapper userMapper;
 
-    public List<Person> search(ConditionEntity conditions) { if(conditions == null) {
+    public List<Person> search(ConditionEntity conditions) {
+        if(conditions == null) {
             return new ArrayList<>();
+        }
+        if(this.isAllEmpty(conditions)) {
+            // 全量查询
+            List<Integer> list = userMapper.selectByCondition(new User());
+            return this.findPersons(list);
         }
         List<List<Integer>> lists = new ArrayList<>();
         if(StringUtils.isNotBlank(conditions.getName())|| StringUtils.isNotBlank(conditions.getCardId())) {
@@ -58,9 +64,21 @@ public class SearchService {
         // 数据库反查Person列表
         if(interSeac == null || interSeac.isEmpty()){
            // 无条件查询
-            interSeac = userMapper.selectByCondition(new User());
+            return new ArrayList<>();
         }
         return this.findPersons(interSeac);
+    }
+
+    // 判断是否条件全为空
+    private boolean isAllEmpty(ConditionEntity entity) {
+        boolean f1 = StringUtils.isBlank(entity.getCardId())
+                && StringUtils.isBlank(entity.getName())
+                && StringUtils.isBlank(entity.getLivePlace())
+                && StringUtils.isBlank(entity.getPassPlace());
+        boolean f2 = !entity.getSymptom()
+                && entity.getEndDate() == null
+                && entity.getStartDate() == null;
+        return f1 && f2;
     }
 
 

@@ -5,9 +5,7 @@ import org.apache.commons.collections4.trie.PatriciaTrie;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,7 +38,7 @@ public class PatricialTrieService {
         if(trie1 == null){
             return new ArrayList<>();
         }
-        values = trie.prefixMap(s).values();
+        values = trie1.prefixMap(s).values();
         List<Integer> list = new ArrayList<>(values);
         return list;
     }
