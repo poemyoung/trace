@@ -90,6 +90,8 @@ public class SearchService {
     }
 
     public List<Integer> findInterSeac(List<List<Integer>> gather) {
+        // 排除null
+        gather.removeIf(Objects::isNull);
         List<Integer> res = new ArrayList<>();
         if(gather == null || gather.size() == 0) {
             return new ArrayList<>();
