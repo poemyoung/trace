@@ -18,4 +18,8 @@ public interface UserDetailMapper {
     int updateByPrimaryKeySelective(UserDetail record);
 
     int updateByPrimaryKey(UserDetail record);
+
+    List<Integer> findHasSymptom();
+
+    List<Integer> findNoSymptom();
 }

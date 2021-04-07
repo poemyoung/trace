@@ -62,4 +62,14 @@ public class UserDetailMapperImpl implements UserDetailMapper {
     public int updateByPrimaryKey(UserDetail record) {
         return mapper.updateByPrimaryKey(record);
     }
+
+    @Override
+    public List<Integer> findHasSymptom() {
+        return mapper.findHasSymptom();
+    }
+
+    @Override
+    public List<Integer> findNoSymptom() {
+        return mapper.findNoSymptom();
+    }
 }

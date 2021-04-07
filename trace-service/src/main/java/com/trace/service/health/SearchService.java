@@ -49,7 +49,7 @@ public class SearchService {
             lists.add(sfService.searchByNameIdCard(conditions.getName(),conditions.getCardId()));
         }
         if(conditions.getSymptom()) {
-            lists.add(this.searchBySymtom(conditions.getSymptom()));
+            lists.add(sfService.searchBySymtom(conditions.getSymptom()));
         }
 
         if(StringUtils.isNotBlank(conditions.getLivePlace())) {
@@ -74,9 +74,7 @@ public class SearchService {
     }
 
 
-    private List<Integer> searchBySymtom(boolean symptom) {
-        return null;
-    }
+
 
     public List<Integer> findInterSeac(List<List<Integer>> gather) {
         // 排除null

@@ -104,4 +104,9 @@ public class SearchFilterService {
         list.sort(Comparator.comparingInt(o -> o));
         return list;
     }
+
+    @Cacheable(value = "search",key = "'symptom'+#symptom")
+    public List<Integer> searchBySymtom(boolean symptom) {
+        return symptom ? detailMapper.findHasSymptom() : detailMapper.findNoSymptom();
+    }
 }
