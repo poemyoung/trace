@@ -99,9 +99,8 @@ public class SearchFilterService {
     public List<Integer> searchByLivePlace(String place) {
         List<Address> addresses = searchService.getLiveAddress();
         // 搜索地址集合
-        ptService.isUsable();
-        PatricialTrieService.buildAddressTree(addresses);
-        List<Integer> list = PatricialTrieService.searchInPatree(place);
+        PatriciaTrie<Integer> trie = ptService.getTrie(addresses);
+        List<Integer> list = ptService.searchInPatree(place, trie);
         list.sort(Comparator.comparingInt(o -> o));
         return list;
     }

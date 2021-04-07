@@ -26,38 +26,39 @@ public class PatricialTrieService {
 
     private static volatile PatriciaTrie<Integer> trie;
 
-    private static volatile boolean f = false;
-
-    public static List<Integer> searchInPatree(String s) {
-        Collection<Integer> values = new ArrayList<>();
+    @Cacheable(cacheNames = "search",key = "'ptTreeExpitre'")
+    public PatriciaTrie<Integer> getTrie(List<Address> list) {
+        // 判断字典树是否初始化
         if (trie == null) {
-            synchronized (PatricialTrieService.class) {
-                if (trie == null) {
-                    logger.error("线程处理出现问题");
-                } else {
-                    values = trie.prefixMap(s).values();
-                }
-            }
-        }else {
-            values = trie.prefixMap(s).values();
+            PatricialTrieService.buildAddressTree(list);
         }
+        return trie;
+    }
+
+    public List<Integer> searchInPatree(String s,PatriciaTrie<Integer> trie1) {
+        Collection<Integer> values;
+        if(trie1 == null){
+            return new ArrayList<>();
+        }
+        values = trie.prefixMap(s).values();
         List<Integer> list = new ArrayList<>(values);
         return list;
     }
 
-    public static void buildAddressTree(List<Address> list) {
-       if(f) {
+
+    public static PatriciaTrie<Integer> buildAddressTree(List<Address> list) {
            // 重新构造
-           synchronized (PatricialTrieService.class) {
-               if(f) {
-                   trie = new PatriciaTrie<>();
-                   for (Address a : list) {
-                       trie.put(getDetail(a),a.getUserId());
-                   }
-                   f = false;
-               }
-           }
-       }
+        if(trie == null) {
+            synchronized (PatricialTrieService.class) {
+                if (trie == null) {
+                    trie = new PatriciaTrie<>();
+                    for (Address a : list) {
+                        trie.put(getDetail(a), a.getUserId());
+                    }
+                }
+            }
+        }
+        return trie;
     }
 
     private static String getDetail(Address address) {
@@ -77,13 +78,6 @@ public class PatricialTrieService {
             address.setDetail("");
         }
         return address.getProvince() + address.getCity() +address.getCounty() + address.getDetail();
-    }
-
-    @Cacheable(cacheNames = "search",key = "'paTreeExpire'")
-    public void isUsable() {
-        synchronized (PatricialTrieService.class) {
-            f = true;
-        }
     }
 
 }
