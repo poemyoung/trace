@@ -25,5 +25,6 @@
         <mapper resource="mapper/AdminMapper.xml" />
         <mapper resource="mapper/ArticleMapper.xml" />
         <mapper resource="mapper/ArticleImageMapper.xml" />
+        <mapper resource="mapper/PopularizeMapper.xml" />
     </mappers>
 </configuration>
