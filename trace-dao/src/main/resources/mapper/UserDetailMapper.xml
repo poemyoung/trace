@@ -135,14 +135,14 @@
     where iduser_detail = #{iduserDetail,jdbcType=INTEGER}
   </update>
   <select id="findHasSymptom" resultType="java.lang.Integer">
-    select user_detail.iduser_detail from user_detail,user_info where
-    user_detail.iduser_detail = user_info.id and
-     user_detail.risk_flag > 0 or user_info.user_type > 0
+    select distinct user_detail.iduser_detail from user_detail left join user_info on
+    user_detail.iduser_detail = user_info.id
+    where user_detail.risk_flag > 0 or (user_info.user_type is not null and user_info.user_type > 0)
      order by iduser_detail asc
   </select>
   <select id="findNoSymptom" resultType="java.lang.Integer">
-    select user_detail.iduser_detail from user_detail,user_info where
-    user_detail.iduser_detail = user_info.id and
+    select user_detail.iduser_detail from user_detail left join user_info on
+    user_detail.iduser_detail = user_info.id where
      user_detail.risk_flag = 0 and (user_info.user_type = 0 or user_info.user_type is null )
      order by iduser_detail asc
   </select>

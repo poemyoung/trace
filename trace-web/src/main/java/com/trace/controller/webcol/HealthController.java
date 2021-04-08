@@ -24,7 +24,7 @@ public class HealthController {
         if(list == null || list.size() == 0) {
             return Result.fail(ResultCode.PARAM_IS_INVALID);
         }
-        service.mark(list,false);
+        service.mark(list,true);
         return Result.success();
     }
 
@@ -33,7 +33,7 @@ public class HealthController {
         if(list == null || list.size() == 0) {
             return Result.fail(ResultCode.PARAM_IS_INVALID);
         }
-        service.mark(list,true);
+        service.mark(list,false);
         return Result.success();
     }
 }
