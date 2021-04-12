@@ -42,4 +42,8 @@ public class TestMysqlUsableController {
     public void washData2() {
         service.washData2();
     }
+
+    public void insertSomething(String headline,String content) {
+        service.insertSomething(headline,content);
+    }
 }

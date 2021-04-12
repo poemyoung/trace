@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author xzp
  * Created on 2021/4/8
@@ -51,5 +53,10 @@ public class PopularizeMapperImpl implements PopularizeMapper {
     @Override
     public int updateByPrimaryKey(Popularize record) {
         return mapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<Popularize> selectAll() {
+        return mapper.selectAll();
     }
 }

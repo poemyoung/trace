@@ -2,6 +2,8 @@ package com.trace.dao.repository;
 
 import com.trace.dao.entity.Popularize;
 
+import java.util.List;
+
 public interface PopularizeMapper {
     int deleteByPrimaryKey(Integer idpop);
 
@@ -14,4 +16,6 @@ public interface PopularizeMapper {
     int updateByPrimaryKeySelective(Popularize record);
 
     int updateByPrimaryKey(Popularize record);
+
+    List<Popularize> selectAll();
 }

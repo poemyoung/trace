@@ -1,5 +1,6 @@
 package com.trace.service.test;
 
+import com.common.utils.SnowflakeIdUtil;
 import com.google.common.collect.Lists;
 import com.trace.api.openid.TencentPosService;
 import com.trace.dao.entity.*;
@@ -32,6 +33,17 @@ public class TestMysqlUsableService {
 
     @Autowired
     RedisTemplate redisTemplate;
+    @Autowired
+    PopularizeMapper popularizeMapper;
+
+    public void insertSomething(String headline,String content) {
+        Popularize pop = new Popularize();
+        pop.setContent(content);
+        pop.setHeadline(headline);
+        SnowflakeIdUtil snow = new SnowflakeIdUtil();
+        pop.setIdpop(snow.nextIntId());
+        popularizeMapper.insert(pop);
+    }
 
     @Autowired
     TestMysqlUsableMapper mapper;

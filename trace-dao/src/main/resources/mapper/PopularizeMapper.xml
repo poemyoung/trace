@@ -68,4 +68,7 @@
       content = #{content,jdbcType=VARCHAR}
     where idpop = #{idpop,jdbcType=INTEGER}
   </update>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select * from pop
+  </select>
 </mapper>
