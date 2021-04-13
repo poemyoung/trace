@@ -373,6 +373,76 @@ public class ColdChainExample {
             addCriterion("remark not between", value1, value2, "remark");
             return (Criteria) this;
         }
+
+        public Criteria andQrpathIsNull() {
+            addCriterion("qrpath is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrpathIsNotNull() {
+            addCriterion("qrpath is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrpathEqualTo(String value) {
+            addCriterion("qrpath =", value, "qrpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrpathNotEqualTo(String value) {
+            addCriterion("qrpath <>", value, "qrpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrpathGreaterThan(String value) {
+            addCriterion("qrpath >", value, "qrpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrpathGreaterThanOrEqualTo(String value) {
+            addCriterion("qrpath >=", value, "qrpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrpathLessThan(String value) {
+            addCriterion("qrpath <", value, "qrpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrpathLessThanOrEqualTo(String value) {
+            addCriterion("qrpath <=", value, "qrpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrpathLike(String value) {
+            addCriterion("qrpath like", value, "qrpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrpathNotLike(String value) {
+            addCriterion("qrpath not like", value, "qrpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrpathIn(List<String> values) {
+            addCriterion("qrpath in", values, "qrpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrpathNotIn(List<String> values) {
+            addCriterion("qrpath not in", values, "qrpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrpathBetween(String value1, String value2) {
+            addCriterion("qrpath between", value1, value2, "qrpath");
+            return (Criteria) this;
+        }
+
+        public Criteria andQrpathNotBetween(String value1, String value2) {
+            addCriterion("qrpath not between", value1, value2, "qrpath");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

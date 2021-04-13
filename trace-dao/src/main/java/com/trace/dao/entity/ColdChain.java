@@ -9,6 +9,8 @@ public class ColdChain {
 
     private String remark;
 
+    private String qrpath;
+
     public Integer getIdcoldchain() {
         return idcoldchain;
     }
@@ -39,5 +41,13 @@ public class ColdChain {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getQrpath() {
+        return qrpath;
+    }
+
+    public void setQrpath(String qrpath) {
+        this.qrpath = qrpath == null ? null : qrpath.trim();
     }
 }

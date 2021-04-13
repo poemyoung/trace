@@ -93,7 +93,7 @@
 
 
 <!--        open id 与 user id 转换表-->
-        <table schema="" tableName="chainpass" domainObjectName="ChainPass"
+        <table schema="" tableName="coldchain" domainObjectName="ColdChain"
                enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
                enableUpdateByExample="false" selectByExampleQueryId="">
             <!--是否使用实际列名,默认为false-->

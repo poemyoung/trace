@@ -6,6 +6,7 @@
     <result column="classify" jdbcType="VARCHAR" property="classify" />
     <result column="source" jdbcType="VARCHAR" property="source" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="qrpath" jdbcType="VARCHAR" property="qrpath" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -37,7 +38,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    idcoldchain, classify, source, remark
+    idcoldchain, classify, source, remark, qrpath
   </sql>
   <select id="selectByExample" parameterType="com.trace.dao.entity.ColdChainExample" resultMap="BaseResultMap">
     select
@@ -65,9 +66,9 @@
   </delete>
   <insert id="insert" parameterType="com.trace.dao.entity.ColdChain">
     insert into coldchain (idcoldchain, classify, source, 
-      remark)
+      remark, qrpath)
     values (#{idcoldchain,jdbcType=INTEGER}, #{classify,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR})
+      #{remark,jdbcType=VARCHAR}, #{qrpath,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.trace.dao.entity.ColdChain">
     insert into coldchain
@@ -84,6 +85,9 @@
       <if test="remark != null">
         remark,
       </if>
+      <if test="qrpath != null">
+        qrpath,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="idcoldchain != null">
@@ -97,6 +101,9 @@
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="qrpath != null">
+        #{qrpath,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -112,6 +119,9 @@
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="qrpath != null">
+        qrpath = #{qrpath,jdbcType=VARCHAR},
+      </if>
     </set>
     where idcoldchain = #{idcoldchain,jdbcType=INTEGER}
   </update>
@@ -119,7 +129,8 @@
     update coldchain
     set classify = #{classify,jdbcType=VARCHAR},
       source = #{source,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR}
+      remark = #{remark,jdbcType=VARCHAR},
+      qrpath = #{qrpath,jdbcType=VARCHAR}
     where idcoldchain = #{idcoldchain,jdbcType=INTEGER}
   </update>
 </mapper>
