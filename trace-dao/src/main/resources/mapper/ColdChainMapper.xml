@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trace.dao.repository.ColdChainMapper">
+  <resultMap id="BaseResultMap" type="com.trace.dao.entity.ColdChain">
+    <id column="idcoldchain" jdbcType="INTEGER" property="idcoldchain" />
+    <result column="classify" jdbcType="VARCHAR" property="classify" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    idcoldchain, classify, source, remark
+  </sql>
+  <select id="selectByExample" parameterType="com.trace.dao.entity.ColdChainExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from coldchain
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from coldchain
+    where idcoldchain = #{idcoldchain,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from coldchain
+    where idcoldchain = #{idcoldchain,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.trace.dao.entity.ColdChain">
+    insert into coldchain (idcoldchain, classify, source, 
+      remark)
+    values (#{idcoldchain,jdbcType=INTEGER}, #{classify,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.trace.dao.entity.ColdChain">
+    insert into coldchain
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idcoldchain != null">
+        idcoldchain,
+      </if>
+      <if test="classify != null">
+        classify,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idcoldchain != null">
+        #{idcoldchain,jdbcType=INTEGER},
+      </if>
+      <if test="classify != null">
+        #{classify,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.trace.dao.entity.ColdChain">
+    update coldchain
+    <set>
+      <if test="classify != null">
+        classify = #{classify,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where idcoldchain = #{idcoldchain,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.trace.dao.entity.ColdChain">
+    update coldchain
+    set classify = #{classify,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where idcoldchain = #{idcoldchain,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -93,8 +93,8 @@
 
 
 <!--        open id 与 user id 转换表-->
-        <table schema="" tableName="pop" domainObjectName="Popularize"
-               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+        <table schema="" tableName="chainpass" domainObjectName="ChainPass"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
                enableUpdateByExample="false" selectByExampleQueryId="">
             <!--是否使用实际列名,默认为false-->
             <!--<property name="useActualColumnNames" value="false" />-->
