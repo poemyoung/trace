@@ -1,6 +1,7 @@
 package com.trace.service.coldchain;
 
 import com.common.enums.Colors;
+import com.common.utils.GsonUtils;
 import com.common.utils.QRCode;
 import com.common.utils.SnowflakeIdUtil;
 import com.trace.dao.entity.ColdChain;
@@ -37,12 +38,18 @@ public class ColdChainService {
         // 插入冷链，生成冷链二维码、插入地址信息（单独分出来）
         ColdChain coldChain = new ColdChain();
         int id = snow.nextIntId();
+        if(id < 0) {
+            id += Integer.MAX_VALUE;
+        }
+        while (ccMapper.selectByPrimaryKey(id) != null) {
+            id += 1;
+        }
         coldChain.setIdcoldchain(id);
         coldChain.setClassify(msg.getClassify());
-        coldChain.setRemark(msg.getClassify());
+        coldChain.setRemark(msg.getRemark());
         coldChain.setSource(msg.getCompany());
         // 生成二维码返回路径
-        String s = this.generateChainQrCode(id);
+        String s = this.generateChainQrCode(coldChain);
         if(StringUtils.isBlank(s)) {
             return "";
         }
@@ -52,8 +59,10 @@ public class ColdChainService {
         return s;
     }
 
-    private String generateChainQrCode(Integer id) {
-        BufferedImage image = QRCode.createImageByColor(id+"", Colors.DEFAULT);
+    private String generateChainQrCode(ColdChain coldChain) {
+        String s = GsonUtils.toJson(coldChain);
+        int id = coldChain.getIdcoldchain();
+        BufferedImage image = QRCode.createImageByColor(s, Colors.DEFAULT);
         String tag = "/" + id + ".jpg";
         try {
             File f = new File(path + tag);

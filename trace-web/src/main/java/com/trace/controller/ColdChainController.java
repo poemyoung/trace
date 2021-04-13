@@ -6,9 +6,7 @@ import com.trace.util.Result;
 import com.trace.util.ResultCode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author xzp
@@ -21,8 +19,8 @@ public class ColdChainController {
     @Autowired
     ColdChainService service;
 
-    @GetMapping("/upchain")
-    public Result upChain(ColdChainBaseMsg baseMsg) {
+    @PostMapping("/upchain")
+    public Result upChain(@RequestBody ColdChainBaseMsg baseMsg) {
         // 参数校验
         if(baseMsg == null || baseMsg.getCompany() == null) {
             return Result.fail(ResultCode.PARAM_IS_INVALID);
