@@ -18,7 +18,6 @@ import java.util.*;
  * @author xzp
  * Created on 2021/3/6
  */
-// unfinished
 @Service
 public class AddrService {
     @Autowired
@@ -30,7 +29,7 @@ public class AddrService {
     @Autowired
     UserAndAddrMapper uaaMapper;
 
-    public int addrInsert(Number lat,Number lng,Integer userId) {
+    public int addrInsert(Number lat,Number lng,Integer userId,Date date) {
         // 参数校验
         if(lat == null || lng == null || userId == null) {
             return 0;
@@ -47,7 +46,7 @@ public class AddrService {
         for (;mapper.selectByExample(example).size() > 0;example.createCriteria().andIdaddressEqualTo(addrId+1));
         Address address = new Address();
         address.setUserId(userId);
-        address.setTime(new Date());
+        address.setTime(date);
         address.setProvince(cps.getProvince());
         address.setLng(lng.toString());
         address.setLat(lat.toString());

@@ -176,7 +176,7 @@ public class TestMysqlUsableService {
                             location.setLatitude(Float.parseFloat(map.get("W")));
                             location.setLongitude(Float.parseFloat(map.get("J")));
                             location.setUserId(user + "");
-                            int addrId = service.addrInsert(location.getLatitude(), location.getLongitude(), user);
+                          //  int addrId = service.addrInsert(location.getLatitude(), location.getLongitude(), user);
                             boolean f = uaaService.addUARelate(user, addrId);
                         }
                     }

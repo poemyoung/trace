@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 /**
  * @author xzp
  * Created on 2021/3/6
@@ -33,7 +35,7 @@ public class LocationController {
         }catch (Exception e) {
             return Result.fail(ResultCode.PARAM_IS_INVALID);
         }
-        int addrId = service.addrInsert(location.getLatitude(),location.getLongitude(),a);
+        int addrId = service.addrInsert(location.getLatitude(),location.getLongitude(),a,new Date());
         if(addrId == 0){
             return Result.fail(ResultCode.SYSTEM_INNER_ERROR);
         }
