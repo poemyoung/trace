@@ -60,7 +60,7 @@ public class UserInfoService {
         }
     }
 
-    public boolean fillUserInfo(UserBaseMsg msg,Integer userId) {
+    public boolean fillUserInfo(UserBaseMsg msg,Integer userId,boolean isInsert) {
         // 参数校验
         String phone = msg.getPhone();
         if(!checkPhone(phone)) {
@@ -87,8 +87,12 @@ public class UserInfoService {
         if(!this.locationInsert(location,userId,detail.getAddrId())) {
             return false;
         }
-
-        int i = detailMapper.insertSelective(detail);
+        int i = 0;
+        if(isInsert) {
+           i = detailMapper.insertSelective(detail);
+        }else {
+            i = detailMapper.updateByPrimaryKeySelective(detail);
+        }
         return i > 0;
     }
     public boolean locationInsert(UserLiveLocation location,Integer userId,Integer addrId) {

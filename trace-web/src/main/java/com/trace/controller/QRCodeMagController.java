@@ -69,7 +69,7 @@ public class QRCodeMagController {
                 }
                 msg.setPhone(p);
             }
-            f = infoService.fillUserInfo(msg,userId);
+            f = infoService.fillUserInfo(msg,userId,true);
         }else {
             // 不生成新用户,更新用户信息
             f = updateService.updateExistMsg(userId,msg);

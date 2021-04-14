@@ -50,9 +50,10 @@ public class UserInfoController {
         }
         boolean f = service.isInfoAccessible(i);
         if(f) {
-            return Result.fail(ResultCode.USER_REP_FILL);
+            return service.fillUserInfo(msg,i,false) ?
+                    Result.success() : Result.fail(ResultCode.PARAM_IS_INVALID);
         }else {
-            return service.fillUserInfo(msg,i) ?
+            return service.fillUserInfo(msg,i,true) ?
                     Result.success() : Result.fail(ResultCode.PARAM_IS_INVALID);
         }
     }
