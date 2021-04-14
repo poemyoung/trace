@@ -57,4 +57,22 @@ public class ColdChainController {
         }
         return Result.success(chargoRet);
     }
+
+    @GetMapping("/chargono")
+    public Result getChargoNo(@RequestParam String code) {
+        if(StringUtils.isBlank(code)) {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        int a = 0;
+        try {
+            a = Integer.parseInt(code);
+        }catch (Exception e) {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        ChargoRet ret = service.findByChainId(a);
+        if(ret == null) {
+            return Result.fail(ResultCode.CHAIN_NOT_EXIST);
+        }
+        return Result.success(ret);
+    }
 }

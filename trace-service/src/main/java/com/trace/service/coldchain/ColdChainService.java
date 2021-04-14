@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -36,6 +37,7 @@ import java.util.List;
  * Created on 2021/4/13
  */
 @Service
+@Cacheable(cacheNames = "chain")
 public class ColdChainService {
     private final Logger LOGGER = LoggerFactory.getLogger(ColdChainService.class);
 
@@ -123,6 +125,7 @@ public class ColdChainService {
         return i > 0;
     }
 
+    @Cacheable(cacheNames = "chain",key = "#json")
     public ChargoRet parseCharGoInfo(String json) {
         ColdChain cc = null;
         try {
@@ -139,6 +142,7 @@ public class ColdChainService {
         return ret;
     }
 
+    @Cacheable(cacheNames = "chain",key = "#chainId")
     public ChargoRet findByChainId(Integer chainId) {
         if(chainId == null || chainId == 0) {
             return null;
