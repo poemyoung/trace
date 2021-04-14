@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
  * Created on 2021/3/8
  */
 
-// unfinished
+
 @Service
 public class HealthyService {
     public int howHealth(Integer userId) {
