@@ -1,6 +1,7 @@
 package com.trace.service.address;
 
 import com.common.utils.SnowflakeIdUtil;
+import com.common.utils.TimeFormatUtil;
 import com.trace.api.addrpentity.AddrComponents;
 import com.trace.api.openid.TencentPosService;
 import com.trace.api.reverseaddrprs.RevBaseMsg;
@@ -9,6 +10,8 @@ import com.trace.dao.entity.*;
 import com.trace.dao.repository.AddressMapper;
 import com.trace.dao.repository.UserAndAddrMapper;
 import com.trace.service.entity.commentity.DateEnum;
+import com.trace.service.entity.retentity.AddrRetEntity;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +31,49 @@ public class AddrService {
 
     @Autowired
     UserAndAddrMapper uaaMapper;
+
+
+    public List<AddrRetEntity> obtainAddrs(Integer userId) {
+        if(userId == null || userId == 0) {
+            return null;
+        }
+        List<AddrRetEntity> list = new LinkedList<>();
+        UserAndAddrExample example = new UserAndAddrExample();
+        example.createCriteria().andUidEqualTo(userId);
+        List<UserAndAddr> userAndAddrs = uaaMapper.selectByExample(example);
+        if(userAndAddrs == null){
+            return null;
+        }
+        userAndAddrs.sort((o1, o2) -> {
+            if(o1.getTime().before(o2.getTime())) {
+                return -1;
+            }else if(o2.getTime().before(o1.getTime())) {
+                return 1;
+            }else {
+                return 0;
+            }
+        });
+        for (UserAndAddr uaa : userAndAddrs) {
+            Integer i = uaa.getAid();
+            if(i == null) {
+                return null;
+            }
+            Address address = mapper.selectByPrimaryKey(i);
+            if(address == null) {
+                continue;
+            }
+            String desc = (StringUtils.isBlank(address.getProvince()) ? "" : address.getProvince())
+                    + (StringUtils.isBlank(address.getCity()) ? "" : address.getCity())
+                    + (StringUtils.isBlank(address.getCounty()) ? "" : address.getCounty())
+                    + (StringUtils.isBlank(address.getDetail()) ? "" : address.getDetail());
+            String time = TimeFormatUtil.formatTime(uaa.getTime());
+            AddrRetEntity aret = new AddrRetEntity();
+            aret.setPlace(desc);
+            aret.setTime(time);
+            list.add(aret);
+        }
+        return list;
+    }
 
     public int addrInsert(Number lat,Number lng,Integer userId,Date date) {
         // 参数校验

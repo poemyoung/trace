@@ -3,15 +3,15 @@ package com.trace.controller;
 import com.trace.service.entity.recentity.Pos;
 import com.trace.service.address.AddrService;
 import com.trace.service.address.UserAndAddrService;
+import com.trace.service.entity.retentity.AddrRetEntity;
 import com.trace.util.Result;
 import com.trace.util.ResultCode;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author xzp
@@ -45,5 +45,23 @@ public class LocationController {
             return Result.fail(ResultCode.PARAM_IS_INVALID);
         }
         return Result.success();
+    }
+
+    @GetMapping("/getaddrs")
+    public Result getAddresses(@RequestParam String userid) {
+        if(StringUtils.isBlank(userid)) {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        int a = 0;
+        try {
+            a = Integer.parseInt(userid);
+        }catch (Exception e) {
+            return Result.fail(ResultCode.PARAM_IS_INVALID);
+        }
+        List<AddrRetEntity> addrRetEntities = service.obtainAddrs(a);
+        if(addrRetEntities == null) {
+            return Result.fail(ResultCode.USER_NOT_EXIST);
+        }
+        return Result.success(addrRetEntities);
     }
 }
