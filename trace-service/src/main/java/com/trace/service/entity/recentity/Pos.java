@@ -32,4 +32,13 @@ public class Pos {
     public void setLatitude(Number latitude) {
         this.latitude = latitude;
     }
+
+    @Override
+    public String toString() {
+        return "Pos{" +
+                "longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", userId='" + userId + '\'' +
+                '}';
+    }
 }

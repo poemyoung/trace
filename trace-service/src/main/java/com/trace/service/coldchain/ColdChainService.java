@@ -4,6 +4,7 @@ import com.common.enums.Colors;
 import com.common.utils.GsonUtils;
 import com.common.utils.QRCode;
 import com.common.utils.SnowflakeIdUtil;
+import com.common.utils.TimeFormatUtil;
 import com.trace.dao.entity.Address;
 import com.trace.dao.entity.ChainPass;
 import com.trace.dao.entity.ChainPassExample;
@@ -22,7 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -37,7 +37,6 @@ import java.util.List;
  * Created on 2021/4/13
  */
 @Service
-@Cacheable(cacheNames = "chain")
 public class ColdChainService {
     private final Logger LOGGER = LoggerFactory.getLogger(ColdChainService.class);
 
@@ -125,7 +124,6 @@ public class ColdChainService {
         return i > 0;
     }
 
-    @Cacheable(cacheNames = "chain",key = "#json")
     public ChargoRet parseCharGoInfo(String json) {
         ColdChain cc = null;
         try {
@@ -142,7 +140,6 @@ public class ColdChainService {
         return ret;
     }
 
-    @Cacheable(cacheNames = "chain",key = "#chainId")
     public ChargoRet findByChainId(Integer chainId) {
         if(chainId == null || chainId == 0) {
             return null;
@@ -173,7 +170,9 @@ public class ColdChainService {
             String detail = (StringUtils.isBlank(address.getProvince()) ? "" : address.getProvince())
                     + (StringUtils.isBlank(address.getCity()) ? "" : address.getCity())
                     + (StringUtils.isBlank(address.getCounty()) ? "" : address.getCounty())
-                    + (StringUtils.isBlank(address.getDetail()) ? "" : address.getDetail());
+                    + (StringUtils.isBlank(address.getDetail()) ? "" : address.getDetail())
+                    + "     "+TimeFormatUtil.formatTime(cp.getTime());
+
             list.add(detail);
         }
         ret.setPlaces(list);
